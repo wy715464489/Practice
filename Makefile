@@ -1,11 +1,11 @@
 CXX = g++
-CXXFLAGS = -I../ -I../include -I./include
+CXXFLAGS = -I../ -I../include -I./include -I./net -I./common
 CPPFLAGS = -Wall -ggdb -Wextra -fpermissive -Wno-sign-compare -O2
 LDFLAGS = -L./lib/
 LIBS = -lgtest -pthread
 TARGET = test
 
-SRC = $(wildcard *.cpp)
+SRC = $(wildcard *.cpp net/*.cpp common/*.cpp)
 OBJ = $(patsubst %.cpp,%.o,$(SRC))
 
 all: $(OBJ)

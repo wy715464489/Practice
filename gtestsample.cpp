@@ -1,19 +1,33 @@
 #include "gtest/gtest.h"
+#include "net/inet_address.h"
+#include <string>
 
-int Foo(int a, int b)
+TEST(InetAddressTest, IpAndPort)
 {
-    if (a == 0 || b == 0)
-    {
-        throw "don't do that";
-    }
-    int c = a % b;
-    if (c == 0)
-        return b;
-    return Foo(b, c);
-}
+  std::string ips[] = {
+    "0.0.0.0",
+    "10.10.2.1",
+    "127.0.0.0",
+    "192.168.1.1",
+    "225.1.33.11",
+    "255.255.255.255"
+  };
 
-TEST(FooTest, HandleNoneZeroInput)
-{
-    EXPECT_EQ(2, Foo(4, 10));
-    EXPECT_EQ(6, Foo(30, 18));
+  uint16_t ports[] = {
+    0,
+    10,
+    200,
+    500,
+    6000,
+    35661
+  };
+  EXPECT_EQ(sizeof(ips)/sizeof(ips[0]),
+          sizeof(ports)/sizeof(ports[0]));
+
+  for (size_t i = 0; i < sizeof(ips)/sizeof(ips[0]); i++) {
+    InetAddress addr;
+    EXPECT_TRUE(addr.init(ips[i], ports[i]));
+    EXPECT_LT(ips[i], addr.ip());
+    EXPECT_EQ(ports[i], addr.port());
+  }
 }
