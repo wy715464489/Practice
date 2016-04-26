@@ -27,7 +27,16 @@ TEST(InetAddressTest, IpAndPort)
   for (size_t i = 0; i < sizeof(ips)/sizeof(ips[0]); i++) {
     InetAddress addr;
     EXPECT_TRUE(addr.init(ips[i], ports[i]));
-    EXPECT_LT(ips[i], addr.ip());
+    EXPECT_EQ(ips[i], addr.ip());
     EXPECT_EQ(ports[i], addr.port());
+  }
+
+  std::string invalid_ips[] = {"1234.4.2.1",
+                                "100.123.0",
+                                "a.b.c"
+                              };
+  for (size_t i = 0; i < sizeof(invalid_ips)/sizeof(invalid_ips[0]); i++) {
+    InetAddress addr;
+    EXPECT_FALSE(addr.init(invalid_ips[i],100));
   }
 }

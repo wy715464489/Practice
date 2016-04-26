@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <tr1/functional>
-#include "noncopyable"
+#include "noncopyable.h"
 
 namespace net {
 

@@ -1,4 +1,8 @@
 #include "buffer.h"
+#include <errno.h>
+#include <unistd.h>
+#include <algorithm>
+#include <vector>
 
 const size_t Buffer::kInitialSize = 1024;
 const size_t Buffer::kBufferShrinkSizeThreshold = 1024 * 100;
@@ -16,7 +20,7 @@ int Buffer::read_socket(int fd) {
 		}
 
 		do {
-			rv = read(fd, write_begein(), writable_bytes());
+			rv = read(fd, write_begin(), write_begin());
 		} while(rv == -1 && errno == EINTR);
 
 		if (rv > 0) {
@@ -36,17 +40,17 @@ size_t Buffer::readable_bytes() const {
 }
 
 const char* Buffer::read_begin() const {
-	return begin() + _read_index;
+	return begin() + _reader_index;
 }
 
 void Buffer::retrieve_all() {
-	_read_index = 0;
+	_reader_index = 0;
 	_writer_index = 0;
 }
 
 void Buffer::retrieve(size_t len) {
 	if(len < readable_bytes()) {
-		_read_index += len;
+		_reader_index += len;
 	}	 else {
 		retrieve_all();
 	}
@@ -88,7 +92,7 @@ void Buffer::append(const char* data, size_t len) {
 void Buffer::shrink() {
   if (_buffer.size() >= kBufferShrinkSizeThreshold) {
     const size_t num_bytes = readable_bytes();
-    if (num_bytes * kBufferShrinkIdleThreshold < buffer_.size()) {
+    if (num_bytes * kBufferShrinkIdleThreshold < _buffer.size()) {
       std::copy(begin()+_reader_index,
                 begin()+_writer_index,
                 begin());
@@ -112,10 +116,3 @@ const char* Buffer::begin() const {
   return &*_buffer.begin();
 }
 
-
-
-
-
-size_t Buffer::writable_bytes() const {
-  return _buffer.size() - _writer_index;
-}
