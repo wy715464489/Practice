@@ -10,8 +10,10 @@
 
 #include "noncopyable.h"
 
-namespace net 
-{
+namespace net {
+
+	class Channel;
+	class Poller;
 
 	typedef std::tr1::function<void ()> EventLoopUpdate;
 	typedef std::tr1::function<void ()> TimerCallback;
@@ -54,9 +56,18 @@ namespace net
   	void quit();
 
   	void run_after(int time_ms, TimerCallback cb);
+  	std::tr1::shared_ptr<Poller> poller();
+
+  	// For unittest only
+  size_t timer_queue_size() const {
+    return _timer_queue.size();
+  }
   private:
   	EventLoop();
 
+  	typedef std::vector<Channel*> ChannelList;
+  	ChannelList _active_channels;
+  	std::tr1::shared_ptr<Poller> _poller;
   	bool _quit;
   	EventLoopUpdate _update;
   	int _update_interval;

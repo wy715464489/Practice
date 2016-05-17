@@ -1,11 +1,15 @@
 #include "eventloop.h"
+#include "channel.h"
+#include "poller.h"
+#include "socket_ops.h"
 
 namespace net
 {
+	const int kDefaultPollTimeoutMs = 10;
 
 	time_t CalculateTimer(const timeval& tv) 
 	{
-  		return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+		return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	}
 
 	EventLoop::EventLoop():
@@ -26,19 +30,24 @@ namespace net
 
 		_quit = false;
 
-		while(!_quit)
-		{
-			if(_update)
-			{
+		while(!_quit) {
+			_poller->poll(kDefaultPollTimeoutMs, &_active_channels);
+
+			for (ChannelList::iterator it = _active_channels.begin();
+ 				it != _active_channels.end(); ++it) {
+				// Invoke active channel's event handler
+				Channel* current_active_channel = *it;
+				current_active_channel->handle_event();
+			}
+			if(_update) {
 				timeval curr;
 				gettimeofday(&curr, NULL);
 				const int elapsed_ms = (curr.tv_sec - prev.tv_sec) * 1000
-                           + (curr.tv_usec - prev.tv_usec) / 1000;
-      			if (elapsed_ms <= -1000 || elapsed_ms >= _update_interval) 
-      			{
-      				gettimeofday(&prev, NULL);
-      				_update();
-      			}
+						   + (curr.tv_usec - prev.tv_usec) / 1000;
+				if (elapsed_ms <= -1000 || elapsed_ms >= _update_interval) {
+					gettimeofday(&prev, NULL);
+					_update();
+				}
 			}
 		}
 
@@ -75,5 +84,9 @@ namespace net
 		timer.cb = cb;
 		_timer_queue.push(timer);
 	}
+
+	std::tr1::shared_ptr<Poller> EventLoop::poller() {
+  		return _poller;
+  	}
 }
 
