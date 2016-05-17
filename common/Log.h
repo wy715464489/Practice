@@ -104,4 +104,25 @@ class LogSystem {
   DISALLOW_COPY_AND_ASSIGN(LogSystem);
 };
 
+extern void debug_log(const char* content, ...) __attribute__((format(printf,1,2)));
+extern void info_log(const char* content, ...) __attribute__((format(printf,1,2)));
+extern void error_log(const char* content, ...) __attribute__((format(printf,1,2)));
+extern void DATA_LOG(const char* content, ...) __attribute__((format(printf,1,2)));
+
+#define ERROR_LOG(content, ...) \
+    error_log("(%s:%d)[ERROR] "content, __FILE__, __LINE__, ##__VA_ARGS__);
+
+#define DEBUG_LOG(content, ...) \
+    debug_log("(%s:%d)[DEBUG] "content, __FILE__, __LINE__, ##__VA_ARGS__);
+
+#define INFO_LOG(content, ...) \
+    info_log("(%s:%d)[INFO] "content, __FILE__, __LINE__, ##__VA_ARGS__);
+
+void FlushLog();
+
+void SigsegvHandler(int sig);
+
+#define DATA_INFO_LOG(protobuf_obj) \
+  DATA_LOG("\t%s\t%s\n", protobuf_obj.GetDescriptor()->name().c_str(), \
+                         protobuf_obj.ShortDebugString().c_str())
 }

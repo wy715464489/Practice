@@ -103,3 +103,26 @@ TEST(LogTest, CreateFiledirectory) {
   EXPECT_TRUE(rv);
 }
 
+using common::LogSystem;
+// using common::ERROR_LOG;
+
+TEST(LogTest, LogSystem) {
+  EXPECT_TRUE(LogSystem::instance().init("./logtest_1234/abcd", 10));
+  EXPECT_TRUE(LogSystem::instance().set_workable(
+              common::kLogLevelDebug, true));
+  EXPECT_TRUE(LogSystem::instance().set_workable(
+              common::kLogLevelInfo, true));
+  EXPECT_TRUE(LogSystem::instance().set_workable(
+              common::kLogLevelError, true));
+  EXPECT_TRUE(LogSystem::instance().set_workable(
+              common::kLogLevelData, true));
+
+  common::ERROR_LOG("hello world");
+  common::INFO_LOG("hello world");
+  common::ERROR_LOG("hello world");
+  common::DATA_LOG("hello world");
+  // INFO_LOG("hello %s", "world");
+  // ERROR_LOG("hello %s", "world");
+  // DATA_LOG("hello %s", "world");
+}
+

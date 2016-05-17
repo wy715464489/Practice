@@ -176,6 +176,39 @@ void LogFileObject::write(const char* content, va_list vl) {
 
   check_rolling_time();
   check_filesize();
+
+  if (_file == NULL) {
+  	timeval tv;
+    gettimeofday(&tv, NULL);
+    time_t now_rolling_time = tv.tv_sec / _rolling_period * _rolling_period;
+    ComposeLogfilename(_rules, _level, tv, now_rolling_time, &_filename);
+    if (!CreateFiledirectory(_filename)) {
+    	fprintf(stderr, "Failed to create directory: %s\n", _filename.c_str());
+      return;
+    }
+
+    _file = fopen(_filename.c_str(), "a");
+    if (_file == NULL) {
+      fprintf(stderr, "Failed to open file to append: %s\n", _filename.c_str());
+      return;
+    }
+    _next_rolling_time = now_rolling_time + _rolling_period;
+  }
+
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  char buf[64];
+  struct tm result;
+  int off = strftime(buf, sizeof(buf), "%Y%m%d %H:%M:%S.",
+                     localtime_r(&tv.tv_sec, &result));
+  snprintf(buf+off, sizeof(buf)-off, "%06d", static_cast<int>(tv.tv_usec));
+  fprintf(_file, "[%s] ", buf);
+
+  if (vfprintf(_file, content, vl) < 0) {
+    // Maybe disk is full
+    fprintf(stderr, "Failed to append log file: %s, content:%s\n",
+            _filename.c_str(), content);
+  }
 }
 
 void LogFileObject::check_filesize() {
@@ -197,6 +230,114 @@ void LogFileObject::check_rolling_time() {
       _file = NULL;
     }
   }
+}
+
+void LogFileObject::set_workable(bool workable) {
+  // No status change
+  if (_workable == workable) {
+    return;
+  }
+
+  // Disable workable logfileobject
+  if (_workable) {
+    fclose(_file);
+    _file = NULL;
+  }
+  _workable = workable;
+}
+
+bool LogSystem::init(const std::string& logname, int max_log_size) {
+  bool rv = true;
+  rv &= _debug.init(logname, kLogLevelDebug, max_log_size);
+  rv &= _info.init(logname, kLogLevelInfo, max_log_size);
+  rv &= _error.init(logname, kLogLevelError, max_log_size);
+  // rv &= data_.init(logname, kLogLevelData, max_log_size);
+  return rv;
+}
+
+bool LogSystem::init_data_log(const std::string& logname, int max_log_size) {
+  return _data.init(logname, kLogLevelData, max_log_size);
+}
+
+bool LogSystem::set_workable(const std::string& level, bool workable) {
+  if (level == kLogLevelDebug) {
+    _debug.set_workable(workable);
+    return true;
+  } else if (level == kLogLevelInfo) {
+    _info.set_workable(workable);
+    return true;
+  } else if (level == kLogLevelError) {
+    _error.set_workable(workable);
+    return true;
+  } else if (level == kLogLevelData) {
+    _data.set_workable(workable);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void debug_log(const char* content, ...) {
+  va_list vl;
+  va_start(vl, content);
+  LogSystem::instance().debug().write(content, vl);
+  va_end(vl);
+}
+
+void info_log(const char* content, ...) {
+  va_list vl;
+  va_start(vl, content);
+  LogSystem::instance().info().write(content, vl);
+
+    va_list v2;
+    va_start(v2, content);
+    LogSystem::instance().debug().write(content, v2);
+  va_end(vl);
+     va_end(v2);
+    LogSystem::instance().info().flush();
+    LogSystem::instance().debug().flush();
+}
+
+void error_log(const char* content, ...) {
+  va_list vl;
+  va_start(vl, content);
+  LogSystem::instance().error().write(content, vl);
+    va_list v2;
+    va_start(v2, content);
+    LogSystem::instance().debug().write(content, v2);
+    //LogSystem::instance().debug().write(content, vl);
+  va_end(vl);
+    va_end(v2);
+    //LogSystem::instance().debug().flush();
+    LogSystem::instance().error().flush();
+}
+
+void DATA_LOG(const char* content, ...) {
+  va_list vl;
+  va_start(vl, content);
+  LogSystem::instance().data().write(content, vl);
+  va_end(vl);
+}
+
+void FlushLog() {
+  LogSystem::instance().debug().flush();
+  LogSystem::instance().info().flush();
+  LogSystem::instance().error().flush();
+  LogSystem::instance().data().flush();
+}
+
+void SigsegvHandler(int sig) {
+  ERROR_LOG("Received SIGSEGV(%d) signal, flush all the logs immediately\n", sig);
+  
+  FlushLog(); 
+
+  // 使用默认的处理函数
+  struct sigaction sa;
+  sa.sa_handler = SIG_DFL;
+  sa.sa_flags = 0;
+  sigaction(SIGSEGV, &sa, 0);
+
+  raise(sig);
 }
 
 }
