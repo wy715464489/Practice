@@ -81,10 +81,10 @@ private:
   DISALLOW_COPY_AND_ASSIGN(TcpConnection);
 };
 
-// void DefaultConnectionDataCallback(MessageHandler message_handler,
-//                                    TcpConnectionPtr src_conn,
-//                                    const ConnectionMap& dst_conns,
-//                                    Buffer* buffer);
+void DefaultConnectionDataCallback(MessageHandler message_handler,
+                                   TcpConnectionPtr src_conn,
+                                   const ConnectionMap& dst_conns,
+                                   Buffer* buffer);
 
 }
 
