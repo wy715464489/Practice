@@ -7,6 +7,8 @@
 #include <netinet/in.h>
 #include <string>
 
+namespace net{
+
 InetAddress::InetAddress() {
 	bzero(&_addr, sizeof(_addr));
 }
@@ -28,4 +30,6 @@ std::string InetAddress::ip() const {
 
 uint16_t InetAddress::port() const {
   return ntohs(_addr.sin_port);
+}
+
 }

@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -I../ -I../include -I./include -I./net -I./common
+CXXFLAGS = -I../ -I../include -I./include -I./net -I./common -I./
 CPPFLAGS = -Wall -ggdb -Wextra -fpermissive -Wno-sign-compare -O2
 LDFLAGS = -L./lib/
 LIBS = -lgtest -pthread

@@ -1,3 +1,6 @@
+#ifndef COMMON_LOG_H_
+#define COMMON_LOG_H_
+
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -126,3 +129,5 @@ void SigsegvHandler(int sig);
   DATA_LOG("\t%s\t%s\n", protobuf_obj.GetDescriptor()->name().c_str(), \
                          protobuf_obj.ShortDebugString().c_str())
 }
+
+#endif  // COMMON_LOG_H_

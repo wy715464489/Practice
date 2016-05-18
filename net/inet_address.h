@@ -4,6 +4,8 @@
 #include <netinet/in.h>
 #include <string>
 
+namespace net{
+
 class InetAddress
 {
  public:
@@ -31,4 +33,5 @@ class InetAddress
  	struct ::sockaddr_in _addr;
 };
 
+}
 #endif  // NET_INET_ADDRESS_H_
