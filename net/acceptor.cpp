@@ -26,6 +26,13 @@ Acceptor::~Acceptor() {
   _channel->disable_all();
 }
 
+void Acceptor::listen() {
+  _socket.listen();
+  // set channel tie
+  _channel->tie(shared_from_this());
+  _channel->enable_reading();
+}
+
 void Acceptor::handle_read() {
   // Loop until no more fd in backup queue
   while (1) {
