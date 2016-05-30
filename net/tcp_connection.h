@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_TCP_CONNECTION_H_
 #define NET_TCP_CONNECTION_H_
 
@@ -11,11 +12,12 @@
 #include "net/message.h"
 #include "common/noncopyable.h"
 
-namespace net {
+namespace hrg { namespace net {
 
 class Channel;
 class Poller;
 class Socket;
+class Buffer;
 
 typedef std::tr1::function<void (const TcpConnectionPtr&)> CloseCallback;
 
@@ -31,7 +33,7 @@ typedef std::map<uint64_t, TcpConnectionPtr > ConnectionMap;
 
 class TcpConnection: public std::tr1::enable_shared_from_this<TcpConnection> {
  public:
- 	// Active connections = (opened -closed)
+  // Active connections = (opened -closed)
   static uint64_t gTcpConnectionOpened;
   static uint64_t gTcpConnectionClosed;
   // Closed by read or write error
@@ -48,14 +50,18 @@ class TcpConnection: public std::tr1::enable_shared_from_this<TcpConnection> {
                 const InetAddress& peer_addr);
   ~TcpConnection();
 
+  // **must** be called after constructor immediately
+  // since shared_from_this() can not be called in constructor
   void tie_channel();
 
   void set_close_callback(const CloseCallback& cb);
   void set_data_callback(const DataCallback& cb);
 
+  // Connection id
   uint64_t id() const;
   uint32_t  peer_ip() const;
 
+  // Be invoked by client or server
   bool send(const char* data, int len);
 
   // Be invoked by client or server
@@ -63,21 +69,22 @@ class TcpConnection: public std::tr1::enable_shared_from_this<TcpConnection> {
 
   void shrink_buffer();
 
-  bool output_empty() const;
-private:
+  bool output_empty() const;   
+
+ private:
   void handle_read();
   void handle_write();
   void handle_error();
 
-  std::tr1::shared_ptr<Socket>  _socket;
-  std::tr1::shared_ptr<Channel> _channel;
-  uint64_t _id;  // Connection's global id
-  int32_t  _peer_ip;   // peer_ip
-  InetAddress _peer_addr;  // peer_addr
-  CloseCallback _close_callback;
-  DataCallback  _data_callback;
-  Buffer _input_buffer;
-  Buffer _output_buffer;
+  std::tr1::shared_ptr<Socket>  socket_;
+  std::tr1::shared_ptr<Channel> channel_;
+  uint64_t id_;  // Connection's global id
+  int32_t  peer_ip_;   // peer_ip
+  InetAddress peer_addr_;  // peer_addr
+  CloseCallback close_callback_;
+  DataCallback  data_callback_;
+  Buffer input_buffer_;
+  Buffer output_buffer_;
   DISALLOW_COPY_AND_ASSIGN(TcpConnection);
 };
 
@@ -86,6 +93,7 @@ void DefaultConnectionDataCallback(MessageHandler message_handler,
                                    const ConnectionMap& dst_conns,
                                    Buffer* buffer);
 
-}
+}  // namespace net
+}  // namespace hrg
 
 #endif  // NET_TCP_CONNECTION_H_

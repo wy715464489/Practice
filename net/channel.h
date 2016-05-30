@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_CHANNEL_H_
 #define NET_CHANNEL_H_
 
@@ -6,63 +7,68 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <tr1/functional>
-#include "noncopyable.h"
+#include "common/noncopyable.h"
 
-namespace net {
+namespace hrg { namespace net {
 
 class Poller;
+
 const uint32_t kNoneEvent = 0;
 const uint32_t kReadEvent = EPOLLIN | EPOLLPRI | EPOLLRDHUP;
 const uint32_t kWriteEvent = EPOLLOUT;
 
 class Channel: public std::tr1::enable_shared_from_this<Channel> {
  public:
- 	typedef std::tr1::function<void()> EventCallback;
+  typedef std::tr1::function<void()> EventCallback;
 
-	Channel(std::tr1::shared_ptr<Poller> poller, int fd);
-	~Channel();
+  Channel(std::tr1::shared_ptr<Poller> poller, int fd);
+  ~Channel();
 
-	void set_read_callback(const EventCallback&);
-	void set_write_callback(const EventCallback&);
-	void set_close_callback(const EventCallback&);
-	void set_error_callback(const EventCallback&);
-  
-	void tie(const std::tr1::shared_ptr<void>& owner);
+  void set_read_callback(const EventCallback&);
+  void set_write_callback(const EventCallback&);
+  void set_close_callback(const EventCallback&);
+  void set_error_callback(const EventCallback&);
 
-	void enable_reading();
+  // Tie this channel to the owner object managed by shared_ptr,
+  // prevent the owner object being destroyed in handleEvent.
+  void tie(const std::tr1::shared_ptr<void>& owner);
 
-	void set_revents(uint32_t revents);
+  void enable_reading();
 
-	void handle_event();
+  // set reterned events, will be invoked by poller
+  void set_revents(uint32_t revents);
 
-	bool has_waited_event() const;
+  void handle_event();
 
-	bool is_writing() const;
-	void enable_writing();
-	void disable_writing();
+  bool has_waited_event() const;
 
-	void disable_all();
+  bool is_writing() const;
+  void enable_writing();
+  void disable_writing();
 
-	int fd() const;
-	uint32_t events() const;
+  // Be invoked when socket fd will be removed from poller
+  void disable_all();
+
+  int fd() const;
+  uint32_t events() const;
 
  private:
- 	void handle_event_with_guard();
+  void handle_event_with_guard();
 
- 	std::tr1::shared_ptr<Poller> _poller;
- 	const int _fd;
- 	uint32_t _events;
- 	uint32_t _revents;
- 	std::tr1::weak_ptr<void> _tie;
- 	bool _tied;
+  std::tr1::shared_ptr<Poller> poller_;
+  const int fd_;
+  uint32_t events_;   // Events that we wait
+  uint32_t revents_;  // Events that returned by epoll_wait
+  std::tr1::weak_ptr<void> tie_;
+  bool tied_;
 
- 	EventCallback _read_callback;
-  	EventCallback _write_callback;
-  	EventCallback _close_callback;
-  	EventCallback _error_callback;
-  	DISALLOW_COPY_AND_ASSIGN(Channel);
+  EventCallback read_callback_;
+  EventCallback write_callback_;
+  EventCallback close_callback_;
+  EventCallback error_callback_;
+  DISALLOW_COPY_AND_ASSIGN(Channel);
 };
 
-}
-
-#endif
+}  // namespace net
+}  // namespace hrg
+#endif  // NET_CHANNEL_H_

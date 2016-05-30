@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_POLLER_H_
 #define NET_POLLER_H_
 
@@ -5,41 +6,46 @@
 #include <sys/epoll.h>
 #include <vector>
 #include <map>
-#include "noncopyable.h"
+#include "common/noncopyable.h"
 
-namespace net {
- 
+namespace hrg { namespace net {
+
 class Channel;
 class EventLoop;
 
-class Poller
-{
+class Poller {
  public:
-	typedef std::vector<Channel*> ChannelList;
-	typedef std::vector<struct epoll_event> EventList;
-	typedef std::map<int, Channel*> ChannelMap;
+  typedef std::vector<Channel* > ChannelList;
+  typedef std::vector<struct epoll_event> EventList;
+  typedef std::map<int, Channel*> ChannelMap;
 
-	Poller();
-	~Poller();
+  Poller();
+  ~Poller();
 
-	void poll(int timeout_ms, ChannelList* active_channels);
+  void poll(int timeout_ms, ChannelList* active_channels);
 
-	void update_channel(Channel* channel);
+  // ADD if channel not already in poller, else MOD
+  // Channel **MUST** has events to waited in poller
+  void update_channel(Channel* channel);
 
-	void remove_channel(Channel* channel);
+  // Remove channel from poller
+  void remove_channel(Channel* channel);
 
-	const ChannelMap& channels() const {
-		return _channels;
-	}
+  // For unittest only
+  const ChannelMap& channels() const {
+    return channels_;
+  }
+
  private:
- 	void control(int operation, Channel* channel);
+  // performs control operations
+  void control(int operation, Channel* channel);
 
- 	int _epollfd;
- 	ChannelMap _channels;
- 	EventList _events;
-	DISALLOW_COPY_AND_ASSIGN(Poller);
+  int epollfd_;
+  ChannelMap channels_;
+  EventList events_;
+  DISALLOW_COPY_AND_ASSIGN(Poller);
 };
 
-}
-
-#endif
+}  // namespace net
+}  // namespace hrg
+#endif  // NET_POLLER_H_

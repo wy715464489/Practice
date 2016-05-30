@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_SOCKET_H_
 #define NET_SOCKET_H_
 
@@ -6,34 +7,41 @@
 #include <errno.h>
 #include "common/noncopyable.h"
 
-namespace net {
+namespace hrg { namespace net {
 
 class InetAddress;
 
 class Socket {
  public:
- 	explicit Socket(int fd);
- 	~Socket();
+  explicit Socket(int fd);
+  ~Socket();
 
- 	int fd() const;
+  int fd() const;
 
- 	void bind(const InetAddress& addr);
+  // Die if failed
+  void bind(const InetAddress& addr);
 
- 	void connect(const InetAddress& addr);
+  // Die if faile
+  void connect(const InetAddress& addr);
 
- 	void listen();
+  // Die if failed
+  void listen();
 
- 	int accept(InetAddress* peer_addr);
+  // On succcess, a non-negative integer return and peer_addr is set
+  // On error, -1 is returned, and errno  is  set  appropriately.
+  int accept(InetAddress* peer_addr);
 
- 	void set_reuse_addr();
+  void set_reuse_addr();
   void set_nonblock();
   void set_tcpnodelay();
   void set_keepalive();
-private:
-  const int _fd;
+
+ private:
+  const int fd_;
   DISALLOW_COPY_AND_ASSIGN(Socket);
 };
 
-}
+}  // namespace net
+}  // namespace hrg
 
 #endif  // NET_SOCKET_H_

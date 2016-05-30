@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_ACCEPTOR_H_
 #define NET_ACCEPTOR_H_
 
@@ -9,27 +10,29 @@
 #include "net/tcp_connection.h"
 #include "common/noncopyable.h"
 
-namespace net {
+namespace hrg { namespace net {
 
 class EventLoop;
 class Acceptor: public std::tr1::enable_shared_from_this<Acceptor> {
  public:
- 	Acceptor(EventLoop* loop, const InetAddress& listen_addr);
- 	~Acceptor();
+  Acceptor(EventLoop* loop, const InetAddress& listen_addr);
+  ~Acceptor();
 
- 	void listen();
+  void listen();
 
- 	void handle_read();
+  void handle_read();
 
- 	void set_new_connection_callback(const NewConnectionCallback& cb);
+  void set_new_connection_callback(const NewConnectionCallback& cb);
+
  private:
- 	EventLoop* _loop;
- 	Socket _socket;
- 	std::tr1::shared_ptr<Channel> _channel;
- 	int _idle_fd;  // when errno == EMFILE
- 	NewConnectionCallback _new_connection_callback;
+  EventLoop* loop_;
+  Socket socket_;
+  std::tr1::shared_ptr<Channel> channel_;
+  int idle_fd_;  // when errno == EMFILE
+  NewConnectionCallback new_connection_callback_;
   DISALLOW_COPY_AND_ASSIGN(Acceptor);
 };
-}
 
+}  // namespace net
+}  // namespace hrg
 #endif  // NET_ACCEPTOR_H_

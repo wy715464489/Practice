@@ -1,11 +1,12 @@
-#ifndef NET_SOCKET_OPS_H
-#define NET_SOCKET_OPS_H
+// Copyright [2012-2014] <HRG>
+#ifndef NET_SOCKET_OPS_H_
+#define NET_SOCKET_OPS_H_
 
 #include <netinet/in.h>
 #include <errno.h>
 #include <string>
 
-namespace net {
+namespace hrg { namespace net {
 
 // Ignore Pipe signal when write to a closed/reset socket
 void IgnorePipeSignal();
@@ -46,6 +47,6 @@ const char* NetworkToAddress(uint32_t ip);
 // ip is in host byte order
 bool IsInternalIp(uint32_t ip);
 
-};
-
-#endif
+}  // namespace net
+}  // namespace hrg
+#endif  // NET_SOCKET_OPS_H_

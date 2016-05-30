@@ -1,4 +1,5 @@
-#include "inet_address.h"
+// Copyright [2012-2014] <HRG>
+#include "net/inet_address.h"
 #include <arpa/inet.h>
 #include <errno.h>
 #include <stdio.h>
@@ -6,30 +7,35 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string>
+#include "common/log.h"
+using hrg::common::LogSystem;
+using hrg::common::ERROR_LOG;
 
-namespace net{
+namespace hrg { namespace net {
 
 InetAddress::InetAddress() {
-	bzero(&_addr, sizeof(_addr));
+  bzero(&addr_, sizeof addr_);
 }
 
 bool InetAddress::init(const std::string& ip, uint16_t port) {
-	_addr.sin_family = AF_INET;
-	_addr.sin_port = htons(port);
-	if (::inet_pton(AF_INET, ip.c_str(), &_addr.sin_addr) <= 0) {
-		// ERROR_LOG("InetAddress::init failed, ip: %s, port: %u, error:%s\n",
-		// 		ip.c_str(), port, strerror(errno));
-	return false;
+  bzero(&addr_, sizeof addr_);
+  addr_.sin_family = AF_INET;
+  addr_.sin_port = htons(port);
+  if (::inet_pton(AF_INET, ip.c_str(), &addr_.sin_addr) <= 0) {
+    ERROR_LOG("InetAddress::init failed, ip: %s, port: %u, error:%s\n",
+             ip.c_str(), port, strerror(errno));
+    return false;
   }
   return true;
 }
 
 std::string InetAddress::ip() const {
-	return inet_ntoa(_addr.sin_addr);
+  return inet_ntoa(addr_.sin_addr);
 }
 
 uint16_t InetAddress::port() const {
-  return ntohs(_addr.sin_port);
+  return ntohs(addr_.sin_port);
 }
 
-}
+}  // namespace net
+}  // namespace hrg

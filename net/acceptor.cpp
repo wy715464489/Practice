@@ -1,3 +1,4 @@
+// Copyright [2012-2014] <HRG>
 #include "net/acceptor.h"
 #include <netinet/in.h>
 #include <stdio.h>
@@ -7,39 +8,42 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "common/log.h"
 #include "net/eventloop.h"
+using hrg::common::LogSystem;
+using hrg::common::ERROR_LOG;
 
-namespace net {
+namespace hrg { namespace net {
 
 Acceptor::Acceptor(EventLoop* loop, const InetAddress& listen_addr)
-  : _loop(loop),
-    _socket(CreateNonblockingSocketOrDie()),
-    _channel(new Channel(loop->poller(), _socket.fd())),
-    _idle_fd(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {
-    _socket.set_reuse_addr();
-    _socket.bind(listen_addr);
-    _channel->set_read_callback(
+  : loop_(loop),
+    socket_(CreateNonblockingSocketOrDie()),
+    channel_(new Channel(loop->poller(), socket_.fd())),
+    idle_fd_(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {
+    socket_.set_reuse_addr();
+    socket_.bind(listen_addr);
+    channel_->set_read_callback(
                     std::tr1::bind(&Acceptor::handle_read, this));
 }
 
 Acceptor::~Acceptor() {
-  _channel->disable_all();
+  channel_->disable_all();
 }
 
 void Acceptor::listen() {
-  _socket.listen();
+  socket_.listen();
   // set channel tie
-  _channel->tie(shared_from_this());
-  _channel->enable_reading();
+  channel_->tie(shared_from_this());
+  channel_->enable_reading();
 }
 
 void Acceptor::handle_read() {
   // Loop until no more fd in backup queue
   while (1) {
     InetAddress peer_addr;
-    int fd = _socket.accept(&peer_addr);
+    int fd = socket_.accept(&peer_addr);
     if (fd >= 0) {
-      _new_connection_callback(fd, peer_addr);
+      new_connection_callback_(fd, peer_addr);
     } else if (errno == EAGAIN) {
       break;
     } else if (errno == EINTR || errno == ECONNABORTED) {
@@ -50,11 +54,12 @@ void Acceptor::handle_read() {
       // The last way to handle it is to simply log the error and exit,
       // as is often done with malloc failures,
       // but this results in an easy opportunity for a DoS attack.
+      ERROR_LOG("Accept fatal error:%s\n", strerror(errno));
       if (errno == EMFILE) {
-        ::close(_idle_fd);
-        _idle_fd = ::accept(_socket.fd(), NULL, NULL);
-        ::close(_idle_fd);
-        _idle_fd = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
+        ::close(idle_fd_);
+        idle_fd_ = ::accept(socket_.fd(), NULL, NULL);
+        ::close(idle_fd_);
+        idle_fd_ = ::open("/dev/null", O_RDONLY | O_CLOEXEC);
       } else {
         // TODO(Weitong): can we do better than just exit immediately?
         exit(1);
@@ -64,7 +69,8 @@ void Acceptor::handle_read() {
 }
 
 void Acceptor::set_new_connection_callback(const NewConnectionCallback& cb) {
-  _new_connection_callback = cb;
+  new_connection_callback_ = cb;
 }
 
-}
+}  // namespace net
+}  // namespace hrg

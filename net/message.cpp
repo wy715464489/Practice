@@ -1,31 +1,31 @@
+// Copyright [2012-2014] <HRG>
 #include "net/message.h"
 #include <string.h>
 #include <string>
 
-namespace net {
+namespace hrg { namespace net {
 
 MessageHeader::MessageHeader()
-  : _length(0),
+  : length_(0),
     type(0),
     src_id(0),
     dst_id(0),
-    //gateway_index(0),
-    _sequence(0),
+    sequence_(0),
     checksum(0) {
 }
 
 void MessageHeader::set_length(int len) {
   // 最大长度64K * 16 
-  _length = len & 0xFFFF; 
-  _sequence = (len >> 16) & 0xF;
+  length_ = len & 0xFFFF; 
+  sequence_ = (len >> 16) & 0xF;
 }
 
 int MessageHeader::length() const {
-  if (_sequence == 12345) {
+  if (sequence_ == 12345) {
     // 客户端默认的所有消息,设置sequence_=12345
-    return _length;
+    return length_;
   } else {
-    return ((_sequence & 0xF) << 16) + _length;
+    return ((sequence_ & 0xF) << 16) + length_;
   }
 }
 
@@ -41,15 +41,26 @@ void ComposeGatewayMessageHeader(const MessageHeader& src_header,
 Message::Message(const MessageHeader& header,
                  const char* body,
                  size_t body_length)
-  : _owner(0),
-    _src_ip(0) {
+  : owner_(0),
+    src_ip_(0) {
     // header和data合并在一起
-    _data.reserve(sizeof(header) + body_length); 
-    _data.append((const char*)&header, sizeof(header));
-    _data.append(body, body_length);
+    data_.reserve(sizeof(header) + body_length); 
+    data_.append((const char*)&header, sizeof(header));
+    data_.append(body, body_length);
+}
+
+Message::Message(const MessageHeader& header,
+                 const std::string& body)
+  : owner_(0),
+    src_ip_(0) {
+  // header和data合并在一起
+  data_.reserve(sizeof(header) + body.size()); 
+  data_.append((const char*)&header, sizeof(header));
+  data_.append(body);
 }
 
 Message::~Message() {
 }
 
-}
+}  // namespace net
+}  // namespace hrg

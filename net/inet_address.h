@@ -1,37 +1,41 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_INET_ADDRESS_H_
 #define NET_INET_ADDRESS_H_
 
 #include <netinet/in.h>
 #include <string>
 
-namespace net{
+namespace hrg { namespace net {
 
-class InetAddress
-{
+class InetAddress {
  public:
-	InetAddress();
-	
-	InetAddress(const struct sockaddr_in& addr)
-		: _addr(addr) {
-	}
+  InetAddress();
 
-	const struct ::sockaddr_in& addr() const { 
-		return _addr; 
-	}
+  /// Constructs an endpoint with given struct @c sockaddr_in
+  /// Mostly used when accepting new connections
+  explicit InetAddress(const struct sockaddr_in& addr)
+    : addr_(addr) {
+  }
 
-	void set_addr(const struct sockaddr_in& addr) {
-		_addr = addr;
-	}
+  const struct ::sockaddr_in& addr() const { return addr_; }
 
-	bool init(const std::string& ip, uint16_t port);
+  void set_addr(const struct sockaddr_in& addr) {
+    addr_ = addr;
+  }
 
-	std::string ip() const;
+  // IP string may be invalid, **MUST** check return value
+  bool init(const std::string& ip, uint16_t port);
 
-	uint16_t port() const;	
+  // A string in IPv4 numbers-and-dots notation
+  std::string ip() const;
+
+  // Host byte order
+  uint16_t port() const;
 
  private:
- 	struct ::sockaddr_in _addr;
+  struct ::sockaddr_in addr_;
 };
 
-}
+}  // namespace net
+}  // namespace hrg
 #endif  // NET_INET_ADDRESS_H_

@@ -1,18 +1,20 @@
+// Copyright [2012-2014] <HRG>
 #ifndef NET_TCP_CLIENT_H_
 #define NET_TCP_CLIENT_H_
 
 #include <tr1/functional>
 #include <tr1/memory>
-#include "inet_address.h"
+#include "net/inet_address.h"
 #include "net/tcp_connection.h"
 
-namespace net {
-	class EventLoop;
-	class Connector;
+namespace hrg { namespace net {
+
+class EventLoop;
+class Connector;
 
 class TcpClient {
  public:
- 	TcpClient(EventLoop* loop,
+  TcpClient(EventLoop* loop,
             const InetAddress& server_addr,
             MessageHandler message_handler);
   virtual ~TcpClient();
@@ -26,8 +28,9 @@ class TcpClient {
   bool output_empty() const;
 
   void shrink_connection_buffer();
+
  private:
- 	// Send server register message, log additional info ..etc
+  // Send server register message, log additional info ..etc
   virtual void connection_opened(const TcpConnectionPtr& conn);
 
   // Connection new data arrives
@@ -38,15 +41,16 @@ class TcpClient {
 
 
   void reconnect(const TcpConnectionPtr& conn);
- 	
-	EventLoop* _loop;
-	InetAddress _server_addr;
-	MessageHandler _message_handler;
-	std::tr1::shared_ptr<Connector> _connector;
-	std::tr1::shared_ptr<TcpConnection> _conn;
-	ConnectionMap _connections;
-	DISALLOW_COPY_AND_ASSIGN(TcpClient);
-};
-}
 
+  EventLoop* loop_;
+  InetAddress server_addr_;
+  MessageHandler message_handler_;
+  std::tr1::shared_ptr<Connector> connector_;
+  std::tr1::shared_ptr<TcpConnection> conn_;
+  ConnectionMap connections_;
+  DISALLOW_COPY_AND_ASSIGN(TcpClient);
+};
+
+}  // namespace net
+}  // namespace hrg
 #endif  // NET_TCP_CLIENT_H_
