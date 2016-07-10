@@ -1,0 +1,53 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ----------世界BOSS系统基本类型----------
+
+message WorldBossNode {
+  required int32 boss_id = 1;			// boss编号
+  optional int32 open_time = 2;		// 本次boss开启时间
+  optional int32 close_time = 3;		// 本次boss结束时间
+  optional int64 total_hp	= 4;		// boss总血量
+  optional int64 cur_hp = 5;			// boss当前血量
+  optional int32 player_count = 6;	// 当前参与玩家数
+  optional int32 player_cd_time = 7;  // 挑战boss剩余cd时间
+  optional _WorldBossStatus stage = 8;	// 1,未开放;2,开放;3,正常结束;4,boss被击杀
+}
+
+message WorldBossHarmRankingNode {
+  optional int32 rank = 1;			// 排名
+  optional int32 user_id = 2;			// 玩家编号
+  optional int32 master_type = 3;		// 当家编号
+  optional int32 level = 4;			// 玩家等级
+  optional string name = 5;			// 玩家名字
+  optional int32 total_harm	= 6;	// 玩家对boss的伤害输出
+
+  optional _PlayerExtraInfo player_extra_info = 7;
+  optional int32 vip_level = 8;		// 玩家vip等级  
+}
+
+message WorldBossLuckyExpressman {
+  optional int32 man_id = 1;			// 镖师编号
+  optional int32 rate = 2;			// 攻击倍率
+}
+
+// 世界boss信息
+message _WorldBossInfo {
+  optional int32 score = 1;			// 总积分
+}
+
+// -------------世界boss商店基本类型------------------------
+message _WorldBossShopGoods {
+  optional int32 goods_id = 1; // 物品组ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _WorldBossShopInfo {
+  repeated int32 goods_ids = 1;  // 客户端可以售出的物品组ID
+  optional int32 refresh_time = 2;  // 下次刷新时间 (给客户端的为倒计时)
+  optional int32 refresh_absolute_time = 3; // 刷新绝对时间
+  optional int32 has_refresh_times = 4; // 
+  optional int32 reset_time = 5;     // 重置时间（客户端不使用）
+  repeated _WorldBossShopGoods goods = 6;  // 客户端可以售出的货物增加字段
+}

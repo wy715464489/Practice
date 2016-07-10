@@ -1,0 +1,17 @@
+package lm;
+import "lm_base.proto";
+
+// --------------工坊系统基本类型--------------------------
+message _WorkshopProduce {
+  optional int32 start_time = 1;  // 开始时间
+  optional int32 end_time = 2; // 结束时间
+  optional int32 normal_count = 3; // 正常产出的数量
+  optional int32 vip_count = 4; // vip产出的数量
+  optional bool has_collected = 5; // 是否已领取
+}
+
+message _Workshop {
+  optional int32  refresh_time = 1;       // in seconds
+  optional _WorkshopProduce cur_produce = 2;   // 当前产出
+  optional _WorkshopProduce next_produce = 3;   // 下一次产出
+}

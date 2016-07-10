@@ -1,0 +1,19 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// --------------------每日任务系统基本类型----------------------
+
+message _DailyTask {
+  required int32 id = 1;
+  required _DailyTaskType type = 2;  // 类型
+  required int32 count = 3;     // 已完成次数
+  required int32 criteria = 4;  // 达标次数 
+  required int32 generated_time = 5;  // 生成时间
+}
+
+message _DailyTaskInfo {
+  optional int32 daily_refresh = 1;  // 距离下次每日刷新的时间 (单位:秒)
+  // optional int32 replace_count = 2;  // 每日任务替换个数
+  repeated _DailyTask   tasks = 3;
+}

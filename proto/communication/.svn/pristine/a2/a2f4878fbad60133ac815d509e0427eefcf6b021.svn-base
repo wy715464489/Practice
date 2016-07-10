@@ -1,0 +1,108 @@
+package lm;
+import "lm_base.proto";
+import "recharge_base.proto";
+import "task_base.proto";
+import "daily_task_base.proto";
+import "gold_exchange_base.proto";
+import "sponsor_base.proto";
+import "expressmen_base.proto";
+
+// -----------------充值系统交互消息-------------
+// message: RECHARGE_INFO
+message RechargeInfoRequest {
+  required int32 user_id = 1;
+}
+
+message RechargeInfoResponse {
+  optional _RechargeInfo recharge_info = 1;
+}
+
+message VipLevelReward {
+  repeated int32 opened_system_ids = 1;  // 解锁新的功能
+  // 各个相关系统的变化
+  optional _GoldExchangeInfo gold_exchange_info = 2; // 点金手次数
+  optional _DailyTaskInfo    daily_task_info = 3;    // 刷新次数
+  optional _TaskInfo         task_info = 4;          // 拒单次数
+  optional _SponsorInfo      sponsor_info = 5;       // 同时签约数量
+}
+
+// message: RECHARGE_ORDER_ID
+message RechargeOrderIdRequest {
+  required int32 user_id = 1;
+  // 服务器校验recharge_id和goods_id是否匹配
+  required int32 recharge_id = 2;  // 支付表ID
+  required int32 goods_id = 3;     // 渠道物品ID 
+}
+
+message RechargeOrderIdResponse {
+  optional string order_id = 1;
+  optional int32 recharge_id = 2;  // 支付方ID
+}
+
+// message: RECHARGE_SUCCESS
+message RechargeSuccessResponse {
+  optional int32         recharge_id = 1;
+  optional _RechargeInfo recharge_info = 2;
+  optional _PlayerInfo   player_info = 3;
+  optional _VipRewardInfo vip_reward_info = 4;  // 奖励数据
+}
+
+// message: VIP_REWARD_INFO
+message VipRewardListRequest {
+  required int32 user_id = 1;
+}
+
+message VipRewardListResponse {
+  optional _VipRewardInfo vip_reward_info = 1;  // 奖励数据
+}
+
+// message: VIP_COLLECT_REWARD
+message VipRewardCollectRequest {
+  required int32 user_id = 1;
+  optional int32 vip = 2;  // 领取的vip礼包等级
+}
+
+message VipRewardCollectResponse {
+  optional _PlayerInfo player_info = 1; // 领取后元宝等信息更新
+  optional _GoodsInfo  goods_info = 2;  // 领取后物品更新
+  optional _RewardInfo reward_info = 3; // 奖励信息(显示用)
+  optional _VipRewardInfo vip_reward_info = 4;  // 奖励数据
+  optional _ErrorInfo error_info = 5;   // 购买后元宝不足等信息
+}
+
+// message: COLLECT_FIRST_RECHARGE_REWARD
+message CollectFirstRechargeRewardRequest {
+  required int32 user_id = 1;
+}
+
+message CollectFirstRechargeRewardResponse {
+  optional _RechargeInfo recharge_info = 1;
+  optional _PlayerInfo player_info = 2; // 领取后元宝等信息更新
+  optional _GoodsInfo  goods_info = 3;  // 领取后物品更新
+  optional _ExpressmenInfo expressmen_info = 4; // 送的镖师
+  optional _RewardInfo reward_info = 5; // 奖励信息(显示用)
+}
+
+// message: DAILY_RECHARGE_REWARD_INFO
+message DailyRechargeRewardInfoRequest {
+  required int32 user_id = 1;
+}
+
+message DailyRechargeRewardInfoResponse {
+	optional _DailyRechargeReward daily_recharge_reward = 1;
+}
+
+// message: COLLECT_DAILY_RECHARGE_REWARD
+message CollectDailyRechargeRewardRequest {
+  required int32 user_id = 1;
+  optional int32 reward_day = 2; //　此处跟_DailyRechargeReward中的reward_day一致
+}
+
+message CollectDailyRechargeRewardResponse {
+  optional _DailyRechargeReward daily_recharge_reward = 1;
+  optional _PlayerInfo player_info = 2; // 领取后元宝等信息更新
+  optional _GoodsInfo  goods_info = 3;  // 领取后物品更新
+  optional _RewardInfo reward_info = 4; // 奖励信息(显示用)
+  optional bool collect_success = 5; //　是否成功领取（有可能奖励过期了或没有此奖励，此处则为false，否则为true）
+}
+

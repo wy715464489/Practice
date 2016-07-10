@@ -1,0 +1,37 @@
+package lm;
+import "lm_base.proto";
+
+// -----------------充值系统基本类型-------------
+message _RechargeInfo {
+  repeated int32 recharged_ids = 1;   // 已经充值过的ID (类型0:普通充值)
+  optional int32 total_gold = 2;      // 充值得到的元宝 (不算赠送的)
+  optional int32 vip = 3;             // 对应的VIP等级
+  optional bool  active_month_card = 4;   // 月卡是否生效
+  optional int32 remaining_month_card_days = 5;  // 月卡剩余天数 
+  optional bool  active_life_card = 6;  // 终身卡是否生效
+  optional int32 refresh_time = 7;      // 奖励邮件发送倒计时（距离0点的时间）
+  optional bool  has_recharged = 12;    // 是否有过充值 
+  optional bool  has_collected_first_recharge_reward = 13;  // 是否领过首充奖励
+
+  // 以下字段客户端不用
+  optional int32 month_deliver_date = 8;    // 月卡上次邮件发送日期
+  optional int32 life_deliver_date = 9;     // 终身卡上次邮件发送日期
+  optional int32 total_money = 10;       // 充值花费的钱，单位:分
+  optional int32 month_card_expire_time = 11; // 月卡失效时间
+}
+
+message _VipReward {
+  required int32 vip = 1;   // 领取的vip等级
+  optional bool has_collect = 2;  // 是否已购买(vip奖励需要购买)
+}
+
+message _VipRewardInfo {
+  repeated _VipReward vip_rewards = 1;   // vip奖励信息
+}
+
+message _DailyRechargeReward {
+  optional bool has_recharged = 1; // 是否有奖励（客户端通过这个判断是否有奖励）
+  optional int32 reward_day = 2; // 领取奖励的时间（格式为20150801）
+  optional bool has_collected = 3; // 是否已领取
+  optional int32 refresh_time = 4; // 刷新时间（倒计时）
+}

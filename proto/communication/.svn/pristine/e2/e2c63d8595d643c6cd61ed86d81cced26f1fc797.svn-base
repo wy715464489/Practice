@@ -1,0 +1,37 @@
+package lm;
+import "lm_base.proto";
+
+// ---------------新手引导系统基本类型------------------------
+message _GuideInfo {
+  optional string current_step_name = 1; // 当前引导步骤
+  optional bool has_finish_first_main_task = 2;   // 完成第一个主线任务
+  optional bool has_recruit_expressmen_expressman_coin = 3; // 勾玉招募
+  optional bool has_recruit_expressmen_gold = 4; // 元宝招募  
+  optional bool has_deploy_expressmen = 5;  // 首次上阵三个镖师
+  optional bool has_finish_second_main_task = 6; // 完成第二个主线任务
+  optional bool has_levelup_expressman = 7;  // 升级镖师
+  optional bool has_finish_first_adventure = 8; // 完成第一个奇遇(客户端处理)  
+  optional bool has_levelup_skill = 9; // 完成升级第二个技能(升级两个技能)
+  optional bool has_collect_season_reward = 10; // 领取季度奖励
+  optional bool has_finish_second_adventure = 11; //完成第二个奇遇(客户端处理)  
+  optional bool has_strengthen_equipment = 12; // 首次升级装备
+  optional bool has_finish_fifth_main_task = 13; // 完成第五个主线任务 (客户端处理)
+  optional bool has_finish_first_random_task = 14;  // 完成第一个随机任务
+  optional bool has_strengthen_carrier = 15; // 强化镖车(三个属性各强化一次)
+  optional bool has_owned_liwenting = 16; // 碎片合成历文婷（是否已有历文婷，无则有，有则跳过）
+  optional bool has_gradeup_carrier = 17; // 首次完成镖车升阶	
+  optional bool has_collect_year_reward = 18; // 领取跨年奖励
+  optional bool has_unlock_mine_activity = 19; // 第一次完成矿山活动
+  optional bool has_fetched_kitchen_food = 20; // 首次领取食物
+  optional bool has_unlock_hunt_activity = 21; // 第一次完成打猎活动
+  optional bool has_unlock_plunder = 22; // 劫镖
+  optional bool has_sign_sponsor = 23; // 首次签约赞助商
+  optional bool has_unlock_defense_activity = 24; //第一次完成山贼入侵活动
+  optional bool has_unlock_arena = 25 ; // 首次完成竞技场
+  optional bool has_finish_office_invade_attack = 26; // 完成镖局入侵进攻的引导
+  optional bool has_finish_office_invade_defense = 27; // 完成镖局入侵防守的引导
+  optional bool has_finish_office_invade_collect = 28; // 完成镖局入侵领取奖励的引导
+  optional bool has_unlock_trade_road = 29; // 完成西域首次普通开拓的引导 
+  optional bool has_upgrade_niuweitong = 30; // 完成牛伟统升星 （牛伟统是否已升过星，无则有，有则跳过）
+  optional bool has_unlock_country_battle = 31; // 完成国战
+}

@@ -1,0 +1,61 @@
+package lm;
+
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+import "raffle_base.proto";
+import "souls_recycling_base.proto";
+
+// message: SOULS_RECYCLE_INFO
+message SoulsRecycleInfoRequest {
+	required int32 user_id = 1;
+}
+
+message SoulsRecycleInfoResponse {
+	required int32 user_id = 1;
+	optional _SoulsRecycleInfo souls_recycle_info = 2;
+}
+
+
+// message: SOULS_RECYCLE_OPEN_BOX
+message SoulsRecycleOpenBoxRequest {
+  required int32 user_id = 1;  
+  optional int32 chest_type = 2; 
+  optional int32 box_open_times = 3; 
+}
+
+message SoulsRecycleOpenBoxResponse {
+  optional _PlayerInfo player_info = 1;
+  optional _GoodsInfo goods_info = 2;
+  optional _ExpressmenInfo expressmen_info = 3;
+  optional _RaffleGoodsInfo raffle_goods_info = 4; //
+  optional _ErrorInfo error_info = 5;
+  optional _SoulsRecycleInfo souls_recycle_info = 6; 
+}
+
+// message: SOUl_SHOP_BUY
+message SoulShopBuyRequest {
+  required int32 user_id = 1;   
+  required int32 id = 2;
+}
+
+message SoulShopBuyResponse {
+  optional int32 id = 1;
+  optional _SoulsRecycleInfo souls_recycle_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _GoodsInfo goods_info = 4;
+  optional _ErrorInfo error_info = 5;
+  optional _RewardInfo reward_info = 6; // 获得物品
+}
+
+// message: SOUl_SHOP_REFRESH
+message SoulShopRefreshRequest {
+  required int32 user_id = 1;
+  optional int32 target_refresh_times = 2;
+}
+
+message SoulShopRefreshResponse {
+  optional _SoulsRecycleInfo souls_recycle_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+}

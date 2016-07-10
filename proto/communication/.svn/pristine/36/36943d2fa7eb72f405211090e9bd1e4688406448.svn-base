@@ -1,0 +1,72 @@
+package lm;
+import "friend_base.proto";
+import "common_enum.proto";
+
+// MessageType: FRIEND_INFO_LIST
+message FriendInfoListRequest {
+  optional int32 user_id = 1;
+}
+
+message FriendInfoListResponse {
+  optional _FriendInfo friend_info = 1;
+}
+
+// MessageType: FRIEND_SEARCH
+message FriendSearchRequest {
+  optional int32 user_id = 1;
+  optional _FriendSearchType search_type = 2; // 搜索类型(精确搜索OR换一批)
+  optional string player_id = 3; // 针对精确搜索有效
+}
+
+message FriendSearchResponse {
+  optional _FriendSearchType search_type = 1; // 搜索类型(精确搜索OR换一批)
+  repeated _FriendPlayer player_list = 2; // 搜索结果
+}
+
+// MessageType: FRIEND_ADD_FOLLOW
+message FriendAddFollowRequest {
+  optional int32 user_id = 1;
+  optional string player_id = 2; // 关注的玩家ID
+}
+
+message FriendAddFollowResponse {
+  optional _FriendInfo friend_info = 1; // 增量更新
+  optional _FriendOptStatus stauts = 2; // 关注结果状态
+  optional string player_id = 3; // 关注的玩家ID
+}
+
+// MessageType: FRIEND_CANCLE_FOLLOW
+message FriendCancleFollowRequest {
+  optional int32 user_id = 1;
+  optional string player_id = 2; // 玩家ID
+}
+
+message FriendCancleFollowResponse {
+  optional _FriendInfo friend_info = 1; // 增量更新
+  optional _FriendOptStatus status = 2; // 取消关注结果状态
+  optional string player_id = 3; // 关注的玩家ID
+}
+
+// MessageType: FRIEND_ADD_BLACK
+message FriendAddBlackRequest {
+  optional int32 user_id = 1;
+  optional string player_id = 2; // 玩家ID
+}
+
+message FriendAddBlackResponse {
+  optional _FriendInfo friend_info = 1; // 增量更新
+  optional _FriendOptStatus status = 2; // 关注结果状态
+  optional string player_id = 3; // 关注的玩家ID
+}
+
+// MessageType: FRIEND_CANCLE_BLACK
+message FriendCancleBlackRequest {
+  optional int32 user_id = 1;
+  optional string player_id = 2; // 玩家ID
+}
+
+message FriendCancleBlackResponse {
+  optional _FriendInfo friend_info = 1; // 增量更新
+  optional _FriendOptStatus status = 2; // 关注结果状态
+  optional string player_id = 3; // 关注的玩家ID
+}

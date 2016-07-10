@@ -1,0 +1,31 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// -------------邮件系统基本类型-----------------------
+// 邮件附件
+message _MailAttachment {
+  optional _AssetType type = 1;
+  optional int32      id = 2;   
+  optional int32      count = 3;
+}
+
+message _Mail {
+  required int32 id = 1;  // 对单个玩家全局唯一
+  optional string origin = 2;  // 来源
+  optional string title = 3;   // 标题
+  optional string content = 4;  // 内容
+  optional string signature = 5;  // 署名
+  optional bool   has_read = 6;   // 是否已读
+  optional int32  generated_time = 7;  // 邮件生成时间
+  optional int32  destroy_time = 8;    // 邮件销毁时间 (仅服务器端使用：用于公告类邮件)
+  repeated _MailAttachment attachments = 9;
+  optional string icon = 10;  // 信封图标
+  repeated string params = 11;  // 参数(用于替换content内的%s)
+  optional int32 arena_level = 12;  // 竞技场等级
+  optional int32 type = 13;
+}
+
+message _MailInfo {
+  repeated _Mail  mails = 1; // 所有邮件
+}

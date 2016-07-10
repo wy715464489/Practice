@@ -1,0 +1,50 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+message _RaffleGoods {
+  optional _RaffleGoodsType goods_type = 1; // 物品类型（1镖师，2物品，3镖师转碎片）
+  optional int32 goods_count =2 ; // 物品数量
+  optional int32 id = 3; // 物品或者镖师id
+  optional int32 trans_count = 4 ; // 转换过后的数量（goods_type为镖师转碎片类型有效）
+  optional int32 trans_id = 5; // 转换过后的碎片ID
+}
+
+message _RaffleGoodsInfo {
+ repeated _RaffleGoods raffle_goods = 1; //物品组合
+}
+
+message _Raffle {
+  optional _RafflePayType pay_type = 1; // 抽卡类型(元宝OR镖师币抽卡)
+  optional int32 remain_free_count = 2; // 剩余免费次数
+  optional int32 remain_free_time = 3; // 剩余免费倒计时（为0则表示免费）
+}
+
+message _RaffleStatus {
+	optional _RafflePayType pay_type = 1; // 抽卡支付类型（元宝OR镖师币） 
+	optional _RaffleCountType count_type = 2; // 抽取数量类型（单抽 OR 十连抽）
+	optional int32 raffle_times = 3; // 抽过几次（区分第一次抽取，第二次抽取和第三次以后的抽取）
+	optional bool finish_guide = 4; // 是否完成引导
+}
+
+message _RaffleSoulInfo {
+  optional int32 expressman_id = 1; // 整卡镖师id
+  repeated int32 debri_ids = 2;     // 镖师碎片id
+}
+
+message _RaffleSoulStatus {
+  optional int32 expressman_count = 1; // 已经抽取到的魂匣整卡镖师的数量
+  optional int32 need_gold = 2; // 下一个整卡需要消耗的元宝数量
+  optional int32 cost_gold = 3; // 已经消耗的元宝数量
+  optional int32 refresh_time = 4; // 刷新时间
+}
+
+message _RaffleInfo {
+  optional int32 refresh_time = 1; //刷新时间
+  optional _Raffle expressman_coin_raffle = 2; // 勾玉抽取
+  optional _Raffle gold_raffle = 3; // 元宝抽取
+  repeated _RaffleStatus raffle_status = 4; // 抽取状态（客户端不使用）
+  optional _RaffleSoulInfo soul_info = 5; // 魂匣抽取信息
+  optional _RaffleSoulStatus soul_status = 6; // 魂匣抽取状态（客户端不使用）
+}
+

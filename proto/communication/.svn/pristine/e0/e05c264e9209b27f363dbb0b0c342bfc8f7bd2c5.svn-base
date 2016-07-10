@@ -1,0 +1,119 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "escort_base.proto";
+import "expressmen_base.proto";
+import "carrier_base.proto";
+
+// --------------------押镖系统交互消息----------------------
+// message: ESCORT_START
+message EscortStartRequest {
+  required int32 user_id = 1;
+  required _EscortType  type = 2;
+  required int32 id = 3;
+  optional _EscortExtraInfo escort_extra_info = 98;
+  optional _EscortVerificationInfo verification_info = 99;
+}
+
+message EscortStartResponse {
+  optional _ExpressmenInfo expressmen_info = 1;  // 上阵镖师
+  optional int32 route_id = 2;  // 路线ID (包含map等信息)
+  optional _PlayerInfo player_info = 3;  // 扣费信息
+  optional _CarriersInfo carrier_info = 4; // 上阵镖车
+  optional _ErrorInfo error_info = 5;  // 镖旗不足等错误
+  optional _GoodsInfo goods_info = 6;  // 掉落的物品(以宝箱形式包装)
+  optional int32 carrier_level = 7; // 仅演示战斗使用
+  optional int32 monster_count = 8; // 本次怪物总数量
+  repeated _EscortAssistPlayer assist_players = 9;
+  optional int32 task_id = 10;  // 任务ID
+  repeated _LuckyExpressman lucky_expressmen = 11; // 幸运镖师，攻击翻倍等
+  optional bool started = 20;
+  optional _EscortExtraInfo escort_extra_info = 98;
+  optional _EscortVerificationInfo verification_info = 99;
+}
+
+// message: ESCORT_END
+message EscortEndRequest {
+  required int32 user_id = 1;
+  required _EscortType type = 2;
+  required int32 id = 3;
+  required _EscortEndStatus status = 4;
+  optional int32 star_count = 5;  // 结算(n颗星)
+  optional _DailyTaskCombatInfo daily_task_combat_info = 6;
+  optional _EscortExtraInfo escort_extra_info = 98;
+  optional _EscortVerificationInfo verification_info = 99;
+}
+
+// 按押镖类型做区分
+message EscortEndResponse {
+  required _EscortType type = 1;
+  required _EscortEndStatus status = 2;
+  optional _TaskResult  task_result = 3;  // 任务结果
+  optional _ArenaResult arena_result = 4; // 竞技场结果
+  optional _ActivityResult activity_result = 5;  // 活动结果
+  optional _PlunderAssignResult plunder_assign_result = 6; // 实时劫委托镖结果
+  optional _StoryResult story_result = 7;  // 主线结果
+  optional _TradeRoadResult trade_road_result = 8; // 商路战斗结果
+  optional _UnionTrapResult union_trap_result = 9; // 公会陷阱战斗结果
+  optional _WorldBossResult world_boss_result = 10;  // 世界boss战斗结果
+  optional _CountryBattleResult country_battle_result = 11; // 国战战斗结果
+  optional _EscortExtraInfo escort_extra_info = 98;
+  optional _EscortVerificationInfo verification_info = 99;  
+} 
+
+message EscortStageStartRequest {
+  required int32 user_id = 1;
+  required _EscortType type = 2;
+  required int32 id = 3;
+  optional int32 stage_index = 4;
+}
+
+// 按押镖类型做区分
+message EscortStageStartResponse {
+  repeated _Combat combats = 1;
+  repeated _Adventure adventures = 2;
+}
+
+// TODO(Weitong): 暂时不按类别做区分
+message EscortStageEndRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+  required int32 stage_index = 3;
+}
+
+message EscortStageEndResponse {
+
+}
+
+// TODO(Weitong): 暂时不按类别做区分
+message EscortCombatStartRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+  required int32 stage_index = 3;
+  required int32 combat_id = 4;
+}
+
+message EscortCombatStartResponse {
+
+}
+
+// TODO(Weitong): 暂时不按类别做区分
+message EscortCombatEndRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+  required int32 stage_index = 3;
+  required int32 combat_id = 4;
+}
+
+message EscortCombatEndResponse {
+
+}
+
+// message: ESCORT_SYNC
+message EscortSync {
+  required int32 user_id = 1;
+  required _EscortType type = 2;
+  required int32 id = 3;
+  optional int32 sub_id = 4;
+  repeated _DamageInfo damage_sync_info = 5;
+}

@@ -1,0 +1,35 @@
+//This is a complex test proto file
+
+enum MainRole{
+	PRINCESS = 0;
+	KING = 1;
+	KNIGHT = 2;
+}
+
+enum Power{
+	KILL = 0;
+	SAVE = 1;
+	POISON = 2;
+}
+
+message Person{
+	required MainRole  role = 1;
+	required string name = 2;
+	required Power power = 3;
+	optional int32 age = 4;
+}
+
+message Family{
+	required int32 num = 1;
+	repeated Person member = 2;
+}
+
+message Country{
+	required Person king = 1;
+	required int32 native_count = 2;
+	repeated Person native = 3;
+	required string country_name = 4;
+	optional bool b_gettogether = 5 [default = true];
+	repeated string  racetype = 6;
+	repeated Family family = 7;
+}

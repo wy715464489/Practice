@@ -1,0 +1,104 @@
+package lm;
+import "lm_base.proto";
+import "expressmen_base.proto";
+
+// ----------------物品系统交互消息--------------------
+// MessageType: SELL_GOODS
+message SellGoodsRequest {
+  required int32 user_id = 1;
+  required _Goods goods = 2;  // 需要出售的物品的ID，及数量
+}
+
+message SellGoodsResponse {
+  optional _PlayerInfo      player_info = 1;  // 铜币变动 
+  optional _Goods           goods = 2;  // 物品变动
+}
+
+// MessageType: USE_GOODS
+message UseGoodsRequest {
+  required int32 user_id = 1;
+  required int32 expressman_id = 2;  // 镖师ID
+  required _Goods goods = 3;  // 物品使用数量
+} 
+
+message UseGoodsResponse {
+  optional _ExpressmenInfo  expressmen_info = 1; // 变动的镖师
+  optional _Goods           goods = 2;  // 物品变动
+}
+
+// MessageType: COMPOSITE_GOODS
+message CompositeGoodsRequest {
+  required int32 user_id = 1;
+  required int32 goods_id = 2;
+  required int32 goods_goal_count = 3;
+} 
+
+message CompositeGoodsResponse {
+  optional _PlayerInfo      player_info = 1;  // 铜币变动 
+  optional _GoodsInfo      goods_info = 2;  // 物品变动  
+  required int32 goods_id = 3;
+  optional _ErrorInfo error_info = 4;
+}
+
+// MessageType: PURCHASE_GOODS
+message PurchaseGoodsRequest {
+  required int32 user_id = 1;
+  required int32 goods_id = 2;
+  required int32 goods_goal_count = 3;
+} 
+
+message PurchaseGoodsResponse {
+  optional _PlayerInfo      player_info = 1;  // 铜币变动 
+  optional _GoodsInfo      goods_info = 2;  // 物品变动
+  required int32 goods_id = 3; //
+  optional _ErrorInfo error_info = 4;
+}
+
+// MessageType: USE_BUNDLE_FLAG
+message UseBundleFlagRequest {
+  required int32 user_id = 1;
+  required int32 goods_id = 2;
+  required int32 goods_goal_count = 3;
+} 
+
+message UseBundleFlagResponse {
+  optional _PlayerInfo     player_info = 1;  // 镖旗变动 
+  optional _GoodsInfo      goods_info = 2;   // 物品变动
+  optional int32           flag_count = 3;   // 本次开出的镖旗数
+  optional _ErrorInfo      error_info = 4;
+  optional int32 goods_id = 5;
+}
+
+// MessageType: USE_BOX
+message UseBoxRequest {
+  required int32 user_id = 1;
+  required int32 goods_id = 2;
+  required int32 goods_goal_count = 3;
+}
+
+message UseBoxResponse {
+  optional _GoodsInfo      goods_info = 1;       // 物品变动
+  optional _GoodsInfo      inc_goods_info = 2;   // 获得物品的信息 （保留）
+  optional _ErrorInfo      error_info = 3;
+  optional int32 times = 4; 						 // 暴击倍数
+  optional int32 goods_id = 5;                   // 使用的宝箱id
+  optional int32 goods_count = 6;                // 使用的宝箱数量
+  optional _RewardInfo reward_info = 7;          // 获得的物品（也包含货币）
+  optional _PlayerInfo player_info = 8;          // 货币更新物品
+}
+
+// MessageType: USE_WAIST_TAG
+message UseWaistTagRequest {
+  required int32 user_id = 1;
+  required int32 expressman_id = 2;  // 镖师ID
+  required int32 goods_id = 3;       // 腰牌ID
+  required int32 goods_goal_count = 4;        // 使用后剩余腰牌的数量
+}
+
+message UseWaistTagResponse {
+  optional _ExpressmenInfo expressmen_info = 1;  // 变动的镖师
+  optional _GoodsInfo      goods_info = 2;       // 物品变动
+  optional _ErrorInfo      error_info = 3;
+  optional int32 goods_id = 4;                   // 使用的腰牌id
+  optional int32 goods_count = 5;                // 使用的宝箱数量
+}

@@ -1,0 +1,37 @@
+package lm;
+import "ranking_base.proto";
+import "common_enum.proto";
+import "lm_base.proto";
+
+// 排名列表
+// MessageType: RANKING_LIST
+message RankingListRequest {
+  required int32 user_id = 1;
+  required _RankingType type = 2; 
+}
+
+message RankingListResponse {
+  //required int32 user_id = 1;
+  required _RankingType type = 2; 
+  optional _RankingArenaSeason ranking_arena_season = 3;
+  optional _RankingOfficePower ranking_office_power = 4;
+  optional _RankingExpressmanPower ranking_expressman_power = 5;
+  optional _RankingCarrierPower ranking_carrier_power = 6;
+  optional _RankingUnionInfo ranking_union_info = 7;
+  optional _RankingWorldBoss ranking_world_boss = 8;
+}
+
+// MessageType: RANKING_EXTRA_INFO
+message RankingExtraInfoRequest {
+  required int32 user_id = 1; // 发起查看的玩家ID
+  required int32 target_user_id = 2;  // 被查看的玩家ID 
+  required _RankingExtraInfoType type = 3;
+}
+
+message RankingExtraInfoResponse {
+  required int32 target_user_id  = 1;
+  required _RankingExtraInfoType type = 2;
+  optional _TeamInfo arena_team_info = 3;  // 竞技场队伍
+  optional _TeamInfo escort_team_info = 4;  // 押镖队伍
+  optional _TeamInfo worldboss_team_info = 5;  //世界Boss队伍
+}

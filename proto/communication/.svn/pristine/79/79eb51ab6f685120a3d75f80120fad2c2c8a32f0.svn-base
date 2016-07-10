@@ -1,0 +1,23 @@
+package lm;
+import "lm_base.proto";
+
+// ---------------元宝交易系统基本类型------------
+message _GoldExchangeInfo {
+  optional int32 used_buy_coin_count = 1;   // 已使用的铜币购买次数
+  optional int32 total_buy_coin_count = 2;  // 总共的铜币购买次数
+  optional int32 used_buy_flag_count = 3;   // 已使用的镖旗购买次数
+  optional int32 total_buy_flag_count = 4;  // 总共的镖旗购买次数
+  optional int32 refresh_time = 5;          // 次数重置时间(从1970年开始的秒数)
+  optional int32 used_buy_arena_match_count = 6;   // 已使用的竞技场匹配买次数
+  optional int32 total_buy_arena_match_count = 7;  // 总共的竞技场匹配购买次数
+  optional int32 used_buy_plunder_count = 8;   // 已使用的劫镖匹配买次数
+  optional int32 total_buy_plunder_count = 9;  // 总共的劫镖匹配购买次数
+  optional int32 used_buy_expressman_coin_count = 10;   // 已使用的镖师币购买次数
+  optional int32 total_buy_expressman_coin_count = 11;  // 总共的镖师币购买次数
+  optional int32 used_buy_activity_count = 12;   // 已购买的活动次数
+  optional int32 total_buy_activity_count = 13;  // 总共的活动购买次数
+  optional int32 used_buy_office_invade_count = 14;   // 已购买的镖局入侵次数
+  optional int32 total_buy_office_invade_count = 15;  // 总共的镖局入侵购买次数
+  optional int32 used_buy_country_battle_count = 16;   // 已购买的国战次数
+  optional int32 total_buy_country_battle_count = 17;  // 总共的国战购买次数
+}

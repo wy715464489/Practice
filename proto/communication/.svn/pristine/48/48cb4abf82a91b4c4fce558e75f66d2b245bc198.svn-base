@@ -1,0 +1,169 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+
+// ----------------------镖师系统--------------------
+message ExpressmenSystemResponse {
+  required _ExpressmenInfo  expressmen_info = 1;
+}
+
+// message: LEVELUP_SKILL
+message LevelupSkillRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required _Skill skill = 3;
+}
+
+message LevelupSkillResponse {
+  optional _PlayerInfo      player_info = 1; 
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _ErrorInfo error_info = 3;
+}
+
+// message: RECRUIT_NEW_EXPRESSMAN
+message RecruitNewExpressmanRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+}
+
+message RecruitNewExpressmanResponse {
+  optional _ExpressmenInfo  expressmen_info =1;
+  optional _GoodsInfo       goods_info = 2;
+  optional int32  expressman_id = 3;
+  optional _ErrorInfo error_info = 4;
+}
+
+// message: MAJORGRADEUP_EXPRESSMAN
+message MajorGradeUpExpressmanRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+}
+
+message MajorGradeUpExpressmanResponse {
+  optional _ExpressmenInfo  expressmen_info =1;
+  optional _GoodsInfo       goods_info = 2;
+  optional int32  expressman_id = 3;
+  optional _ErrorInfo error_info = 4;
+}
+
+// message: LEVELUP_EQUIPMENT
+message LevelupEquipmentRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required int32 equipment_id = 3;
+  optional bool one_click = 4;  // 一键升级
+}
+
+message LevelupEquipmentResponse {
+  optional _PlayerInfo      player_info = 1;
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _GoodsInfo       goods_info = 3;
+  optional _ErrorInfo error_info = 4;
+  required int32 equipment_id = 5;
+  optional bool one_click = 6;  // 一键升级
+}
+
+// message: QUALITYUP_EQUIPMENT
+message QualityupEquipmentRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required int32  equipment_id = 3;
+  optional bool one_click = 4;  // 一键升级
+}
+
+message QualityupEquipmentResponse {
+  optional _PlayerInfo      player_info = 1; 
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _GoodsInfo       goods_info = 3;
+  optional _ErrorInfo error_info = 4;
+  required int32 equipment_id = 5;
+  optional bool one_click = 6;  // 一键升级
+}
+
+// message: UNLOCK_EQUIPMENT
+message UnlockEquipmentRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required int32  equipment_id = 3;
+}
+
+message UnlockEquipmentResponse {
+  optional _PlayerInfo      player_info = 1; 
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _ErrorInfo error_info = 3;
+  required int32 expressman_id = 4;
+  required int32 equipment_id = 5;
+}
+
+// message: WORKING_EXPRESSMEN
+message WorkingExpressmenRequest {
+	required int32  user_id = 1;
+	required _ExpressmenWorkingList  working_lists = 2;
+}
+
+// message: BUY_EXPRESSMAN
+message BuyExpressmanRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required _AssetType asset_type = 3;
+}
+
+message BuyExpressmanResponse {
+  optional _ExpressmenInfo expressmen_info = 1;
+  optional _PlayerInfo     player_info = 2;
+  optional _ErrorInfo      error_info = 3;
+  optional int32           expressman_id = 4;
+}
+
+// message: LEVELUP_MORAL
+message LevelupMoralRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required int32  moral_id = 3;
+  optional int32  moral_level = 4; // 目标级别
+}
+
+message LevelupMoralResponse {
+  optional _PlayerInfo      player_info = 1;
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _GoodsInfo       goods_info = 3;
+  optional _ErrorInfo       error_info = 4;
+  optional int32            moral_id = 5;
+  optional int32            expressman_id = 6;
+}
+
+// message: QUALITYUP_MORAL
+message QualityupMoralRequest {
+  required int32  user_id = 1;
+  required int32  expressman_id = 2;
+  required int32  moral_id = 3;
+  optional int32  moral_quality = 4; // 目标大阶
+}
+
+message QualityupMoralResponse {
+  optional _PlayerInfo      player_info = 1; 
+  optional _ExpressmenInfo  expressmen_info = 2;
+  optional _GoodsInfo       goods_info = 3;
+  optional _ErrorInfo       error_info = 4;
+  optional int32            moral_id = 5;
+  optional int32            expressman_id = 6;
+}
+
+message MoralLevelInfo {
+  optional int32            expressman_id = 1;
+  optional _ExpressmenInfo  expressmen_info = 2;
+}
+
+// message: QUERY_TEAM_INFO
+message QueryTeamRequest {
+  required int32  user_id = 1;
+  required int32  tar_user_id = 2;
+  required int32  escort_type = 3;
+}
+
+message QueryTeamResponse {
+  optional int32  tar_user_id = 1;
+  optional _TeamInfo team_info = 2;
+}
+

@@ -1,0 +1,255 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "office_invade_base.proto";
+
+// ----------------------------镖局入侵系统交互消息-------------------------
+
+// MessageType: OFFICE_INVADE_INFO
+message OfficeInvadeInfoRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeInfoResponse {
+  optional _OfficeInvadeInfo office_invade_info = 1;
+}
+
+// MessageType: OFFICE_INVADE_ATTACK
+message OfficeInvadeAttackRequest {
+  required int32 user_id = 1;
+  optional string target_player_id = 2;
+  optional int32 target_server_id = 3;
+  optional _OfficeInvadeType invade_type = 4;
+}
+
+message OfficeInvadeAttackResponse {
+  optional _OfficeInvadeInfo  office_invade_info = 1;
+  optional bool can_attack = 2;  // 是否可以攻击
+  optional _ErrorInfo error_info = 3; // 镖旗不足
+  optional _PlayerInfo player_info = 4; // 扣除的镖旗
+}
+
+// 检测是否超时
+// MessageType: OFFICE_INVADE_ATTACK_TIMEOUT
+message OfficeInvadeAttackTimeoutRequest {
+  required int32 user_id = 1; 
+}
+
+// 如果超时,则放在End里response
+
+// MessageType: OFFICE_INVADE_CRAP
+message OfficeInvadeCrapRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeCrapResponse {
+  optional int32  random_num = 1; // 掷出的骰子数
+  optional _Grid  target_grid = 2;  // 目标的格子
+  optional _DiceInfo  dice_info = 3;
+}
+
+
+// MessageType: OFFICE_INVADE_GIFT
+message OfficeInvadeGiftRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeGiftResponse {
+  optional _Grid  current_grid = 1; // 当前格子(把已完成的事件设为失效)
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo goods_info = 3;
+  optional _RewardInfo reward_info = 4;
+}
+
+// MessageType: OFFICE_INVADE_TRAP
+message OfficeInvadeTrapRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeTrapResponse {
+  optional _Grid  current_grid = 1; // 当前格子(把已完成的事件设为失效)
+  optional _GridTrapEventType  event_type = 2;
+  optional _GridTrapEventDecreasePower decrease_power = 3;
+  // TODO(Weitong): 镖师无法出战等
+}
+
+// MessageType: OFFICE_INVADE_RAND_EVENT
+message OfficeInvadeRandEventRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeRandEventResponse {
+  optional _Grid  current_grid = 1;  
+  optional _GridRandEventType  event_type = 2;
+  optional _GridRandEventForward    forward = 3;
+  optional _GridRandEventBackward   backward = 4; 
+  optional _GridRandEventIncreasePower increase_power = 5;
+  // 其它额外的随机事件
+  // 额外信息，比如镖师重置id
+  // 移动3格, 战斗力+10%
+}
+
+// MessageType: OFFICE_INVADE_DICE
+message OfficeInvadeDiceRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeDiceResponse {
+  optional _Grid  current_grid = 1;  
+  optional _DiceInfo dice_info = 2;
+}
+
+// MessageType: OFFICE_INVADE_COMBAT
+message OfficeInvadeCombatRequest {
+  required int32 user_id = 1; 
+  repeated int32 expressman_ids = 2;
+}
+
+message OfficeInvadeCombatResponse {
+  optional _Grid  current_grid = 1;  
+  optional bool   success = 2;
+  optional _FortInfo fort_info = 3;
+  repeated int32  used_expressman_ids = 4;  // 下阵的镖师 
+  // 胜利后的奖励
+  optional _PlayerInfo player_info = 5;
+  optional _GoodsInfo goods_info = 6;
+  optional _RewardInfo reward_info = 7;
+}
+
+// MessageType: OFFICE_INVADE_CHOOSE_ROUTE
+message OfficeInvadeChooseRouteRequest {
+  required int32 user_id = 1; 
+  required int32 route_id = 2;
+}
+
+message OfficeInvadeChooseRouteResponse {
+  optional _Grid target_grid = 1;
+  optional _DiceInfo dice_info = 2;
+  optional int32 route_id = 3;
+}
+
+// MessageType: OFFICE_INVADE_END
+message OfficeInvadeEndResponse {
+  optional bool is_success = 1; 
+  optional _OfficeInvadeFailureReason failure_reason = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _RewardInfo reward_info = 4; 
+}
+
+// 取消进攻
+// MessageType: OFFICE_INVADE_CANCEL_ATTACK
+message OfficeInvadeCancelAttackRequest {
+  required int32 user_id = 1; 
+}
+
+message OfficeInvadeCancelAttackResponse {
+  optional _OfficeInvadeInfo  office_invade_info = 1;
+}
+
+// --------------------防守阵容---------------------
+// MessageType: OFFICE_INVADE_DEPLOY
+message OfficeInvadeDeployRequest {
+  required int32 user_id = 1; 
+  optional _DefenseFortInfo defense_fort_info = 2;
+}
+
+message OfficeInvadeDeployResponse {
+  optional _DefenseFortInfo defense_fort_info = 1;
+}
+
+// MessageType: OFFICE_INVADE_MAIN_STORAGE
+message OfficeInvadeMainStorageRequest {
+  required int32 user_id = 1;
+  optional int32 main_storage_id = 2; // == route_id [1,2,3]
+}
+
+message OfficeInvadeMainStorageResponse {
+  optional int32 main_storage_id = 1; 
+}
+
+// 当玩家被进攻时，却进行布防，升级等操作时，返回该消息
+// MessageType: OFFICE_INVADE_BEING_ATTACKED
+message OfficeInvadeBeingAttackedResponse {
+}
+
+// ----------------------生产系统--------------------
+// MessageType: OFFICE_INVADE_PRODUCE
+message OfficeInvadeProduceRequest {
+  required int32 user_id = 1;
+}
+
+message OfficeInvadeProduceResponse {
+  optional _OfficeInvadeProduceInfo produce_info = 1;
+}
+
+// MessageType: OFFICE_INVADE_COLLECT
+message OfficeInvadeCollectRequest {
+  required int32 user_id = 1;
+  optional _AssetType asset_type = 2;
+}
+
+message OfficeInvadeCollectResponse {
+  optional _OfficeInvadeProduceInfo produce_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _RewardInfo reward_info = 3;
+}
+
+// MessageType: OFFICE_INVADE_PRODUCE_UPGRADE
+message OfficeInvadeProduceUpgradeRequest {
+  required int32 user_id = 1;
+  required _OfficeInvadeProduceType type = 2; 
+  required int32 target_level = 3;
+}
+
+message OfficeInvadeProduceUpgradeResponse {
+  optional _OfficeInvadeProduceInfo produce_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+  optional int32 target_level = 4;
+  optional _OfficeInvadeProduceType type = 5; 
+}
+
+// ---------------------搜索-------------------------
+
+// MessageType: OFFICE_INVADE_SEARCH
+message OfficeInvadeSearchRequest {
+  required int32 user_id = 1;
+}
+
+message _OfficeInvadeTargetTeam {
+  optional string player_id = 1;
+  optional string player_name = 2;
+  optional int32  server_id = 3; 
+  optional int32  character_id = 4;
+  optional int32  office_level = 5;
+  optional _RewardInfo reward_info = 6;
+  optional _PlayerExtraInfo player_extra_info = 7;
+}
+
+message OfficeInvadeSearchResponse {
+  repeated _OfficeInvadeTargetTeam target_teams = 1;
+  optional int32 searchable_time = 2; // 下次执行搜索的倒计时
+}
+
+// ---------------------被入侵记录---------------------
+
+// MessageType: OFFICE_INVADE_DEFENSE_RECORD_INFO
+message OfficeInvadeDefenseRecordInfoRequest {
+  required int32 user_id = 1;
+}
+
+message OfficeInvadeDefenseRecordInfoResponse {
+  optional _OfficeInvadeDefenseRecordInfo defense_record_info = 1;
+}
+
+// MessageType: OFFICE_INVADE_REVENGE_TARGET_INFO
+message OfficeInvadeRevengeTargetInfoRequest {
+  required int32 user_id = 1;
+  // 以下需查看的被复仇玩家信息
+  required string player_id = 2;
+  optional int32 server_id = 3;
+}
+
+message OfficeInvadeRevengeTagetInfoResponse {
+  optional _OfficeInvadeTargetTeam target_team = 1;
+}

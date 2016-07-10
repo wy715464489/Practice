@@ -1,0 +1,40 @@
+package lm;
+import "common_enum.proto";
+
+// --------------镖车系统基本类型-------------------------
+
+// ---------------镖车------------------------
+message _Carrier {
+  required int32 id = 1;
+  optional int32 quality = 2;
+  optional int32 hp_level = 3; // 生命值
+  optional int32 att_level = 4; // 攻击力
+  optional int32 speed_level = 5; // 移动速度
+  optional int32 att_speed_level = 6; // 攻击速度
+  optional int32 endurance = 7;// 耐久度
+  optional int32 power = 8;  // 战斗力
+
+  repeated int32 part_ids = 9;  // 装备的配件
+  optional int32 raw_power = 10;  // 镖车裸战斗力
+}
+
+message _CarrierWorkingInfo{ 
+  required int32 deployed_carrier_id = 1;
+  optional _EscortType  type = 2;
+}
+
+// ----------镖车配件----------------
+message _CarrierPart{
+  required int32 id = 1;
+  optional int32 level   = 2; // 等级
+  optional int32 grade = 3; // 阶
+}
+
+message _CarriersInfo {
+  repeated _Carrier carriers = 1;  
+  repeated _CarrierWorkingInfo carrier_working_infos = 2;
+  optional int32 tech_level = 3;
+  optional int32 tech_exp = 4;
+
+  repeated _CarrierPart carrier_parts  = 5;    // 镖车配件
+}

@@ -1,0 +1,19 @@
+package lm;
+import "lm_base.proto";
+
+// -----------赞助商系统基本类型--------------
+message _Sponsor {
+  optional int32 id = 1;  // 赞助商ID
+  optional int32 level = 2;  // 级别 [0, 5]
+  optional int32 exp = 3;    // 当前经验值
+  optional bool  has_signed_contact = 4;  // 是否已签约
+  optional int32 contact_expire_time = 5;  // 已签合约的到期时间
+  optional int32 contact_index = 6; // 合约索引, 从1开始
+  optional int32 reward_time = 7;  //  已经发送奖励的时间
+  optional int32 refresh_remain_time = 8;  //  刷新倒计时间
+}
+
+message _SponsorInfo {
+  repeated _Sponsor sponsors = 1;  // 所有赞助商
+  optional int32 max_sponsor_count_meanwhile = 2; // 同时签约赞助商数量
+}

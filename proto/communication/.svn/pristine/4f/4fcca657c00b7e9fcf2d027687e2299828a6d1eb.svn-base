@@ -1,0 +1,108 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+import "carrier_base.proto";
+
+// ------------竞技场系统基本类型--------------
+
+// 竞技场玩家基本信息
+message _ArenaPlayer {
+  optional int32    level = 1;
+  optional int32    score = 2;
+  // optional int32    rank = 3;  // 青铜二段才进排行榜, 0表示未进入排名
+  optional bool     should_advance = 4;   // 是否需要进阶赛
+  repeated _AdvanceMatchResult  advance_match_results = 5;  // 进阶赛结果
+  optional int32    match_count = 6;        // 可以进行比赛的次数
+  // optional int32    reset_match_count = 8;  // 可重置比赛次数的次数
+  // optional int32    refresh_time = 9;       // 次数的刷新时间
+  optional int32    last_season_level = 10;   // 上赛季级别
+  optional int32    last_season_score = 11;   // 上赛季分数
+  optional int32    last_season_id =  12;   // 上赛季ID
+}
+
+message _ArenaMatchRecord {
+  optional string opponent_name = 1;
+  optional int32  opponent_arena_level = 2;
+  optional bool   beat_the_opponent = 3; // 是否击败对手
+  optional int32  match_time = 4;    // 比赛发生时间 
+  optional int32  opponent_office_level = 5;
+  optional bool   active = 6; // 是否主动发起
+  optional _TeamInfo opponent_team_info = 7; // 对手上阵信息
+  optional _PlayerExtraInfo player_extra_info = 8;
+  optional int32  opponent_vip = 9; // 对手的vip等级
+  optional int32  opponent_user_id = 10;  // 对手的user_id
+}
+
+message _ArenaInfo {
+  required int32 curr_season_id = 1;  // 竞技场当前赛季的ID
+  optional _ArenaPlayer  arena_player = 2;  // 玩家自身信息
+  optional int32 season_countdown = 3;  // 赛季结束倒计时 (单位: 秒)
+}
+
+// 竞技场赛季排名
+message _ArenaTopPlayer {
+  optional int32  user_id = 1;
+  optional string player_name = 2;
+  optional int32  level = 3; // 竞技场级别
+  optional int32  score = 4; // 竞技场分数
+  optional int32  rank = 5;  // 竞技场排名, 从1开始
+  optional int32  power = 6; // 牛逼值
+  optional int32  office_level = 7; 
+  optional int32  character_id = 8; 
+  optional string  office_name = 9;
+  optional int32  vip = 10;
+  optional _PlayerExtraInfo player_extra_info = 11;
+}
+
+message _ArenaSeason {
+  optional int32  season_id = 1;
+  repeated _ArenaTopPlayer top_players = 2;
+}
+
+message _ArenaOpponentPlayer {
+  optional int32  user_id = 1;
+  optional string player_name = 2; // 玩家名字
+  optional int32  arena_level = 3;   // 竞技场级别
+  optional int32  office_level = 4;  // 镖局等级
+  repeated _Expressman expressmen = 6;  // 上阵的镖师
+  optional _Carrier carrier = 7;        // 上阵的镖车
+  optional int32  power = 8;  // 上阵镖师及镖车的总战斗力
+  optional _PlayerExtraInfo player_extra_info = 9;
+}
+
+//message _ArenaOpponentRobot {
+// optional int32  arena_robot_id = 1;
+//}
+
+message _ArenaOpponent {
+  optional _ArenaOpponentType type = 1;
+  optional _ArenaOpponentPlayer player = 2;
+  // optional _ArenaOpponentRobot  robot = 3;
+}
+
+message _ArenaRobot {
+  optional int32  user_id = 1;
+  optional string player_name = 2; // 玩家名字
+  optional int32  arena_level = 3;   // 竞技场级别
+  optional int32  office_level = 4;  // 镖局等级
+  repeated _Expressman expressmen = 5;  // 上阵的镖师(匹配界面显示对手用)
+  optional _ExpressmenInfo  expressmen_info = 6; // 上阵的镖师及其情义镖师
+  optional _Carrier  carrier = 7;  // 镖车
+  optional int32   power = 8;  // 阵镖师及镖车的总战斗力
+  optional _PlayerExtraInfo player_extra_info = 9;
+  optional int32 character_id = 10;
+}
+
+message _ArenaShopGoods {
+  optional int32 goods_id = 1; // 物品ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _ArenaShopInfo {
+  repeated int32 goods_ids = 1;  // 客户端可以售出的货物
+  optional int32 refresh_time = 2;  // 下次刷新时间 (给客户端的为倒计时)
+  optional int32 refresh_absolute_time = 3; // 刷新绝对时间
+  optional int32 has_refresh_times = 4; //
+  repeated _ArenaShopGoods goods = 5;  // 客户端可以售出的货物增加字段
+}

@@ -1,0 +1,34 @@
+package lm;
+import "lm_base.proto";
+
+// -------------活动系统基本类型-----------
+message _ActivityMultiple {
+  optional int32 rate = 1; // 倍率
+  optional int32 cost_flag = 2; // 消耗的镖旗数
+  optional bool  is_open = 3; //倍率是否开启
+  optional int32 index = 4; // 位移索引
+}
+
+message _ActivityTask {
+  required int32 id = 1; 
+  optional int32 level = 2;  // 从1开始,数字越大难度越高
+  optional int32 star = 3;   // 战斗胜利星数
+}
+
+message _Activity {
+  optional int32 type = 1;   // 类型
+  optional int32 finish_count = 2;  // 完成次数
+  repeated _ActivityTask tasks =  4;  // 活动的任务
+}
+
+message _ActivityCount {
+  optional int32 remaining_count = 1; // 剩余的次数
+  // optional int32 buy_count = 2; // 已经购买的次数
+  optional int32 refresh_time = 3;  // 下次刷新倒计时(单位: 秒)
+}
+
+message _ActivityInfo {
+  repeated _Activity activities = 1;
+  optional _ActivityCount activity_count = 2; 
+  repeated _ActivityMultiple activity_multiple_info = 3; // 活动倍率
+}

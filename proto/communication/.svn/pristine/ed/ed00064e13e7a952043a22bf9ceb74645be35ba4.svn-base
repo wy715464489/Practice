@@ -1,0 +1,96 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+import "arena_base.proto";
+import "world_boss_base.proto";
+
+// 竞技场排名
+message _RankingArenaSeason {
+  optional int32 season_id = 1;
+  repeated _ArenaTopPlayer top_players = 2;
+}
+
+message _OfficePower {
+  optional int32  user_id = 1;
+  optional string player_name = 2;
+  optional int32  office_level = 3;
+  optional int32  character_id = 4; // 主角ID
+  optional int32  rank = 5; 
+  optional int32  power = 6; // 总牛逼值
+  optional string  office_name = 7;
+  optional int32  vip = 8;
+  optional _PlayerExtraInfo player_extra_info = 9;
+}
+
+// 镖局总战力
+message _RankingOfficePower {
+  repeated _OfficePower office_powers = 1;
+}
+
+message _ExpressmanPower {
+  optional int32  user_id = 1;
+  optional string player_name = 2;
+  optional int32  office_level = 3;
+  optional int32  character_id = 4; // 主角ID
+  optional int32  rank = 5; 
+  optional int32  power = 6; // 总牛逼值
+  optional string  office_name = 7;
+  optional int32  vip = 8;
+  optional _PlayerExtraInfo player_extra_info = 9;
+}
+
+// 镖师总战力
+message _RankingExpressmanPower {
+  repeated _ExpressmanPower expressman_powers = 1;
+}
+
+message _CarrierPower {
+  optional int32  user_id = 1;
+  optional string player_name = 2;
+  optional int32  office_level = 3;
+  optional int32  character_id = 4; // 主角ID
+  optional int32  rank = 5; 
+  optional int32  power = 6; // 总牛逼值
+  optional string  office_name = 7;
+  optional int32  vip = 8;
+  optional _PlayerExtraInfo player_extra_info = 9;
+}
+
+// 镖车总战力
+message _RankingCarrierPower {
+  repeated _CarrierPower carrier_powers = 1;
+}
+
+message _RankingUnion {
+  optional int32  union_id = 1;
+  optional string union_name = 2;
+  optional int32  level = 3;
+  optional int32  member_num = 4; // 
+  optional string  chairman_player_id = 5;  // 会长ID
+  optional string chairman_player_name = 6; //  会长名称
+  optional int32  rank = 7; 
+  optional int32 active_value = 8; // 三日活跃值
+}
+
+// 公会排行榜
+message _RankingUnionInfo {
+  repeated _RankingUnion ranking_unions = 1;
+}
+
+message _WorldBossScoreRankingNode {
+	optional int32 rank = 1;			// 排名
+	optional int32 user_id = 2;			// 玩家编号
+	optional int32 master_type = 3;		// 当家编号	
+	optional int32 level = 4;			// 玩家等级
+	optional string name = 5;			// 玩家名字
+	optional int32 vip_level = 6;		// 玩家vip等级      需求暂时被开掉
+	optional int32 score = 7;			// 玩家总积分
+  optional _PlayerExtraInfo player_extra_info = 8;
+}
+
+// 世界Boss积分排行榜
+message _RankingWorldBoss{
+  repeated _WorldBossScoreRankingNode score_ranking_list  = 1;   //  世界boss积分排行
+  optional int32 self_score = 2;    // 自己总积分
+}

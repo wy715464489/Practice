@@ -1,0 +1,18 @@
+package lm;
+import "lm_base.proto";
+import "chat_base.proto";
+
+// -------------聊天系统交互消息-----------
+// message: CHAT_ROOM_INFO
+message ChatRoomListRequest {
+  required int32 user_id = 1;
+}
+
+message ChatRoomListResponse {
+  required _ChatRoomInfo chat_room_info = 1;
+}
+
+// message: UNION_ROOM_CHANGE
+message UnionRoomChangeResponse {
+  required _ChatRoom chat_room = 1;
+}

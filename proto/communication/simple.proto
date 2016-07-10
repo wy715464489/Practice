@@ -1,0 +1,3 @@
+message Simple{
+    required int32 id = 1;
+}

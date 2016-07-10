@@ -1,0 +1,82 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_recruit_base.proto";
+import "expressmen_base.proto";
+import "mail_base.proto";
+
+// ------------镖师招募系统交互消息-----------
+// message: EXPRESSMEN_RECRUITMENT_INFO
+message ExpressmenRecruitmentInfoRequest {
+  required int32 user_id = 1;
+}
+
+message ExpressmenRecruitmentInfoResponse {
+  optional _ExpressmenRecruitmentInfo expressmen_recruitment_info = 1;
+}
+
+// message BUY_RECRUIT_PERMIT
+message BuyRecruitPermitRequest {
+  required int32 user_id = 1;
+  required int32 group_id = 2;  // 镖师组的ID
+  required _RecruitPermitType recruit_permit_type = 3;
+}
+
+message BuyRecruitPermitResponse {
+  optional _PlayerInfo player_info = 1;
+  optional _ExpressmenRecruitmentInfo expressmen_recruitment_info = 2;
+  optional _ErrorInfo error_info = 3;  // 镖师币不足
+  optional _MailInfo mail_info = 4;    // 购买许可证的奖励邮件(MAIL_PUSH增量)
+  optional int32 group_id = 5;  // 镖师组的ID
+  optional _RecruitPermitType recruit_permit_type = 6;
+}
+
+// message RECRUIT_EXPRESSMAN
+message RecruitExpressmanRequest {
+  required int32 user_id = 1;
+  required int32 group_id = 2;  // 镖师组的ID
+  required int32 expressman_id = 3;  // 镖师ID
+}
+
+message RecruitExpressmanResponse {
+  optional _PlayerInfo player_info = 1;
+  optional _ExpressmenRecruitmentInfo expressmen_recruitment_info = 2;
+  optional _ExpressmenInfo expressmen_info = 3; // 新购买的镖师
+  optional _ErrorInfo error_info = 4;  // 镖师币不足
+  optional _MailInfo mail_info = 5;    // 购买镖师的奖励邮件(MAIL_PUSH增量)
+  optional int32 group_id = 6;  // 镖师组的ID
+  optional int32 expressman_id = 7;  // 镖师ID
+}
+
+// message TOUGHEN_EXPRESSMAN
+message ToughenExpressmanRequest {
+  required int32 user_id = 1;
+  required int32 group_id = 2;  // 镖师组的ID
+  required _ToughenExpressmanType toughen_type = 3;  //历练类型
+}
+
+message ToughenExpressmanResponse {
+  optional _PlayerInfo player_info = 1;
+  optional int32 expressman_id = 2;  // 抽到的镖师ID
+  optional _ExpressmenInfo expressmen_info = 3; // 抽到的镖师碎片
+  optional _ErrorInfo error_info = 4;  // 资源不足
+  optional int32 debris_count = 5; // 碎片数
+  optional int32 multiple = 6; // 翻倍次数
+  optional _ToughenExpressmanType toughen_type = 7;  //历练类型  
+  optional _GoodsInfo goods_info = 8;  // 物品总量
+  optional _ToughenExpressmenInfo toughen_info = 9; // 历练信息
+}
+
+// message NOTICE
+message NoticeInfo {
+  optional string content = 1;  // 内容  
+}
+
+// message TOUGHEN_EXPRESSMAN_INFO
+message ToughenInfoRequest {
+  required int32 user_id = 1;
+}
+
+message ToughenInfoResponse {
+  optional _ToughenExpressmenInfo toughen_info = 1; // 历练信息
+}

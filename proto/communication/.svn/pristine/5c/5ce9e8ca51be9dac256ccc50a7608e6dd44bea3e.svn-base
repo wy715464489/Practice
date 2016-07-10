@@ -1,0 +1,73 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "arena_base.proto";
+
+// ------------竞技场系统交互消息--------------
+// message: ARENA_LIST
+message ArenaListRequest {
+  required int32 user_id = 1; 
+}
+
+message ArenaListResponse {
+  optional _ArenaInfo arena_info = 1;
+}
+
+// message: ARENA_MATCH_RECORD
+message ArenaMatchRecordRequest {
+  required int32 user_id = 1; 
+}
+
+message ArenaMatchRecordResponse {
+  repeated _ArenaMatchRecord arena_match_records = 1;  // 比赛记录信息
+}
+
+// message: ARENA_FIND_OPPONENT
+message ArenaFindOpponentRequest {
+  required int32 user_id = 1;   
+}
+
+message ArenaFindOpponentResponse {
+  optional int32  arena_match_id = 1;  // 比赛ID (防止客户端多次发送同一结果)
+  optional _ArenaOpponent arena_opponent = 2; 
+}
+
+// message: ARENA_ADVANCE
+message ArenaAdvanceResponse {
+}
+
+// message: ARENA_SHOP_INFO
+message ArenaShopInfoRequest {
+  required int32 user_id = 1;   
+}
+
+message ArenaShopInfoResponse {
+  optional _ArenaShopInfo arena_shop_info = 1;
+}
+
+// message: ARENA_SHOP_BUY
+message ArenaShopBuyRequest {
+  required int32 user_id = 1;   
+  required int32 id = 2;
+}
+
+message ArenaShopBuyResponse {
+  optional int32 id = 1;
+  optional _ArenaShopInfo arena_shop_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _GoodsInfo goods_info = 4;
+  optional _ErrorInfo error_info = 5;
+  optional _RewardInfo reward_info = 6; // 获得物品
+}
+
+// message: ARENA_SHOP_REFRESH
+message ArenaShopRefreshRequest {
+  required int32 user_id = 1;   
+  optional int32 target_refresh_times = 2;
+}
+
+message ArenaShopRefreshResponse {
+  optional _ArenaShopInfo arena_shop_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+}

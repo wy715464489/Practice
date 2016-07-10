@@ -1,0 +1,10 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ------------徽章系统交互消息--------------
+// 徽章信息
+message _BadgeInfo {
+  repeated int32 achievement_ids = 1; //成就 
+  optional int32 badge_id = 2;  // 当前徽章id
+}

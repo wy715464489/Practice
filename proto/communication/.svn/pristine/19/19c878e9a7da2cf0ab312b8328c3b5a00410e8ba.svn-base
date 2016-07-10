@@ -1,0 +1,15 @@
+package lm;
+import "lm_base.proto";
+import "guide_base.proto";
+
+// -------------新手引导系统交互消息-----------
+// message: SET_GUIDE_STEP
+message SetGuideStepRequest {
+  required int32  user_id = 1;
+  required string current_step_name = 2;
+}
+
+// message: GUIDE_LIST
+message GuideListResponse {
+  required _GuideInfo guide_info = 1;
+}

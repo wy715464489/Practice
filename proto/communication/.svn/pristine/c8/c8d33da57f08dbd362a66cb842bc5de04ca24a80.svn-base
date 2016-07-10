@@ -1,0 +1,36 @@
+package lm;
+import "lm_base.proto";
+import "mail_base.proto";
+
+// -------------邮件系统交互消息-----------------------
+// message: MAIL_LIST
+message MailListRequest {
+  required int32 user_id = 1;
+}
+
+message MailListResponse {
+  optional _MailInfo mail_info = 1;
+}
+
+// message: MAIL_READ
+message MailReadRequest {
+  required int32 user_id = 1;
+  required int32 mail_id = 2;
+}
+
+// message: MAIL_ATTACHMENT_RECEIVE
+message MailAttachmentReceiveRequest {
+  required int32 user_id = 1;
+  required int32 mail_id = 2;
+}
+
+message MailAttachmentReceiveResponse {
+  optional int32 mail_id = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo goods_info = 3;
+}
+
+// message: MAIL_PUSH
+message MailPushResponse {
+  optional _MailInfo mail_info = 1;  // 增量邮件
+}

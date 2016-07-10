@@ -1,0 +1,11 @@
+package lm;
+import "lm_base.proto";
+
+// --------------------厨房系统基本类型-------------------------
+
+message _KitchenInfo {
+  optional int32 remaining_time = 1;  // 还剩多少秒煮熟  
+  optional _GoodsInfo producing = 2;  // 正在煮的食物
+  optional _GoodsInfo  products = 3;  // 已经生产出的食物
+  optional int32 absolute_time = 4;   // 下次煮熟的绝对时间（1970后的时间戳）
+}

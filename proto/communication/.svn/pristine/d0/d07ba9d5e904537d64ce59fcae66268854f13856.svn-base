@@ -1,0 +1,32 @@
+package lm;
+import "lm_base.proto";
+
+// -------------每日签到系统基本类型--------------------
+message _SignedDailyInfo {
+  optional int32 signed_day = 1;  // 签约
+  optional int32 signed_day_idx = 2;  // 签约天数索引 [1-7], 0表示重置
+  optional int32 refresh_time = 3;   // 下次签约刷新时间
+  optional int32 month = 4;        // 第几月的签到,格式[1-12]
+  optional int32 year = 5;         // 年份，2015
+  optional bool vip_multiple = 6;  // 是否vip mu
+}
+
+message _DailySignInfo {
+  optional int32 current_day = 1;  // 今天是第几天[1-31]签到
+  optional bool has_signed = 2;    // 今天是否已签约
+  optional int32 refresh_time = 3; // 下次签约刷新时间
+  optional int32 current_month = 4;  // 今天是第几月,[1-12]
+  optional bool vip_multiple = 5;  // 是否vip多倍已经领过
+}
+
+// -------开服新手签到信息结构--------
+message _SignedOpenExpressInfo {
+  optional int32 signed_day = 1;  // 签约天数 
+  optional int32 signed_day_idx = 2; // 今天是第几天[1-30]签到, -1表示已经完成签到
+}
+
+message _OpenExpressSignInfo {
+  optional int32 current_day = 1;   // 今天是第几天[1-30]签到, -1表示已经完成签到
+  optional bool  has_signed = 2;    // 今天是否已签约
+  optional int32 refresh_time = 3;  // 下次签约刷新时间
+}

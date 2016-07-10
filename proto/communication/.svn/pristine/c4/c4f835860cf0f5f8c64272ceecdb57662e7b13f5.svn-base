@@ -1,0 +1,20 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// -------------折扣店系统基本类型-----------
+
+message _GoodsInSale {
+  required int32 goods_group_id = 1;       // 物品组ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true) 
+}
+
+message _Shop {
+  optional int32       refresh_time = 1;       // in seconds
+  optional _RefreshDay refresh_day = 2;
+  optional int32       refresh_hour = 3;    
+  repeated _GoodsInSale  normal_goods = 4;
+  repeated _GoodsInSale  sponsor_goods = 5;
+  optional int32		has_refresh_times = 6;  // 已经手动刷新的次数
+  optional int32 	   reset_time = 7;     // 重置时间（客户端不使用）
+}

@@ -1,0 +1,130 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "carrier_base.proto";
+
+// --------------镖车系统交互消息-------------------------
+// message: DEPLOY_CARRIER
+message DeployCarrierRequest {
+  required int32 user_id = 1;
+  required _CarrierWorkingInfo carrier_working_infos = 2;
+}
+
+message DeployCarrierResponse {
+  required _CarriersInfo carrier_info = 1; // 只返回镖车id
+}
+
+// message:  BUY_CARRIER
+message BuyCarrierRequest {
+  required int32 user_id = 1;
+  required int32 carrier_id = 2;
+}
+
+message BuyCarrierResponse {
+  optional _CarriersInfo carrier_info = 1; // 只返回购买镖车
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+}
+
+// message:STRENGTHEN_CARRIER
+message StrengthenCarrierRequest {
+  required int32 user_id = 1;
+  required int32 carrier_id = 2;
+  required _CarrierUp carrier_up_type = 3;
+  optional int32 level = 4;
+}
+
+message StrengthenCarrierResponse {
+  optional _CarriersInfo carrier_info = 1; // 只返回增量
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo  goods_info = 3;
+  optional _ErrorInfo  error_info = 4;
+}
+
+// message:REPAIR_CARRIER
+message RepairCarrierRequest {
+  required int32 user_id = 1;
+  required int32 carrier_id = 2;
+  required int32 goal_endurance = 3;	// 增加到的耐久值
+}
+
+message RepairCarrierResponse {
+  optional _CarriersInfo carrier_info = 1; // 只返回增量
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo  error_info = 4;
+  required int32 carrier_id = 5;
+}
+
+// 镖车配件
+// message: CARRIER_EQUIP_PART
+message CarrierEquipPartRequest {
+  required int32 user_id = 1;
+  optional int32 carrier_id = 2;
+  optional int32 carrier_part_id = 3;
+}
+
+// 装备回包，只有成功才回
+message CarrierEquipPartResponse {
+  required int32 user_id = 1;
+  optional _CarriersInfo carrier_info = 2;
+}
+
+// message: CARRIER_UN_EQUIP_PART
+message CarrierUnEquipPartRequest {
+  required int32 user_id = 1;
+  required int32 carrier_id = 2;
+  required int32 carrier_part_id = 3;
+}
+
+// 卸装回包，只有成功才回
+message CarrierUnEquipPartResponse {
+  required int32 user_id = 1;
+  optional _CarriersInfo carrier_info = 2;
+}
+
+// message: CARRIER_UNLOCK_PART
+message CarrierUnlockPartRequest {
+  required int32 user_id = 1;
+  required int32 carrier_part_id = 2;
+}
+
+message CarrierUnlockPartResponse {
+  required int32 user_id = 1;
+  optional _CarriersInfo carrier_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _ErrorInfo  error_info = 4;  // 错误信息，如镖旗不足
+  optional _GoodsInfo  goods_info = 5;  // 领取后物品更新
+}
+
+// message: CARRIER_LEVEL_UP_PART
+message CarrierLevelUpPartRequest {
+  required int32 user_id = 1;
+  required int32 carrier_part_id = 2;
+  required int32 tar_level = 3;
+}
+
+message CarrierLevelUpPartResponse {
+  required int32 user_id = 1;
+  optional _CarriersInfo carrier_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _ErrorInfo  error_info = 4;  // 错误信息，如镖旗不足
+  optional _GoodsInfo  goods_info = 5;  // 领取后物品更新
+}
+
+// message: CARRIER_GRADE_UP_PART
+message CarrierGradeUpPartRequest {
+  required int32 user_id = 1;
+  required int32 carrier_part_id = 2;
+  required int32 tar_grade = 3;
+}
+
+message CarrierGradeUpPartResponse {
+  required int32 user_id = 1;
+  optional _CarriersInfo carrier_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _ErrorInfo  error_info = 4;  // 错误信息，如镖旗不足
+  optional _GoodsInfo  goods_info = 5;  // 领取后物品更新
+}
+
+
+

@@ -1,0 +1,344 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "union_base.proto";
+
+// --------------------公会系统交互消息----------------------
+
+// message: UNION_LIST
+message UnionListRequest {
+  required int32 user_id = 1;
+}
+
+message UnionListResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+// message: UNION_ERROR
+message UnionErrorResponse {
+  optional _UnionInfo union_info = 1;
+  optional _UnionErrorType union_error_type = 2;
+}
+
+// message: UNION_STATUS_DEALT
+message UnionStatusDealtRequest{
+  required int32 user_id = 1;
+}
+
+// --------- 普通成员操作 ----------
+
+// message: UNION_EXIT
+message UnionExitRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionExitResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+// message: UNION_SEARCH
+message UnionSearchRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2; // 工会id
+}
+
+message UnionSearchResponse {
+  repeated _UnionAbstract unions = 1; // 帮会列表
+}
+
+// 工会列表
+// message: UNION_UNIONS
+message UnionUnionsRequest {
+  required int32 user_id = 1;
+}
+
+message UnionUnionsResponse {
+  repeated _UnionAbstract unions = 1;
+  optional _UnionInfo union_info = 2;
+}
+
+// message: UNION_REFRESH_MEMBERS
+message UnionRefreshMembersRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionRefreshMembersResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+// message: UNION_REFRESH_PENDING_MEMBERS
+message UnionRefreshPendingMembersRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionRefreshPendingMembersResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+// message: UNION_REFRESH_ABSTRACT
+message UnionRefreshAbstractRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionRefreshAbstractResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+//message: UNION_APPLY_JOIN
+message UnionApplyJoinRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2;
+}
+
+message UnionApplyJoinResponse {
+  optional _UnionInfo union_info = 1;
+  optional _UnionApplyJoinStatus apply_join_status = 2;
+}
+
+//message: UNION_CANCEL_APPLY_JOIN
+message UnionCancelApplyJoinRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionCancelApplyJoinResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+//message: UNION_DONATE
+
+message UnionDonateRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2;
+}
+
+message UnionDonateResponse {
+  optional _UnionInfo union_info = 1;
+  optional _GoodsInfo goods_info = 2;
+}
+
+// message: UNION_WORSHIP
+message UnionWorshipRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2;
+  optional string player_id = 3; // 被膜拜的玩家
+  optional _UnionWorshipType worship_type = 4; // 膜拜方式
+}
+
+message UnionWorshipResponse {
+  optional _UnionInfo union_info = 1;
+  optional _PlayerInfo player_info = 2; // 赠送的镖旗和消耗的元宝或铜钱
+  optional _ErrorInfo error_info = 3;  // 元宝或铜钱不足
+  optional _RewardInfo reward_info = 4; // 奖励的镖旗
+}
+
+// message: UNION_COLLECT_WORSHIP_REWARD
+message UnionCollectWorshipRewardRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2;
+}
+
+message UnionCollectWorshipRewardResponse {
+  optional _UnionInfo union_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _RewardInfo reward_info = 3;
+}
+
+// message: UNION_MEMBER_DETAIL
+message UnionMemberDetailRequest {
+  required int32 user_id = 1;
+  optional int32 union_id = 2;
+  optional string player_id = 3;
+}
+
+message UnionMemberDetailResponse {
+  optional string player_id = 1;
+  optional _TeamInfo escort_team_info = 2;  // 押镖队伍
+  optional int32 user_id = 3;  // 被查看玩家id
+}
+
+// --------- 管理员专有操作 ----------
+
+// message: UNION_CREATE
+message UnionCreateRequest {
+  required int32 user_id = 1;
+  optional string union_name = 2;
+}
+
+message UnionCreateResponse {
+  optional _Status status = 1;
+  optional _UnionInfo union_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _ErrorInfo error_info = 4;
+}
+
+//message: UNION_CHANGE_NAME
+message UnionNameChangeRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string union_name = 3;
+}
+
+message UnionNameChangeResponse {
+  optional _Status status = 1;
+  optional _UnionInfo union_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _ErrorInfo error_info = 4;
+  optional bool is_operator = 5; // 是否为操作者本身(操作者为true,其它成员为false)
+}
+
+// message: UNION_CHANGE_ANNOUNCEMENT
+message UnionAnnouncementChangeRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string union_announcement = 3;
+}
+
+message UnionAnnouncementChangeResponse {
+  optional _Status status = 1;
+  optional _UnionInfo union_info = 2;
+  optional bool is_operator = 3; // 是否为操作者本身(操作者为true,其它成员为false)
+}
+
+//message: UNION_DISSOLUTION
+message UnionDissolutionRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+}
+
+message UnionDissolutionResponse {
+  optional _UnionInfo union_info = 1;
+  optional bool is_operator = 2; // 是否为操作者本身(操作者为true,其它成员为false)
+}
+
+//message: UNION_ASSIGN
+message UnionAssignRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string assign_player_id = 3;
+}
+
+message UnionAssignResponse {
+  optional _UnionInfo union_info = 1;
+  optional bool is_operator = 2; // 是否为操作者本身(原始会长为操作者true, 新会长为false)
+  optional _UnionAssignResult assign_result = 3; // 成功或错误枚举
+}
+
+//message: UNION_MANAGE_ELDERS
+message UnionManageEldersRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string elders_player_id = 3; // 被操作的长老的ID（提升或者撤销）
+  required _UnionMemberOptType opt_type = 4; // 操作动作
+}
+
+message UnionManageEldersResponse {
+  optional _UnionInfo union_info = 1;
+  optional _UnionMemberOptType opt_type = 2; // 操作动作
+  optional _UnionManageEldersResult manage_result = 3; // 成功或者错误枚举
+}
+
+//message: UNION_KICK_OUT_MEMBER
+message UnionKickOutMemberRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string out_player_id = 3;
+}
+
+// 需要给哪些人发这个消息，且被踢出人如果在副本中操作怎么办
+message UnionKickOutMemberResponse {
+  optional _UnionInfo union_info = 1;
+  required int32 out_player_id = 2;
+  optional bool is_operator = 3; // 是否为操作者本身(管理员为操作者true, 被踢的成员为false)
+}
+
+// message: UNION_DEAL_APPLY
+message UnionDealApplyRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required string deal_player_id = 3;
+  optional bool is_agree = 4; // 是否同意申请
+}
+
+message UnionDealApplyResponse {
+  optional _UnionInfo union_info = 1;
+  optional bool is_agree = 2; // 是否同意申请
+  optional bool is_operator = 3; // 是否为操作者本身(管理员为操作者true, 被处理申请的玩家为false)
+  optional _UnionDealApplyStatus deal_apply_status = 4; // 处理申请的状态
+}
+
+//message: UNION_SET_MIN_LEVEL
+message UnionSetMinLevelRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required int32 min_level = 3;
+}
+
+message UnionSetMinLevelResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+//message: UNION_SET_VERIFICATION
+message UnionSetVerificationRequest {
+  required int32 user_id = 1;
+  required int32 union_id = 2;
+  required bool is_auto_join = 3;
+}
+
+message UnionSetVerificationResponse {
+  optional _UnionInfo union_info = 1;
+}
+
+// message: UNION_SHOP_INFO
+message UnionShopInfoRequest {
+  required int32 user_id = 1;
+}
+
+message UnionShopInfoResponse {
+  optional _UnionShopInfo union_shop_info = 1;
+}
+
+// message: UNION_SHOP_BUY
+message UnionShopBuyRequest {
+  required int32 user_id = 1;
+  required int32 id = 2;
+}
+
+message UnionShopBuyResponse {
+  optional int32 id = 1;
+  optional _UnionShopInfo union_shop_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _GoodsInfo goods_info = 4;
+  optional _ErrorInfo error_info = 5;
+  optional _RewardInfo reward_info = 6; // 获得物品
+}
+
+// message: UNION_SHOP_REFRESH
+message UnionShopRefreshRequest {
+  required int32 user_id = 1;
+  optional int32 target_refresh_times = 2;
+}
+
+message UnionShopRefreshResponse {
+  optional _UnionShopInfo union_shop_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+}
+
+// message: UNION_COLLECT_ACTIVE_REWARD
+message UnionCollectActiveRewardRequest {
+  required int32 user_id = 1;
+  optional int32 achievement_id = 2; // 奖励ID
+}
+
+message UnionCollectActiveRewardResponse {
+  optional _UnionInfo union_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo goods_info = 3;
+  optional _RewardInfo reward_info = 4;
+  optional _ErrorInfo error_info = 5;
+}

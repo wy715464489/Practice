@@ -1,0 +1,13 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// -------------聊天系统基本类型-----------
+message _ChatRoom {
+  optional string room_id = 1;
+  required _ChatRoomType room_type = 2;
+}
+
+message _ChatRoomInfo {
+  repeated _ChatRoom chat_rooms = 1;
+}

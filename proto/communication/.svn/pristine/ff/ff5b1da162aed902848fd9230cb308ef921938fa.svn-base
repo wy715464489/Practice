@@ -1,0 +1,135 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "world_boss_base.proto";
+
+// --------------世界boss信息-------------------------
+
+// message: GET_ALL_WORLD_BOSS_INFO
+message GetAllWorldBossInfoRequest {
+  required int32 user_id = 1;
+}
+
+message GetAllWorldBossInfoResponse {
+  optional int32 cur_time = 1;					//	服务器当前时间
+  repeated WorldBossNode world_boss_list	= 2;	//	当前各世界boss状态
+}
+
+// message: GET_HARM_RANKING_TO_BOSS
+message GetHarmRankingToBossRequest {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;			// boss编号
+}
+
+message GetHarmRankingToBossResponse {
+  optional int32 boss_id = 1;			// boss编号
+  repeated WorldBossHarmRankingNode harm_ranking_list	= 2;	//	针对当前boss的伤害输出排行
+  optional int32 self_harm = 3;			// 自己总伤害
+}
+
+
+// message: REFRESH_WORLD_BOSS_CD
+message RefreshWorldBossCDRequest {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;			// boss编号
+  optional int32 real_flag = 3;		// 查询消耗还是真实刷新(0,查询消耗;1,真实刷新)
+}
+
+message RefreshWorldBossCDResponse {
+  optional int32 boss_id = 1;				// boss编号
+  optional int32 player_cd_time = 2;		// 挑战boss剩余cd时间
+  optional int32 real_flag = 3;			// 查询消耗还是真实刷新(0,查询消耗;1,真实刷新)
+  optional int32 cost = 4;				// 元宝消耗 	
+  optional _PlayerInfo player_info = 5;	//
+  optional _ErrorInfo  error_info = 6;	//
+}
+
+// message: WORLD_BOSS_START_BATTLE_PRE
+message WorldBossStartBattlePreRequest {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;			// boss编号
+}
+
+message WorldBossStartBattlePreResponse {
+  optional int32 boss_id = 1;						// boss编号
+  repeated WorldBossLuckyExpressman LuckyMen = 2;	// 镖师攻击倍率
+}
+
+// message: WORLD_BOSS_START_BATTLE
+message WorldBossStartBattleRequest {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;			// boss编号
+}
+
+message WorldBossStartBattleResponse {
+  optional int32 boss_id = 1;						// boss编号
+  optional int32 boss_total_hp = 2;				// boss总血量
+  optional int32 boss_cur_hp = 3;					// boss当前血量
+  optional int32 player_count = 4;				// 当前参与玩家
+  optional int32 random_key = 5;					// 本次战斗随机认证
+}
+
+// message: WORLD_BOSS_END_BATTLE
+message WorldBossEndBattleRequest {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;         // boss编号
+  optional int32 random_key = 3;      // 本次战斗随机认证
+  optional bool  is_success = 4;      // 战斗结果（0，输；1，赢）
+  optional int32 harm = 5;            // 战斗伤害值
+}
+
+message WorldBossEndBattleResponse {
+  required int32 user_id = 1;
+  optional int32 boss_id = 2;         // boss编号
+  optional bool is_success = 3;       // 战斗结果（0，输；1，赢）
+  optional int32 total_harm = 4;      // 伤害输出
+  repeated _Reward rewards = 5;   // 战斗奖励
+}
+
+// message: WORLD_BOSS_NOTIFY_BOSS_STAGE
+message NotifyWorldBossStageResponse {
+  optional int32 boss_id = 1;			// boss编号
+  optional _WorldBossStatus stage = 2;		// 1,未开放;2,开放;3,正常结束;4,boss被击杀
+}
+
+
+// -------------世界boss商店交互消息------------------------
+// message: WORLD_BOSS_SHOP_INFO
+message WorldBossShopInfoRequest {
+  required int32 user_id = 1;   
+}
+
+message WorldBossShopInfoResponse {
+  optional _WorldBossShopInfo world_boss_shop_info = 1;
+  optional int32 score = 2;
+}
+
+// message: WORLD_BOSS_SHOP_BUY
+message WorldBossShopBuyRequest {
+  required int32 user_id = 1;   
+  required int32 id = 2; //物品组ID
+}
+
+message WorldBossShopBuyResponse {
+  optional int32 id = 1;  //物品组ID
+  optional _WorldBossShopInfo world_boss_shop_info = 2;
+  optional _PlayerInfo player_info = 3;
+  optional _GoodsInfo goods_info = 4;
+  optional _ErrorInfo error_info = 5;
+  optional _RewardInfo reward_info = 6;
+  optional int32 score = 7;
+}
+
+// message: WORLD_BOSS_SHOP_REFRESH
+message WorldBossShopRefreshRequest {
+  required int32 user_id = 1;   
+  optional int32 target_refresh_times = 2;
+}
+
+message WorldBossShopRefreshResponse {
+  optional _WorldBossShopInfo world_boss_shop_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;
+  optional int32 score = 4;
+}
+

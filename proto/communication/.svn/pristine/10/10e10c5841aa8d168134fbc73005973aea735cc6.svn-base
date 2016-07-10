@@ -1,0 +1,51 @@
+package lm;
+import "lm_base.proto";
+import "daily_sign_base.proto";
+import "expressmen_base.proto";
+
+// -------------每日签到系统交互消息--------------------
+// message DAILY_SIGN_INFO
+message DailySignInfoRequest {
+  required int32 user_id = 1;
+}
+
+message DailySignInfoResponse {
+  optional _DailySignInfo daily_sign_info = 1; 
+}
+
+// message DAILY_SIGN
+message DailySignRequest {
+  required int32 user_id = 1;
+  required int32 current_day = 2;
+}
+
+message DailySignResponse {
+  optional _DailySignInfo daily_sign_info = 1; 
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo  goods_info = 3;
+  optional _RewardInfo reward_info = 4;
+  optional _ExpressmenInfo expressmen_info = 5; 
+}
+
+// message OPEN_EXPRESS_SIGN_INFO
+message OpenExpressSignInfoRequest {
+  required int32 user_id = 1;
+}
+
+message OpenExpressSignInfoResponse {
+  optional _OpenExpressSignInfo open_express_sign_info = 1; 
+}
+
+// message OPEN_EXPRESS_SIGN
+message OpenExpressSignRequest {
+  required int32 user_id = 1;
+  required int32 current_day = 2;
+}
+
+message OpenExpressSignResponse {
+  optional _OpenExpressSignInfo open_express_sign_info = 1; 
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo  goods_info = 3;
+  optional _ExpressmenInfo  expressmen_info = 4;
+  optional _RewardInfo reward_info = 5;
+}

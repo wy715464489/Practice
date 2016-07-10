@@ -1,0 +1,64 @@
+package lm;
+import "lm_base.proto";
+import "common_enum.proto";
+import "expressmen_base.proto";
+
+// 国战战斗记录
+message _CountryBattleRecord {
+  optional int32 commerce_id = 1;  // 商会id
+  optional bool attack = 2;  // 是否主动攻击
+  optional bool win = 3;     // 是否胜利
+  optional _PlayerInfo opponent_player_info = 4; // 对手信息
+  optional int32 attack_time = 5; // 进攻结束时间
+}
+
+// 商会信息
+message _CountryBattleCommerce {
+  optional int32 commerce_id = 1;
+  // 玩家等级，角色id，帮会id(名字)，服务器id (名字)
+  optional _PlayerInfo  player_info = 2;
+  // 单独给客户端计算，服务器不存此状态
+  optional _CountryBattleCommerceStatus status = 3;
+  repeated _Reward rewards = 4; 
+  optional _TeamInfo team_info = 5;
+  // 以下字段，只有服务器用
+  // 所有镖师，包括情谊镖师
+  optional _ExpressmenInfo expressmen_info = 10;
+  optional bool  captured_by_player = 11; // 是否被玩家占领
+  optional int32 capture_time = 12; // 占领时间
+  optional int32 produce_time = 13; // 结算时间 (机器人没奖励)
+
+  // 战斗信息，不会被玩家主动放弃/被动换世界影响
+  optional int32 be_attacked_time = 14; // 被攻打的时间
+  optional string attack_player_id = 15;  // 进攻的玩家id
+  optional _PlayerInfo attack_player_info = 16;  // 进攻玩家的信息
+}
+
+// 城市信息
+message _CountryBattleCity {
+  required int32 city_id = 1;
+  repeated _CountryBattleCommerce commerces = 2;
+  repeated _Reward reward_left = 3;
+  optional int32 refresh_time = 4;  // 剩余奖励重置时间
+}
+
+// 省信息
+message _CountryBattleProvince {
+  optional int32 province_id = 1;
+  repeated _CountryBattleCity cities = 2;
+}
+
+// 世界信息
+message _CountryBattleWorld {
+  optional int32 world_id = 1;
+  repeated _CountryBattleProvince provinces = 2;
+}
+
+message _CountryBattleInfo {
+  // 进攻可购买次数同劫镖，竞技场系统
+  optional int32 attack_count = 1; // 个人进攻剩余次数信息
+  repeated _CountryBattleRecord records = 2;  // 战报   
+  // 以下信息每次访问, gameserver从国战服务器读取
+  optional int32 commerce_id = 3;  // 已占领的commerce(0表示没占领)
+  optional _CountryBattleWorld world = 4;
+}

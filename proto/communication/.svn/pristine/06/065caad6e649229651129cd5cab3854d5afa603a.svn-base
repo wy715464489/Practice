@@ -1,0 +1,26 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ------运营活动基本类型--------------
+message _OperatingAchievement {
+  required int32 id = 1; 
+  optional int32 process = 2; // 进度 (criterial_count == -1, 则按criteria来)
+  optional int32 criteria = 3; // 标准
+  optional int32 criteria_count = 4; // 达到标准的次数
+  optional bool  reward_received = 5; // 奖励有没有被领过
+  optional _OperatingAchievementType type = 6; // 类型
+}
+
+message _OperatingActivity {
+  required int32 id = 1;
+  repeated _OperatingAchievement achievements = 2;
+  // 以下时间只是服务器用
+  optional int32 begin_time = 3;
+  optional int32 end_time = 4;
+}
+
+message _OperatingActivityInfo {
+  repeated _OperatingActivity activities = 1; 
+  optional int32 refresh_time = 2;  // 刷新倒计时(活动，每天凌晨5点更新)
+}

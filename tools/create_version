@@ -1,0 +1,14 @@
+#!/bin/bash
+echo "#include <string>" > ./version.h
+echo const std::string kVersion = \"$1\"\; >> ./version.h
+echo -n const std::string kSVNVersion =\"  >> ./version.h
+echo $(svn info|grep URL | grep -v Relative)\\n \\ >> ./version.h
+echo $(svn info|grep "Repository Root")\\n \\ >> ./version.h
+echo $(svn info|grep UUID)\\n \\ >> ./version.h
+echo $(svn info|grep Revision:)\\n \\ >> ./version.h
+echo $(svn info|grep "Node Kind")\\n \\ >> ./version.h
+echo $(svn info|grep "Schedule")\\n \\ >> ./version.h
+echo $(svn info|grep "Last Changed Author")\\n \\ >> ./version.h
+echo $(svn info|grep "Last Changed Rev")\\n \\ >> ./version.h
+echo -n $(svn info|grep "Last Changed Date")\\n  >> ./version.h
+echo "\";" >> ./version.h

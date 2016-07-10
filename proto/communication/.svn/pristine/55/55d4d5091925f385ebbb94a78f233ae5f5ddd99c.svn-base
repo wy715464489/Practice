@@ -1,0 +1,49 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// -----------------主线剧情基本类型--------------
+
+message _StoryTask {
+  optional int32 id = 1; // 任务ID
+  // 挑战和精英关卡有用
+  optional int32 star = 2;  // 几星完成
+  optional int32 remaining_count = 3; // 今日剩余次数
+  optional int32 reset_count = 4; // 已重置次数
+  // 以下字段为服务器用
+  optional int32 consumed_flag = 5;  // 当日消耗的镖旗 
+}
+
+message _StorySeasonReward {
+  optional _StorySeasonRewardType reward_type = 1; // 奖励类型（季度、年度）
+  optional int32 year_id = 2;    // 年id
+  optional int32 season_id = 3;  // 季度id
+  optional bool has_received = 4; // 是否领取
+  // season_id
+  optional int32 id = 5;   // reward id
+}
+
+message _StorySystemInfo {
+  optional int32 finished_story_task_id = 1;  // 如果从未完成过，则不设置该字段(和精英无关)
+  // 已通关的过渡和挑战关卡(打过但没通关的不发，客户端自行判断下一个可打的), 及已开放的精英
+  repeated _StoryTask story_tasks = 2;   
+  repeated _StorySeasonReward season_reward = 3; // 已经可以领取（已领取和未领取）奖励
+  optional int32 last_task_id = 4; // 上次扫荡或者挑战的关卡
+  optional int32 refresh_time = 5;  // 下次通关次数等重置时间
+  optional int32 elite_stars = 6;   // 精英关卡的总星数
+  optional int32 challenge_stars = 7;   // 挑战关卡的总星数
+  optional bool init_challenge_stars = 8; // 挑战关卡总星数初始化标示
+}
+
+message _StoryYearSummary {
+  optional int32 year = 1;			// 年
+  optional int32 reward_golds = 2; // 所获得的元宝
+  optional int32 reward_coins = 3; // 所获得的铜钱
+  optional int32 reward_tickets = 4; // 所获得的票券
+  repeated int32 open_consigner_ids = 5; // 所开启的委托人
+  optional int32 consume_flags = 6; // 消耗的镖旗
+}
+
+message _StoryYearSummaryInfo {
+  repeated _StoryYearSummary story_year_summary = 1;
+}

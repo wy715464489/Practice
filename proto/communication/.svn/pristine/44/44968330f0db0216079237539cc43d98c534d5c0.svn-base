@@ -1,0 +1,21 @@
+package lm;
+import "lm_base.proto";
+
+// ------------镖师招募系统基本类型-----------
+
+message _ExpressmenGroup {
+  required int32 group_id = 1;  // Group id
+  repeated int32 owned_expressman_ids = 2; // 已拥有的镖师ids
+  optional bool  owned_first_recruit_permit = 3;  // 已拥有第一个许可证 (用于购买银卡镖师)
+  optional bool  owned_second_recruit_permit = 4;  // 已拥有第二个许可证 (用于购买金卡镖师)
+}
+
+message _ExpressmenRecruitmentInfo {
+  repeated _ExpressmenGroup expressmen_groups = 1;  // 购买过镖师的镖师组
+}
+
+// -------历练镖师-------
+message _ToughenExpressmenInfo {
+  optional bool use_normal_toughen = 1; // 是否普通历练过
+	optional bool use_advance_toughen = 2; // 是否高级历练过
+}

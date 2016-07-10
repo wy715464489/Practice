@@ -1,0 +1,15 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ----------------------镖师系统基本类型--------------------
+message _ExpressmenWorkingList {
+  repeated int32 ids = 1;
+  optional _EscortType  type = 2;
+}
+
+message _ExpressmenInfo {  
+  repeated _Expressman expressmen = 1;
+  repeated _ExpressmenWorkingList  working_lists  = 2; // 上阵镖师id 
+  optional int32 working_count_max = 3; // 最大上阵镖师数
+}

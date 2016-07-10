@@ -1,0 +1,191 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+import "carrier_base.proto";
+import "story_base.proto";
+import "task_base.proto";
+import "activity_base.proto";
+import "arena_base.proto";
+import "plunder_base.proto";
+import "union_base.proto";
+import "country_battle_base.proto";
+
+// --------------------押镖系统基本类型----------------------
+message _LuckyExpressman {
+  required int32 expressman_id = 1;
+  optional int32 damage_ratio = 2;
+}
+
+message _NPCExtraInfo {
+  optional int64 total_hp = 1;
+  optional int64 hp = 2;
+  optional bool is_damage_counted = 3;
+  optional int32 level = 4;
+}
+
+message _DamageInfo {
+  required int32 id = 1;
+  required int64 damage = 2;
+}
+
+message _EscortExtraInfo {
+  optional int32 sub_id = 1;
+  optional int32 random_key = 2;
+  repeated _DamageInfo damage_info = 10;
+}
+
+message _NPC {
+  required int32 id = 1;
+  required float x = 2;  // 出生地点: x轴
+  required float y = 3;  // 出生地点: y轴
+  optional int32 spawn_type = 4; // 出生类型
+  optional _NPCExtraInfo npc_extra_info = 99;
+}
+
+message _PlayerTeam {
+  optional int32  server_id = 1;   // 哪个服
+  optional string player_id = 2;   // 玩家PlayerID
+  optional string player_name = 3;  // 玩家名字
+  optional string player_region = 4;  // 玩家所在地域
+  repeated int32  expressman_ids = 5;   // 劫镖的镖师ID
+  repeated _Expressman expressmen = 6;  // 劫镖镖师以及他们的情义镖师
+  optional int32  player_level = 7; // 玩家级别
+  optional _Carrier  carrier = 8;   // 上阵的镖车
+  optional _CarriersInfo carriers_info = 9; // 只包含镖车科技值，配件信息
+  optional _PlayerExtraInfo player_extra_info = 17;
+}
+
+message _TaskCombat {
+  required int32 id = 1;  // 战斗组ID
+  required int32 position = 2; // 地图中的位置
+  repeated _NPC  npcs = 3;
+  optional _PlayerTeam plunder_team = 4;
+  optional int32 type = 5;  // 类型
+}
+
+message _ArenaCombat {
+  required int32 position = 1; // 地图中的位置
+  optional _PlayerTeam arena_team = 2;  // 竞技场对手
+  optional int32 arena_robot_id = 3;  // 出动机器人
+}
+
+message _Combat {
+  optional _EscortType type = 1;
+  optional _TaskCombat  task_combat = 2; 
+  optional _ArenaCombat arena_combat = 3; 
+}
+
+message _Adventure {
+  required int32 id = 1;
+  required int32 position = 2;
+  repeated _NPC  npcs = 3;
+}
+
+// 次数上限 [1, 5]
+message _DailyTaskCombatInfo {
+  optional int32 use_hewu = 1;               // 使用合吾
+  optional int32 defuse_mine = 2;            // 拆除地雷
+  optional int32 destruct_rolling_stone = 3; // 破坏滚石
+  optional int32 cast_carrier_skill = 4;     // 释放镖车技能
+  optional int32 defuse_gear_mine = 5;       // 消灭蜘蛛雷
+  optional int32 hunt_animal = 6;            // 狩猎小动物
+  optional int32 kill_robber = 7;            // 消灭山贼
+  optional int32 destruct_fence = 8;         // 破坏栅栏
+  optional int32 mining_ore = 9;             // 开采矿石
+  optional int32 help_friend = 10;           // 情谊镖师援护
+}
+
+message _TaskResult {
+  optional _PlayerInfo    player_info = 1;       // 金钱和声望奖励
+  optional _GoodsInfo     goods_info = 2;        // 物品奖励
+  optional _TaskInfo      task_info = 3;         // 更新任务列表
+  // optional _ExpressmenInfo expressmen_info = 4;  // 最大上阵数 (镖局可能会升级)
+  optional _CarriersInfo   carrier_info = 5;     // 耐久度
+  optional _ErrorInfo      error_info = 6;       // 镖旗可能不够
+  optional _ConsignerInfo  consigner_info = 7;   // 只有该任务的委托人
+  optional _RewardInfo     reward_info = 8;      // 奖励信息
+  optional int32           reward_times = 9;      // 拒单奖励倍数
+  optional _RewardInfo     extra_reward_info = 10; // 额外的奖励信息(击败劫镖)
+}
+
+message _ActivityResult {
+  optional _PlayerInfo    player_info = 1; // 金钱和声望奖励
+  optional _GoodsInfo     goods_info = 2;  // 物品奖励
+  // optional _ExpressmenInfo expressmen_info = 4;  // 最大上阵数 (镖局可能会升级)
+  optional _CarriersInfo   carrier_info = 5; // 耐久度
+  optional _ErrorInfo      error_info = 6;   // 镖旗可能不够
+  optional _ActivityInfo   activity_info = 7; // 活动信息
+  optional _RewardInfo     reward_info = 8;  // 奖励信息
+  optional int32           reward_times = 9; // 转盘奖励倍数
+}
+
+message _ArenaResult {
+  optional _ArenaInfo  arena_info = 1;   // 更新竞技场信息
+  optional _PlayerInfo player_info = 2;  // 金钱奖励 
+  optional _GoodsInfo  goods_info = 3;   // 物品奖励
+  optional _RewardInfo reward_info = 4;  // 奖励信息
+}
+
+message _PlunderAssignResult {
+  optional _PlunderInfo  plunder_info = 1;   // 更新劫镖系统信息
+  optional _PlayerInfo player_info = 2;  // 金钱奖励 
+  optional _GoodsInfo  goods_info = 3;   // 物品奖励
+  optional _RewardInfo reward_info = 4;  // 奖励信息
+}
+
+message _StoryResult {
+  optional _PlayerInfo       player_info = 1;       // 金钱和声望奖励
+  optional _GoodsInfo        goods_info = 2;        // 物品奖励
+  optional _CarriersInfo     carrier_info = 4;     // 耐久度
+  optional _ErrorInfo        error_info = 5;       // 镖旗可能不够
+  repeated _StoryTask        story_tasks = 3;      // 变化的主线任务
+  repeated _StorySeasonReward season_rewards = 6;  // 增量的新的可以领的季度和年度奖励
+  optional int32 finished_story_task_id = 7;  // 如果从未完成过，则不设置该字段(和精英无关)
+  optional _RewardInfo     reward_info = 8;  // 奖励信息
+  optional _ExpressmenInfo   expressmen_info = 9;
+  optional int32 expressman_experience = 10; // 镖师经验
+}
+
+message _TradeRoadResult {
+  optional _PlayerInfo       player_info = 1;       // 金钱和声望奖励
+  optional _CarriersInfo     carrier_info = 2;     // 耐久度
+  optional _GoodsInfo        goods_info = 3;        // 物品奖励
+  optional _RewardInfo     reward_info = 4;  // 奖励信息  
+}
+
+message _UnionTrapResult {
+  optional _PlayerInfo       player_info = 1;       // 金钱和声望奖励
+  optional _CarriersInfo     carrier_info = 2;     // 耐久度
+  optional _GoodsInfo        goods_info = 3;        // 物品奖励
+  optional _RewardInfo     reward_info = 4;  // 奖励信息  
+  optional _UnionInfo      union_info = 5; // 公会个人相关数据
+  optional int32					 extra_reward_percent = 6; // 额外奖励比例 
+}
+
+message _WorldBossResult {
+  // 彦铭，俊彦按实际情况添加字段
+  optional _PlayerInfo       player_info = 1;       // 金钱和声望奖励
+  optional _GoodsInfo        goods_info = 2;        // 物品奖励
+  optional _RewardInfo       reward_info = 3;       // 奖励信息  
+}
+
+message _CountryBattleResult {
+  optional _PlayerInfo       player_info = 1;       // 金钱和声望奖励
+  optional _GoodsInfo        goods_info = 2;        // 物品奖励
+  optional _RewardInfo       reward_info = 3;       // 奖励信息  
+  optional _CountryBattleInfo country_battle_info = 4;  // 更新国战相关信息
+}
+
+message _EscortAssistPlayer {
+  repeated _Expressman expressmen = 1;
+  repeated int32 expressmen_ids = 2;    // 上阵使用的镖师id
+}
+
+message _EscortVerificationInfo {
+  optional int32 skill_casted_count = 1;
+}
+
+message _EscortVerificationResult {
+  optional bool result = 1;
+}

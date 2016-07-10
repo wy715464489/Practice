@@ -1,0 +1,8 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+message _GrowthFundInfo {
+  optional bool has_bought = 1; 
+  repeated int32 collected_levels = 2;
+}

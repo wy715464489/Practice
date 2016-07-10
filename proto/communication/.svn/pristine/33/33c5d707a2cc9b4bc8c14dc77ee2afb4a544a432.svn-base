@@ -1,0 +1,6 @@
+import "test_nested.proto";
+
+message MultiNested {
+    required int32 id = 1;
+    optional Nested nested = 2;
+}

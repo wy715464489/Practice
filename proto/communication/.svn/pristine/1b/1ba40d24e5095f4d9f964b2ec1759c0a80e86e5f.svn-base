@@ -1,0 +1,47 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ----------------------随机商店系统基本类型------------------
+message _RandomShopGoods {
+  optional int32 goods_id = 1; // 物品ID
+  optional bool is_free = 2; // 是否免费 
+  optional bool has_sold = 3; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _RandomShopDiscount {
+  optional int32 discount_id = 1; // 折扣ID
+  optional int32 pass_times = 2; // 经过的次数
+  optional bool  is_open = 3; //倍率是否开启
+  optional int32 index = 4; // 位移索引
+}
+
+message _RandomShopDiscountInfo {
+  repeated _RandomShopDiscount random_shop_discounts = 1; // 折扣信息
+  optional int32 last_update_time = 2; // 上一次出现的日期(用以计算没有刷新出商店时用缺省值恢复折扣CD)
+}
+
+message _RandomShopRefresh {
+  optional int32 expect_appear_time = 1; // 期望出现的时间点
+  optional int32 real_appear_time = 2; // 时间出现的时间点（服务器设置一个容忍过期时间）
+  optional int32 endure_overdue_time = 3; // 容忍的过期时间
+  optional int32 duration_time = 4; // 持续的时间 
+  optional _RandomShopRefreshStatus status = 5; // 状态
+}
+
+message _RandomShopRefreshInfo {
+  repeated _RandomShopRefresh random_shop_refreshs = 1; // 每日随机商人信息
+}
+
+// 随机商店信息
+message _RandomShopInfo {
+  optional bool is_open = 1; // 是否开启
+  optional int32 duration_time = 2; // 如果开启了，离商店关闭的倒计时（秒s）
+  repeated _RandomShopGoods goods = 3;  // 此次售货的货物
+  optional int32 discount = 4; // 折扣（8折 ，7折等）
+  optional int32 refresh_time = 5;  // 刷新时间 (给客户端的为倒计时)
+
+  // 以下字段客户端不使用
+  optional _RandomShopDiscountInfo random_shop_discount_info = 6; // 折扣信息
+  optional _RandomShopRefreshInfo random_shop_refresh_info = 7; // 每日商店的信息
+}

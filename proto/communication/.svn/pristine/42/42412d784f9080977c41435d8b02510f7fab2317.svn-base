@@ -1,0 +1,45 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ----------------------任务系统基本类型------------------
+
+// 任务委派状态
+message _TaskAssignStatus {
+  optional int32  end_time = 1; // 委派结束时间(0表示结束)
+  optional string plunder_player_name = 3;  // 劫镖者名字(存在则被劫镖了, ^-^)
+}
+
+message _Task {
+  required int32 id = 1;  // 任务ID
+  optional _TaskDenyResult deny_result = 2; // 拒绝任务的结果
+  optional bool read = 3;   // 玩家是否打开过任务详情
+  optional int32 generated_time = 4; // 任务生成时间 
+  optional _TaskAssignStatus assign_status = 5; // 委派信息
+}
+
+message _TaskInfo {
+  repeated _Task tasks = 1;
+  optional int32 deny_count_refresh_time = 2;  // 拒单次数更新时间 (倒计时:单位秒)
+  optional int32 deny_count = 3;   // 拒单次数
+  optional int32 refresh_time = 4;  // 下次刷新时间 
+  optional int32 remaining_gold_task_count = 5; // 每天剩余的金镖单次数
+  optional int32 remaining_special_consigner_task_count = 6; // 每天剩余的特殊委托镖单次数
+}
+
+// 委托人的镖单
+message _Order {
+  required int32 task_id = 1; // 任务ID
+  required int32 star = 2;    // 任务完成的星星数据[0, 3], 0表示未通过
+}
+
+message _Consigner {
+  required int32 id = 1;  // 委托人ID
+  repeated _Order orders = 2;  // 委托人开启的镖单
+  required int32 star_count = 3;  // 获得的星星总数 
+  repeated int32 received_reward_ids = 4;  // 已领的奖励ID [1, 3]
+}
+
+message _ConsignerInfo {
+  repeated _Consigner consigners = 1;
+}

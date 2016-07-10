@@ -1,0 +1,40 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+message _SoulBox{
+	optional int32 type = 1;
+	optional bool has_open = 2;
+	optional int32 open_times = 3;
+	optional bool box_open_flag = 4;  //是否有符合开启宝箱条件的镖师武魂
+	optional int32 cost_expressman_soul_id = 5;  //需要消耗的镖师武魂id
+	optional int32 cost_expressman_soul_num = 6;  //需要消耗的镖师武魂数量
+}
+
+message _SoulBoxesInfo {
+	repeated _SoulBox boxes = 1;
+}
+
+message _SoulShopGoods {
+  optional int32 id = 1; // 组id
+  optional int32 goods_id = 2; // 物品ID
+  optional int32 goods_num = 3; // 卖出的数量
+  optional bool has_sold = 4; // 是否已被卖出(未卖出是false，已买出是true)
+  optional int32 cost_expressman_soul_id = 5;
+  optional int32 cost_expressman_soul_num = 6;
+}
+
+message _SoulShopInfo {
+  optional bool soul_shop_open_flag = 1;
+  repeated _SoulShopGoods goods = 2;  // 客户端可以售出的货物字段
+}
+
+message _SoulsRecycleInfo {
+	optional bool system_open_flag = 1;  //是否符合武魂回收系统的开启条件
+	optional _SoulBoxesInfo soul_boxes_info = 2;  //武魂宝箱信息
+	optional _SoulShopInfo soul_shop_info = 3; //武魂商店信息
+	optional int32 refresh_time = 4;  // 下次刷新时间 (给客户端的为倒计时)
+    optional int32 refresh_absolute_time = 5; // 刷新绝对时间
+    optional int32 has_refresh_times = 6; //
+}
+

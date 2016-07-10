@@ -1,0 +1,6 @@
+import "simple.proto";
+
+message Nested{
+    required int32 id = 1;
+    repeated Simple simple = 2;
+}

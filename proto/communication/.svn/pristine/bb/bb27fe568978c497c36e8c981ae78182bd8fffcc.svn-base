@@ -1,0 +1,22 @@
+package lm;
+import "lm_base.proto";
+import "kitchen_base.proto";
+
+// --------------------厨房系统交互消息-------------------------
+
+// message: KITCHEN_LIST
+message KitchenListRequest {
+  required int32 user_id = 1;
+}
+message KitchenListResponse {
+  required _KitchenInfo kitchen_info = 1;
+}
+
+// message: KITCHEN_COLLECT_ALL_FOOD
+message KitchenCollectAllFoodRequest {
+  required int32 user_id = 1;
+}
+message KitchenCollectAllFoodResponse {
+  required _KitchenInfo kitchen_info = 1;
+  optional _GoodsInfo   goods_info   = 2;
+}

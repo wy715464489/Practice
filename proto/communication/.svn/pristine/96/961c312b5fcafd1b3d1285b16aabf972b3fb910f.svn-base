@@ -1,0 +1,30 @@
+package lm;
+import "lm_base.proto";
+import "common_enum.proto";
+
+// 在线等状态，暂时不实现
+message _OnlineStauts {
+	optional int32 last_login = 1; // 最近登录时间
+}
+
+message _FriendPlayer {
+  optional string player_id = 1; // 玩家ID
+  optional int32 user_id = 2;   // 玩家UID
+  optional int32  server_id = 3; // 服务器ID
+  optional string player_name = 4; // 玩家名称
+  optional int32 level = 5; // 等级
+  optional int32 character_id = 6; // 主角镖师ID
+  optional _OnlineStauts online_status = 7; // 在线状态
+  optional _TeamInfo team_info = 8; // 押镖上阵队伍
+  optional _PlayerExtraInfo player_extra_info = 9; //玩家额外信息
+}
+
+message _FriendPlayerInfo {
+  repeated _FriendPlayer friend_players = 1; // 所有关注的玩家
+}
+
+message _FriendInfo {
+  optional _FriendPlayerInfo friend_list = 1; // 关注的玩家
+  optional _FriendPlayerInfo black_list = 2;  // 黑名单玩家
+  repeated string black_by_other = 3; //被其他玩家拉黑
+}

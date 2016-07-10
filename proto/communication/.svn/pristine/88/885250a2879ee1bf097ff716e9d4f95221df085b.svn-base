@@ -1,0 +1,153 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "carrier_base.proto";
+
+// ----------------------------镖局入侵系统基本类型-------------------------
+
+// -----------防守信息-----------
+message _DefenseFortInfo {
+  optional int32 route_id = 1;
+  optional int32 index = 2;
+  repeated int32 expressman_ids = 3;
+  optional int32 carrier_id = 4;
+}
+
+message _OfficeInvadeDefenseInfo {
+  repeated _DefenseFortInfo  defense_fort_infos = 1;  // 关卡驻防信息 
+  // 默认第三条route的要塞是主仓库
+  optional int32 main_storage_id = 2; // == route_id [1,2,3]
+}
+
+// -----------进攻信息-----------
+
+message _Grid {
+  optional int32 route_id = 1;
+  optional int32 index = 2;  // 每条路线的第一个格子为1,然后依次递增
+  optional _GridEventType  event = 3; // 事件
+  optional bool  event_inactive = 4;  // 事件是否失效
+}
+
+message _OfficeInvadeCommand {
+  optional _OfficeInvadeCommand command = 1; 
+  optional _Grid   grid = 2;
+}
+
+message _DiceInfo {
+  optional int32 remaining_dice = 1;  // 剩余的骰子数 
+  optional int32 remaining_steps = 2;    // 在当前位置，玩家可以前进的格子数
+}
+
+message _StorageInfo {
+  optional bool is_main = 1;
+  optional _RewardInfo reward_info = 2;
+}
+
+message _FortInfo {
+  optional int32 original_power = 1;
+  optional int32 remaining_power = 2;
+  repeated _Expressman expressmen = 3;
+  optional int32 route_id = 4;
+  optional int32 index = 5;
+  optional _Carrier carrier  = 6;
+  optional _StorageInfo storage_info = 7;  // 预先把镖师币，技能书分配好
+}
+
+message _OfficeInvadeAttackInfo {
+  optional _DiceInfo dice_info = 1;
+  optional _Grid  current_grid = 2; // 当前位置的表格
+  repeated _Grid route = 3;
+  optional int32  current_grid_id = 4; // 当前位置(表格里的id)
+  repeated _FortInfo  fort_infos = 5;  // 关卡驻防信息 
+  repeated int32 used_expressman_ids = 6; // 已使用过的镖师
+  optional int32 power_coefficient = 12; // 进攻方战斗力系数, 默认值:100 表示100%
+
+  // 以下为服务器用
+  optional int32 reputation = 13; // 结束后奖励的声望
+  optional  _OfficeInvadeType invade_type = 14; // 入侵类型
+  optional _RewardInfo reward_info = 15; // 记录已获得的奖励的信息
+
+  // 对方玩家的信息
+  optional string player_id = 7;
+  optional string player_name = 8;
+  optional int32  server_id = 9;
+  optional int32  character_id = 10;
+  optional int32  office_level = 11;
+  optional _PlayerExtraInfo player_extra_info = 16;
+}
+
+message _GridTrapEventDecreasePower {
+  optional int32  power_coefficient = 1;   // 当前总的
+  optional int32  changed_power_coefficient = 2; // 本次变化的(正数)
+}
+
+message _GridRandEventForward {
+  optional _Grid  target_grid = 1;    // 前进的格子
+  optional _DiceInfo dice_info = 2;   // 前进中遇到了要塞阻挡
+  optional int32  forward_step = 3;   // 前进几步
+}
+
+message _GridRandEventBackward {
+  optional _Grid  target_grid = 1;    //  后退的格子
+  optional int32  backward_step = 2;  //  后退几步
+}
+
+message _GridRandEventIncreasePower {
+  optional int32  power_coefficient = 1;   // 当前总的
+  optional int32  changed_power_coefficient = 2; // 本次变化的(正数)
+}
+
+message _OfficeInvadeProduceInfo {
+  optional int32 level = 1; // 废弃, 两个级别分开计算 
+  optional int32 expressman_coin = 2;
+  optional int32 expressman_coin_produce_time = 3; // 生产下一个的倒计时, 单位: 秒
+  optional int32 skill_book = 4;
+  optional int32 skill_book_produce_time = 5;  // 生产下一个的倒计时, 单位: 秒
+  optional int32 expressman_coin_level = 6  [default = 1];
+  optional int32 skill_book_level = 7  [default = 1];
+}
+
+message _OfficeInvadeDefenseRecord {
+  optional string player_id = 1;
+  optional string player_name = 2;
+  optional int32  office_level = 3;
+  optional int32  server_id = 4;
+  optional int32  invade_time = 5; // 入侵结束时间 (服务器时间)
+  optional _RewardInfo lost_info = 6; // 被掠夺的物品
+  optional _OfficeInvadeType invade_type = 7;
+  optional _PlayerExtraInfo player_extra_info = 8;
+}
+
+message _OfficeInvadeDefenseRecordInfo {
+  repeated _OfficeInvadeDefenseRecord defense_records = 1;
+}
+
+// ------------总的信息----------
+message _OfficeInvadeInfo {
+  optional _OfficeInvadeAttackInfo  attack_info = 1;
+  optional _OfficeInvadeDefenseInfo defense_info = 2;
+  optional _OfficeInvadeProduceInfo produce_info = 3;
+  optional  int32 remain_attack_count = 4;// 今日剩余可进攻次数
+  optional  int32 refresh_time = 5;       // 每天刷新(被攻击次数)倒计时, 单位: 秒
+  optional  bool is_being_attacked = 6;  // 是否正在被攻击
+  optional  bool is_attacking = 7;        // 正在攻击别人
+  optional  int32 being_attacked_timeout = 8;  // 被攻击超时倒计时, 单位: 秒
+  optional  int32 attacking_timeout = 9;        // 攻击超时时间倒计时, 单位: 秒
+  optional  int32 searchable_time = 10;         // 可进行搜索的倒计时, 0表示可以执行搜索, 单位: 秒
+  optional  int32 attacked_count = 11;          // 已进攻的次数(包括复仇)
+  // 以下参数只有服务器用
+  optional  int32 be_attacked_count = 20;       // 剩余的可被攻击的次数
+  optional  int32 be_searched_able_time = 21;   // 可被搜索的时间
+  optional  int32 be_attacked_able_time = 22;   // 可被攻击的时间
+  optional  _OfficeInvadeProduceInfo mirror_produce_info = 23; // 被搜索时的生产镜像
+  repeated  int32  be_captured_routes = 24;  // 被攻破的路线
+  optional  _OfficeInvadeType be_invaded_type = 25; // 被入侵的类型
+  optional  string invade_player_id = 26;   // 入侵我们的玩家ID (搜索和进攻时记录)
+  optional  string invade_player_name = 27;   // 入侵我们的玩家名字
+  optional  int32 invade_player_office_level = 28;   // 入侵我们的镖局等级
+  optional  int32 invade_player_server_id = 29;   // 入侵我们的服务器ID
+  optional _PlayerExtraInfo invade_player_extra_info = 30;
+}
+
+// --TODO(Weitong): 分离出来,放入db作为一个单独字段，影响效率
+// optional _OfficeInvadeDefenseRecordInfo defense_record_info = 26; //

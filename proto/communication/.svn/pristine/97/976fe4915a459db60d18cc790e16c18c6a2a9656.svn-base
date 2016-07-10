@@ -1,0 +1,85 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "carrier_base.proto";
+
+// -------------劫镖系统基本类型-----------
+
+message _Position {
+  optional int32 map_idx = 1; // 第几张地图, 从1开始
+  optional int32 x_pos = 2;   // x轴的位置
+}
+
+message _EscortTeam {
+  optional int32  server_id = 1;   // 哪个服
+  optional string player_id = 2;   // 玩家ID
+  optional int32  task_id  =  3;   // 任务ID
+  optional string player_name = 4; 
+  optional string player_region = 5;  // 玩家所在地域
+  optional int32  player_level = 6;  // 玩家级别
+  optional int32  time_past = 7;   // 押镖已进行的时间
+  optional int32  begin_time = 8;  // 押镖开始时间
+  repeated _Position npc_positions = 9; //  战斗npc的位置
+  optional int32  map_count = 10;       //  战斗会有几张地图
+  optional bool   in_person = 11;       //  是否玩家亲自押镖
+  repeated int32  expressman_ids = 12;   // 劫镖的镖师ID
+  repeated _Expressman expressmen = 13;  // 劫镖镖师以及他们的情义镖师
+  optional _Carrier  carrier = 14;   // 上阵的镖车
+  optional int32  task_quality = 15; // 镖单: 铜，银，金 
+  optional int32  task_type = 16; // 任务类型: 普通/特殊委托人
+  // optional int32  index = 15;  // 在查询返回的index中的位置
+  optional _PlayerExtraInfo player_extra_info = 17;
+  optional _CarriersInfo  carriers_info = 18;  // 镖车科技值，配件信息
+}
+
+message _PlunderAssignedTask {
+  required int32  plunder_id = 1; // 任务ID(服务器生成，保证唯一)
+  optional _EscortTeam escort_team = 2;  // 押镖队伍
+  optional _PlunderResult result = 3; // 劫镖结果
+  optional int32  end_time = 4;  // 结束时间 (发给客户端的是倒计时, 单位:秒)
+  optional _PlunderStatus status = 5;  // 劫镖方状态
+  optional int32  pos_index = 6;  // 地图位置
+  optional bool is_enemy = 7;  // 是否为仇人
+}
+
+message _PlunderInfo {
+  optional int32 plunder_count = 1;      // 可劫镖次数 
+  //optional _PlunderStatus  status  = 2;  // 劫镖方状态
+  repeated _PlunderAssignedTask assigned_tasks = 3; // 劫镖任务状态及结果
+  optional int32 refresh_time = 4;  // 自动更新时间 (给客户端倒计时, 单位:秒)
+  optional int32 plunder_gold_task_count = 5;  // 每天可劫的金镖单次数
+  optional int32 plunder_special_consigner_task_count = 6;  // 每天可劫的特殊委托人镖单次数
+}
+
+// 被劫镖的信息
+message _PlunderRecord {
+  optional int32 id = 1;  // 记录ID
+  optional string player_id = 2;
+  optional string player_name = 3;
+  optional int32  office_level = 4;
+  optional int32  plunder_time = 5;    // 发生时间 
+  optional string  player_region = 6;          // 对方区域
+  optional int32  server_id = 7;       // 服务器ID
+  optional int32  task_id = 8;          // 任务id(用于计算奖励)
+  optional _TeamInfo team_info = 9;    // 对手上阵信息
+  optional _PlunderRecordStatus status = 10; 
+  optional _PlayerExtraInfo player_extra_info = 11;
+}
+
+message _PlunderRecordInfo {
+  repeated _PlunderRecord records = 1;
+  optional int32 refresh_time = 2;  // 自动更新时间 (给客户端倒计时, 单位:秒)
+}
+
+message _PlunderShopGoods {
+  optional int32 goods_id = 1; // 物品ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _PlunderShopInfo {
+  repeated int32 goods_ids = 1;  // 客户端可以售出的货物id
+  optional int32 refresh_time = 2;  // 下次刷新时间 (给客户端的为倒计时)
+  optional int32 refresh_absolute_time = 3; // 刷新绝对时间
+  optional int32 has_refresh_times = 4; // 
+  repeated _PlunderShopGoods goods = 5;  // 客户端可以售出的货物增加字段
+}

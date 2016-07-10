@@ -1,0 +1,1077 @@
+package lm;
+
+// 所有枚举变量定义在这个文件里
+// 全局的在开头
+// 各个系统的放在对应系统的段里
+
+// ---------------------------全局---------------------------------
+// ----------玩家资源分类-------------------
+enum _AssetType {
+ ASSET_COIN = 1;
+ ASSET_GOLD = 2;
+ ASSET_FLAG = 3;
+ ASSET_REPUTATION = 4;
+ ASSET_GOODS = 5;
+ ASSET_EXPRESSMAN = 6;
+ ASSET_EXPRESSMAN_COIN = 7; // 镖师币
+ ASSET_ARENA_COIN = 8;      // 竞技场币
+ ASSET_SKILL_BOOK = 9;      // 技能书
+ ASSET_ARENA_MATCH = 10;    // 竞技场匹配次数
+ ASSET_TICKET = 11;         // 票券(采购券)
+ ASSET_PLUNDER = 12;        // 劫镖次数
+ ASSET_ACITIVTY = 13;       // 活动次数
+ ASSET_OFFICE_INVADE = 14;  // 镖局入侵次数
+ ASSET_TRADE_ROAD_COIN = 15; // 西域币
+ ASSET_PLUNDER_COIN = 16;  // 黑市币
+ ASSET_UNION_COIN = 17;  // 工会币
+ ASSET_STREET_COIN = 18;  // 街道币
+ ASSET_COUNTRY_BATTLE = 19; // 国战次数
+ ASSET_MATERIAL_SOURCE = 20; // 材料本源
+}
+
+// ---来源: 比如镖师化为碎片
+enum _AssetSource {
+  ASSET_SOURCE_EXPRESSMAN = 1;
+}
+
+enum _RobotType {
+  ROBOT_TYPE_ARENA = 1;
+  ROBOT_TYPE_PLUNDER = 2;
+  ROBOT_TYPE_TRADE_ROAD = 3;
+  ROBOT_TYPE_COUNTRY_BATTLE = 4;
+}
+
+// ----------系统ID-------------------------
+enum _SystemId {
+  PLUNDER_SYSTEM = 1;    // 劫镖
+  DAILY_TASK_SYSTEM = 2; // 每日之计
+  KITCHEN_SYSTEM = 3;    // 厨房
+  WORKSHOP_SYSTEM = 4;   // 镖旗坊
+  ESCORT_SYSTEM = 5;     // 押镖
+  SHOP_SYSTEM = 6;       // 商店
+  CARRIER_SYSTEM = 7;    // 镖车库
+  ACTIVITY_SYSTEM = 8;   // 活动系统
+  SPONSOR_SYSTEM = 9;    // 赞助商系统
+  ARENA_PK_SYSTEM = 10;     // 竞技场(镖局争霸)系统
+  RECRUIT_SYSTEM = 11;   // 招募系统
+  EXCHANGE_COIN = 12;   // 钱庄
+  EXCHANGE_FLAG = 13;   // 镖旗坊
+  BAG_SYSTEM = 14;       // 背包系统
+  ACTIVITY_RACING_SYSTEM = 16;  // 争分夺秒系统
+  ACTIVITY_MINING_SYSTEM = 17;  // 挖掘矿洞系统
+  ACTIVITY_HUNTING_SYSTEM = 18;  // 丛林狩猎系统
+  ACTIVITY_DEFENSE_SYSTEM = 19;  // 山贼入侵系统
+  EXPRESSMAN_SYSTEM = 21;  // 镖师系统
+  ORDER_LIST_SYSTEM = 22;  // 镖单录系统
+  ARENA_SYSTEM = 24;     // 竞技场系统
+  ARENA_SHOP   = 25;     // 竞技场商店
+  GOLD_SHOP    = 26;     // 藏宝斋
+  TRADE_ROAD = 27;       // 商路系统
+  OFFICE_INVADE_SYSTEM = 29;    // 镖局潜入
+  UNIONS_SYSTEM = 40;    // 公会系统
+  STREET_SYSTEM = 45;    // 街市系统
+  WORLD_BOSS_SYSTEM = 46;  // 世界boss系统
+  COUNTRY_BATTLE_SYSTEM = 49;  // 国战系统
+}
+
+// ------------竞技场系统--------------
+// 某场进阶比赛的结果
+enum _AdvanceMatchResult {
+  ADVANCE_MATCH_FAILED = 0;
+  ADVANCE_MATCH_SUCCESS = 1;
+}
+
+enum _ArenaSeasonIndex {
+  CURR_ARENA_SEASON = 0;
+  LAST_ARENA_SEASON = 1;
+}
+
+// 竞技场对手
+enum _ArenaOpponentType {
+  ARENA_OPPONENT_PLAYER = 1;
+  ARENA_OPPONENT_ROBOT = 2;
+}
+
+// ------------镖车系统----------------
+enum _CarrierUp {
+  CARRIER_UP_QUALITY = 0;  // 升品质
+  CARRIER_UP_LEVEL_HP = 1;  // 生命值升级
+  CARRIER_UP_LEVEL_ATTACK = 2;  // 攻击力升级
+  CARRIER_UP_LEVEL_SPEED = 3;  // 移动速度升级
+  CARRIER_UP_LEVEL_ATT_SPEED = 4;  // 攻击速度升级
+}
+
+// ------------兑换码系统--------------
+enum _CDKeyError{
+  CDKEY_ERROR_INVALID_CDKEY = 1;	// 兑换码错误
+  CDKEY_ERROR_CDKEY_USED = 2;			// 兑换码已经使用
+  CDKEY_ERROR_SAME_TYPE_USED = 3; // 兑换码同类型的已经使用过
+  CDKEY_ERROR_UNSUPPORTED_CHANNEL = 4; // 兑换码不支持此此渠道
+  CDKEY_ERROR_UNSUPPORTED_GAMESERVER = 5; // 兑换码不支持此服务器
+  CDKEY_ERROR_CDKEY_OVERDUE = 6; // 兑换码已过期
+  CDKEY_ERROR_CDKEY_NO_REMAINING_COUNT = 7; // 该兑换码没有可用的使用次数了
+  CDKEY_ERROR_OTHER_ERROR = 8; // 其它异常
+}
+
+// ------------每日任务系统--------------
+enum _DailyTaskType {
+  DAILY_TASK_COMPLETE_ESCORT = 1;           // 完成押镖
+  DAILY_TASK_UPLEVEL_EQUIPMENT = 2;         // 强化镖师装备
+  DAILY_TASK_UPLEVEL_SKILL = 3;             // 升级镖师技能
+  DAILY_TASK_COMPLETE_PLUNDER = 4;          // 完成劫镖
+  DAILY_TASK_EAT_FOOD = 5;                  // 镖师吃食物
+  DAILY_TASK_COMPLETE_ARENA_COMBAT = 6;     // 参与竞技场战斗
+  DAILY_TASK_COMPLETE_ACTIVITY = 7;         // 参与活动
+  DAILY_TASK_BUY_OUTLETS = 8;               // 折扣店购买
+  DAILY_TASK_GOLD_EXCHANGE_COIN = 9;        // 点金手(购买银币)
+  DAILY_TASK_PLUNDER_SUCCESS = 10;          // 劫镖成功
+  DAILY_TASK_ESCORT_THREE_STARS = 11;       // 押镖达成3星
+  DAILY_TASK_UPLEVEL_CARRIER = 12;          // 升级镖车
+  DAILY_TASK_COLLECT_KITCHEN_FOOD = 13;     // 领取食物
+  DAILY_TASK_USE_HEWU = 14;                 // 使用合吾(战斗服务器)
+  DAILY_TASK_DEFUSE_MINE = 15;              // 拆除地雷(战斗服务器)
+  DAILY_TASK_DESTRUCT_ROLLING_STONE = 16;   // 破坏滚石(战斗服务器)
+  DAILY_TASK_WIN_ARENA_COMBAT = 17;         // 竞技场战斗胜利
+  DAILY_TASK_CAST_CARRIER_SKILL = 18;       // 释放镖车技能(战斗服务器)
+  DAILY_TASK_ASSIGN_TASKS = 19;             // 委托镖单(完成押镖<1>的子类)
+  DAILY_TASK_DEFUSE_GEAR_MINE = 20;         // 消灭蜘蛛雷(战斗服务器)
+  DAILY_TASK_BUY_MATERIAL = 21;             // 快速采购材料
+  DAILY_TASK_SIGN_SPONSOR = 22;             // 进行赞助商签约
+  DAILY_TASK_COLLECT_WORKSHOP = 23;         // 领取镖旗 (工坊)
+  DAILY_TASK_HUNT_ANIMAL = 24;              // 狩猎小动物(战斗服务器)
+  DAILY_TASK_KILL_ROBBER = 25;              // 消灭山贼(战斗服务器)
+  DAILY_TASK_DESTRUCT_FENCE = 26;           // 破坏栅栏(战斗服务器)
+  DAILY_TASK_MINING_ORE = 27;               // 开采矿石(战斗服务器)
+  DAILY_TASK_RECRUIT_EXPRESSMAN = 28;       // 招募镖师
+  DAILY_TASK_HELP_FRIEND = 29;              // 情谊镖师援护(战斗服务器)
+  DAILY_TASK_COMPLETE_RACING = 30;          // 完成争分夺秒活动
+  DAILY_TASK_COMPLETE_MINING = 31;          // 完成挖掘矿洞活动
+  DAILY_TASK_COMPLETE_HUNTING = 32;         // 完成丛林狩猎活动
+  DAILY_TASK_COMPLETE_DEFENSE = 33;         // 完成山贼入侵活动
+  DAILY_TASK_OFFICE_INVADE = 34;            // 镖局入侵活动
+  DAILY_TASK_TOUGHEN_EXPRESSMAN = 36;       // 镖师历练
+  DAILY_TASK_CARRIER_UPGRADE = 37;          // 镖车升阶
+  DAILY_TASK_TRADE_ROAD_OPERATION = 38;             // 商路（西域)开拓
+  DAILY_TASK_TRADE_ROAD_ADVANCED_OPERATION = 39;    // 商路（西域)高级开拓
+  DAILY_TASK_RAFFLE = 40;                           // 抽卡
+  DAILY_TASK_COMPLETE_ELITE_STORY = 41;             // 完成精英副本
+  DAILY_TASK_COUNTRY_BATTLE = 42;										// 完成国战
+  DAILY_TASK_SIMULATE_FIGHT = 43;										// 完成切磋
+}
+
+// ------------押镖系统--------------
+enum _EscortType {
+  ESCORT_NORMAL_TASK = 0;  // 普通任务
+  ESCORT_REPLENISHMENT_TASK = 1;  // 普通任务补单
+  ESCORT_ARENA = 2;  // 竞技场
+  ESCORT_ACTIVITY = 3; // 活动
+  ESCORT_RACING = 4; // 争分夺秒
+  ESCORT_MINING = 5; // 挖掘矿洞
+  ESCORT_HUNTING = 6; // 丛林狩猎
+  ESCORT_DEFENSE = 7; // 山贼入侵
+  ESCORT_PLUNDER_ASSIGN = 8; // 实时劫委托镖
+  ESCORT_DEMONSTRATION = 9; // 演示战斗
+  ESCORT_STORY_TASK = 10;  // 主线任务
+  ESCORT_TRADE_ROAD = 11; // 商路战斗
+  ESCORT_INVADE = 12; // 镖局入侵
+  ESCORT_UNION_TRAP = 13; // 公会玩法（陷阱战）
+  ESCORT_WORLD_BOSS = 14; // 世界boss
+  ESCORT_SIMULATE_FIGHT = 15; // 切磋
+  ESCORT_COUNTRY_BATTLE = 16; // 国战
+}
+
+enum _EscortEndStatus {
+  ESCORT_END_SUCCESS = 0;
+  ESCORT_END_FAILURE = 1;  // 镖队成员已全部伤退
+  ESCORT_END_PLUNDERED  = 2;  // 劫镖导致的失败
+  ESCORT_END_TIME_OUT = 3;  //  战斗时间已耗尽
+  ESCORT_END_WORLD_BOSS_DEFEATED = 10;  //  BOSS已被击杀
+  ESCORT_END_WORLD_BOSS_CLOSED = 11;  // BOSS挑战时间已结束
+}
+
+// ------------公会系统--------------
+enum _UnionJoinedStatus {
+  UNION_STATUS_NORMAL = 1;  // 工会正常
+  UNION_STATUS_DISSOLUTIONED = 2; // 工会被解散
+  UNION_STATUS_OUT = 3;  //  已被踢出工会
+}
+
+enum _UnionMemberType{
+  UNION_PRESIDENT = 1; // 会长
+  UNION_ELDERS = 2; // 长老
+  UNION_MEMBER = 3; // 会员
+}
+
+enum _UnionMemberOptType{
+  UNION_PROMOTION_ELDERS = 1; // 提升会长
+  UNION_CANCEL_ELDERS = 2; // 撤销长老
+}
+
+enum _UnionErrorType {
+	UNION_KICKED_OUT = 1;    // 玩家被踢出
+	UNION_DISSOLUTIONED = 2; // 公会被解散
+  UNION_MEMBER_OUT = 3;    // 被操作的玩家已经不在工会中了（转让工会会长，踢出成员，膜拜，查看工会成员详细信息）
+  UNION_IN_UNION = 4; // 已经加入公会，但进行了申请公会等类似操作
+  UNION_AUTHORITY_FAILED = 5; // 权限校验失败(包含不是会长或者不是长老)
+}
+
+enum _UnionWorshipType{
+	WORSHIP_PRIMARY = 1; // 初级
+	WORSHIP_MEDIUM = 2; // 中级
+	WORSHIP_ADVANCED = 3; // 高级
+}
+
+enum _UnionApplyJoinStatus{
+  UNION_APPLY_JOIN_SUCCESS = 1; // 申请成功
+  UNION_APPLY_JOIN_NO_UNION = 2; // 没有可加入的公会（一键加入）
+  UNION_APPLY_JOIN_UNION_NOT_EXIST = 3; // 加入的公会不存在（指定加入某一个公会）
+  UNION_APPLY_JOIN_HAS_APPLY = 4; // 已经申请过这个公会了（指定加入某一个公会）
+  UNION_APPLY_JOIN_LEVEL_DEFICIENT = 5;  // 玩家等级不够（指定加入某一个公会）
+  UNION_APPLY_JOIN_LIST_FULL = 6; // 工会申请列表已满
+}
+
+enum _UnionAssignResult{
+  UNION_ASSIGN_SUCCESS = 1; // 转让成功
+  UNION_ASSIGN_FAILED = 2; // 转让失败
+}
+
+enum _UnionManageEldersResult{
+  UNION_MANAGE_ELDERS_SUCCESS = 1; // 操作成功（包含提升长老和撤销长老）
+  UNION_MANAGE_ELDERS_FULL = 2;    // 长老名额已满
+}
+
+enum _UnionDealApplyStatus{
+  UNION_DEAL_APPLY_SUCCESS = 1; // 公会处理申请成功（包括同意申请或者拒绝申请）
+  UNION_DEAL_APPLY_FULL = 2; // 公会已经满了
+  UNION_DEAL_APPLY_HAS_JOINED = 3; // 玩家已经加入公会了（可能是本公会，也可能是其它公会）
+  UNION_DEAL_APPLY_NOT_EXIST = 4;  // 玩家不在申请列表中了
+}
+
+// ----------抽卡系统----------------
+enum _RaffleGoodsType {
+  RAFFLE_EXPRESSMAN = 1; // 完整的镖师卡
+  RAFFLE_GOODS = 2; // 其他的物品（包括镖师碎片）
+  RAFFLE_TRANS_DEBRIS = 3; // 抽取到的镖师转换成碎片
+}
+
+enum _RafflePayType {
+  EXPRESSMAN_COIN_RAFFLE = 1; // 镖师币抽卡
+  GOLD_RAFFLE = 2; // 元宝抽卡
+  SOUL_GOLD_RAFFLE = 3; // 魂匣抽卡
+}
+
+enum _RaffleCountType {
+  RAFFLE_ONE = 1; // 买一个
+  RAFFLE_TEN = 2; // 十连抽
+}
+
+enum _RaffleSoulGoodsType {
+  RAFFLE_SOUL_EXPRESSMAN = 1; // 整卡
+  RAFFLE_SOUL_DEBRI_1 = 2; // 魂石1
+  RAFFLE_SOUL_DEBRI_2 = 3; // 魂石2
+  RAFFLE_SOUL_DEBRI_3 = 4; // 魂石3
+  RAFFLE_SOUL_NORMAL = 5; // 普通物品
+}
+
+// ------------招募系统--------------
+enum _RecruitPermitType {
+  FIRST_RECRUIT_PERMIT = 1;
+  SECOND_RECRUIT_PERMIT = 2;
+}
+
+enum _ToughenExpressmanType {
+  COMMON_TOUGHEN = 1;
+  ADVANCED_TOUGHEN = 2;
+  ULTIMATE_TOUGHEN = 3;
+}
+
+// ------------登陆系统--------------
+enum _Status {
+  SUCCESS = 0;
+  CHARACTER_NOT_EXIST = 1; // 登陆时，检查角色是否存在
+  DUPLICATE_NAME = 2;  // 创建账号时，检测重名
+  SENSITIVE_WORD = 3;  // 敏感词
+  SESSION_EXPIRED = 4;
+}
+
+// ------------镖局入侵系统--------------
+enum _OfficeInvadeFailureReason {
+  OFFICE_INVADE_FAILURE_NO_DICE = 1;        // 骰子=0,步数=0，且没有事件(非最后要塞)
+  OFFICE_INVADE_FAILURE_ATTACK_TIMEOUT = 2; // 进攻时间到了
+  OFFICE_INVADE_FAILURE_NO_EXPRESSMEN = 3;  // 镖师用完了，还没推过去
+  OFFICE_INVADE_FAILURE_PLAYER_CANCEL = 4;  // 玩家主动放弃
+}
+
+enum _FortType {
+  FORT_TYPE_MINI = 1;     // 驻守关卡
+  FORT_TYPE_STORAGE = 2;  // 要塞仓库
+}
+
+enum _GridEventType {
+  GRID_EVENT_NOTHING = -1; // 无
+  GRID_EVENT_GIFT = 1;     // 红包
+  GRID_EVENT_RANDOM = 2;   // 随机事件
+  GRID_EVENT_DICE = 3;     // 送骰子
+  GRID_EVENT_TRAP = 4;     // 陷阱 (先不做)
+  GRID_EVENT_MINI_FORT = 5; // 小关卡
+  GRID_EVENT_FORT = 6;      // 要塞
+}
+
+enum _GridTrapEventType {
+  GRID_TRAP_EVENT_DECREASE_POWER = 1;
+  // TODO(Weitong): 镖师无法出战
+}
+
+enum _GridRandEventType {
+  GRID_RAND_EVENT_FORWARD = 1;
+  GRID_RAND_EVENT_BACKWARD = 2;
+  GRID_RAND_EVENT_INCREASE_POWER = 4;
+}
+
+enum _OfficeInvadeProduceType {
+  OFFICE_INVADE_EXPRESSMAN_COIN = 1;
+  OFFICE_INVADE_SKILL_BOOK = 2;
+}
+
+enum _OfficeInvadeType {
+  OFFICE_INVADE_TYPE_NORMAL = 1;  // 普通入侵
+  OFFICE_INVADE_TYPE_REVENGE = 2; // 复仇
+}
+
+// ------------折扣店系统--------------
+enum _RefreshDay {
+  TODAY = 0;
+  TOMORROW = 1;
+}
+
+// ------------劫镖系统--------------
+enum _PlunderStatus {
+  PLUNDER_IDLE = 0;  // 空闲
+  PLUNDERING_REALTIME_TASK = 1;  // 实时劫委托镖
+  PLUNDERING_ONLINE_TASK = 2;  // 委托劫在线镖
+  PLUNDERING_ASSIGN_TASK = 3;  // 委托劫委托镖
+  PLUNDER_FINISHED = 4; //劫镖完成
+}
+
+enum _PlunderType {
+  PLUNDER_REALTIME = 1;  // 实时劫镖
+  PLUNDER_ASSIGN = 2;    // 委托劫镖
+}
+
+enum _PlunderRevengeType {
+	PLUNDER_NORMAL_TYPE = 1;   // 正常被劫镖
+	PLUNDER_REVENGE_TYPE = 2;  // 被复仇劫镖
+}
+
+enum _PlunderResult {
+  PLUNDER_SUCCESS = 1;
+  PLUNDER_FAILED = 2;
+  PLUNDER_TIMEOUT = 3;
+}
+
+enum _PlunderRecordStatus {
+  PLUNDER_RECORD_IDLE = 1;
+  PLUNDER_RECORD_REVENGING = 2; // 复仇中
+  PLUNDER_RECORD_REVENGE_SUCCESS = 3;  // 复仇成功
+  PLUNDER_RECORD_REVENGE_FAILED = 4;   // 复仇失败
+}
+
+// ------------任务系统--------------
+enum _TaskDenyResult {
+  NOTHING = 0;  // 直接删除
+  DOUBLE_REWARD = 1;  // 触发双倍奖励
+  TRIPLE_REWARD = 2;  // 触发三倍奖励
+  PUNISH = 3;   // 扣除声望
+}
+
+// ------------商路系统--------------
+enum _TradeRoadBranchLevel {
+  TRADE_ROAD_BRANCH_LOW = 0; //初级开拓
+  TRADE_ROAD_BRANCH_HIGH = 1; //高级开拓
+}
+
+enum _TradeRoadBoxChestType {
+  TRADE_ROAD_BOX_CHEST_LOW = 1; //初级开拓
+  TRADE_ROAD_BOX_CHEST_HIGH = 2; //高级开拓
+}
+
+enum _TradeRoadBranchStatus {
+  TRADE_ROAD_BRANCH_UNOPEN = 0; // 未开放
+  TRADE_ROAD_BRANCH_LOCK = 1; // 锁定，还未战胜
+  TRADE_ROAD_BRANCH_OPEN = 2; // 已解锁 但还未运营
+  TRADE_ROAD_BRANCH_OPERATING = 3; // 正在运营
+  TRADE_ROAD_BRANCH_FETCHED = 4; //商路分支的奖励已经领取完成
+  TRADE_ROAD_BRANCH_BOX_OPENED = 5; //宝箱已领取（只针对高级开拓有效）
+}
+
+enum _TradeRoadCityStatus {
+  TRADE_ROAD_CITY_UNOPEN = 0; // 城池未开放(等级限制)
+  TRADE_ROAD_CITY_LOCK = 1; // 城池锁定(前一个城池未攻下)
+  TRADE_ROAD_CITY_UNLOCK = 2; // 城池解锁，可以攻打
+  TRADE_ROAD_CITY_DONE = 3; // 城池分支已全部领取奖励
+}
+
+// -----------------主线任务系统--------------
+enum _StorySeasonRewardType {
+  STORY_REWARD_YEAR = 1; // 年度
+  STORY_REWARD_SEASON = 2;  // 季度
+}
+
+// -------------镖师----------------------------
+enum _ExpressmanStatus {
+  REST = 0;  // 休息
+  WORKING = 1;  // 上阵
+}
+
+// 镖师来源
+enum _ExpressmanOrigin {
+  EXPRESSMAN_ORIGIN_SHOP = 1;  // 从商店购买
+  EXPRESSMAN_ORIGIN_ORDER_LIST = 2;  // 完成镖单录获得
+  EXPRESSMAN_ORIGIN_RECHARGE = 3;  // 充值获得
+}
+
+// -------------元宝商城------------------------
+enum _VIPEffectId {
+  MAX_BUY_FLAG_COUNT = 1;  // 每日可购买镖旗次数
+  MAX_BUY_COIN_COUNT = 2;  // 每日可购买银币次数
+  MAX_BUY_EXPRESSMAN_COIN_COUNT = 3;  // 每日可购买勾玉次数
+  MAX_BUY_PLUNDER_COUNT = 4;  // 劫镖每日可购买次数
+  MAX_BUY_ARENA_COUNT = 5;    // 竞技场每日可购买挑战次数
+  MAX_DAILY_TASK_REFRESH_COUNT = 6; // 每日之计刷新次数
+  MAX_TASK_DENY_COUNT = 7; // 镖单委托板可拒单次数上限
+  FLAG_PRODUCE_EVERYTIME = 8;  //镖旗产量（每半小时）
+  MAX_SPONSOR_COUNT_MEANWHILE = 9; // 同时签约赞助商数量
+  EXTRA_SPONSOR_EXP_PERCENT = 10;  // 赞助商签约经验增加N%
+  OPEN_GOLD_SHOP = 11;             // 元宝商城开启
+  OPEN_ACTIVITY_SWEEP = 12;        // 活动副本开启扫荡
+  DOUBLE_KITCHEN_PRODUCE = 13;     // 厨房双倍产出
+  MAX_PLUNDER_COUNT_MEANWHILE = 14;  // 同时劫镖数量
+  OPEN_DENY_TASK_TRIPLE_REWARD = 15;  // 拒单三倍奖励
+  OPEN_ULTIMATE_TOUGHEN = 16;  // 是否开启豪华历练
+  MAX_BUY_ACTIVITY_COUNT = 17;  // 最大活动购买次数
+  MAX_BUY_OFFICE_INVADE_COUNT = 18;  // 最大镖局入侵购买次数
+  DAILY_WORSHIP_NUM_LIMIT = 19; // 每日膜拜次数
+  IS_SENIOR_WORSHIP_AVAILABLE = 20 ; // 高级膜拜是否开启
+  MAX_BUY_CHALLENGE_STAGE_COUNT = 21; // 挑战关卡重置次数
+  MAX_BUY_ELITE_STAGE_COUNT = 22 ; // 精英关卡重置次数
+  IS_ONE_CLICK_EQUIP_UPGRADE_AVAILABLE = 23;  // 是否可以一键装备升级
+  DAILY_TRADE_ROAD_RESET_COUNT = 24; // 商路重置次数
+  IS_RAFFLE_SOUL_BOX_OPEN = 25; // 魂匣是否开放
+  TASK_SEARCH_IN_PERSON_NUM_UP_LIMIT = 26; // 每次搜索优先搜索的手动镖单的数量
+  MAX_BUY_COUNTRY_BATTLE_COUNT = 27;  // 最大国战进攻购买次数
+}
+
+// --------------运营活动-----------------------
+enum _OperatingAchievementType {
+  OPERATING_ACHIEVEMENT_TYPE_MIN = 0; // 最小类型
+  OPERATING_ACHIEVEMENT_TYPE_OFFICE_LEVEL = 1; // 镖局等级
+  OPERATING_ACHIEVEMENT_TYPE_OFFICE_POWER = 2; // 镖局战斗力
+  OPERATING_ACHIEVEMENT_TYPE_EXPRESSMAN_TOTAL_GRADE = 3; // 镖师总星级
+  OPERATING_ACHIEVEMENT_TYPE_CARRIER_QUALITY = 4; // 镖车品阶
+  OPERATING_ACHIEVEMENT_TYPE_ELITE_STORY_STAR = 10; // 主线精英星级
+  OPERATING_ACHIEVEMENT_TYPE_CUMULATIVE_RECHARGE = 11; // 累计充值
+  OPERATING_ACHIEVEMENT_TYPE_ASSIGN_TASK = 12; // 任务委托
+  OPERATING_ACHIEVEMENT_TYPE_EXPRESSMAN_COIN_RAFFLE = 13; // 勾玉抽卡
+  OPERATING_ACHIEVEMENT_TYPE_GOLD_RAFFLE = 14; // 元宝抽卡
+  OPERATING_ACHIEVEMENT_TYPE_MAX = 15; // 最大类型
+}
+
+// --------------嘉年华-----------------------
+enum _CarnivalTaskType {
+	CARNIVAL_TASK_TYPE_MIN = 0; // 最小类型
+	CARNIVAL_TASK_TYPE_OFFICE_LEVEL = 1; // 镖局等级
+	CARNIVAL_TASK_TYPE_OFFICE_POWER = 2; // 镖局牛逼值
+	CARNIVAL_TASK_TYPE_RECHARGE = 3; // 累计充值
+	CARNIVAL_TASK_TYPE_GOLD_COST = 4; // 元宝消耗
+	CARNIVAL_TASK_TYPE_COIN_COST = 5; // 银币消耗
+	CARNIVAL_TASK_TYPE_EXPRESSMAN_COIN_COST = 6; // 勾玉消耗
+	CARNIVAL_TASK_TYPE_FLAG_COST = 7; // 镖旗消耗
+	CARNIVAL_TASK_TYPE_BUY_FLAG = 8; // 镖旗购买
+	CARNIVAL_TASK_TYPE_COLlECT_FLAG = 9; // 镖旗领取
+	CARNIVAL_TASK_TYPE_BUY_COIN = 10; // 购买铜钱（钱庄兑换）
+	CARNIVAL_TASK_TYPE_EXPRESSMAN_COIN_RAFFER = 11; // 勾玉抽卡
+	CARNIVAL_TASK_TYPE_GOLD_RAFFLE = 12; // 元宝抽卡（含魂匣）
+	CARNIVAL_TASK_TYPE_FINISH_DAILY_TASK = 13; // 完成每日之计
+	CARNIVAL_TASK_TYPE_AREAN_ESCORT = 14; // 竞技场战斗
+	CARNIVAL_TASK_TYPE_PLUNDER_ESCORT = 15; // 劫镖
+	CARNIVAL_TASK_TYPE_ACTIVITY_ESCORT = 16; // 磨练活动
+	CARNIVAL_TASK_TYPE_OFFICE_INVADE_ESCORT = 17; // 镖局密道
+	CARNIVAL_TASK_TYPE_OFFICE_INVADE_LEVEL = 18; // 密道等级
+	CARNIVAL_TASK_TYPE_TRADE_ROAD_ESCORT = 19; // 西域开拓
+	CARNIVAL_TASK_TYPE_UNION_TRAP_ESCORT = 20; // 奇门遁甲
+	CARNIVAL_TASK_TYPE_CARRIER_PART_LEVEL = 21; // 镖车科技值
+	CARNIVAL_TASK_TYPE_WORLD_BOSS_ESCORT = 22; // 世界boss
+	CARNIVAL_TASK_TYPE_TASK_FINISH = 23; // 押运镖单（手动和委托，只算随机镖单，含神秘镖单）
+	CARNIVAL_TASK_TYPE_TASK_ESCORT = 24; // 手动押镖（只算随机镖单，含神秘镖单）
+	CARNIVAL_TASK_TYPE_TASK_ASSIGN = 25; // 委托押镖（只算随机镖单，含神秘镖单）
+	CARNIVAL_TASK_TYPE_ELITE_STORY_ESCORT = 26; // 精英关卡次数（含挑战关卡）
+	CARNIVAL_TASK_TYPE_ELITE_STORY_STARS = 27; // 精英关卡星级（含挑战关卡）
+	CARNIVAL_TASK_TYPE_SPECIAL_TASK_FINISH = 28; // 神秘镖单
+	CARNIVAL_TASK_TYPE_CONSIGNER_STAR = 29; // 委托人星级
+	CARNIVAL_TASK_TYPE_EXPRESSMAN_COUNT = 30; // 镖师个数
+	CARNIVAL_TASK_TYPE_SKILL_UP = 31; // 技能升级次数
+	CARNIVAL_TASK_TYPE_EQUIPMENT_UP = 32; // 装备强化次数(包括升级和强化)
+	CARNIVAL_TASK_TYPE_MORAL_UP = 33; // 素质强化次数(包括升级和强化)
+  CARNIVAL_TASK_TYPE_MAX = 34; // 最大类型
+}
+
+enum _CarnivalCalcType {
+  CARNIVAL_CALC_CURRENT_VALUE = 0; // 取当前值
+  CARNIVAL_CALC_ACCUMULATION = 1;  // 逐次累加
+}
+
+// --------------排行榜------------------------
+enum _RankingType {
+  RANKING_TYPE_ARENA_LAST_SEASON = 1; // 竞技场上赛季排名
+  RANKING_TYPE_ARENA_CURR_SEASON = 2; // 竞技场本赛季排名
+  RANKING_TYPE_OFFICE_POWER = 3;      // 镖局总战斗力
+  RANKING_TYPE_EXPRESSMAN_POWER = 4;  // 镖师总战斗力
+  RANKING_TYPE_CARRIER_POWER = 5;     // 镖车总战斗力
+  RANKING_TYPE_UNION = 6;			// 公会排行榜
+  RANKING_TYPE_WORLD_BOSS = 7;		//世界boss积分排行榜
+}
+
+enum _RankingExtraInfoType {
+  RANKING_EXTRA_INFO_TYPE_ARENA_TEAM = 1; // 竞技场上阵队伍
+  RANKING_EXTRA_INFO_TYPE_ESCORT_TEAM = 2; // 押镖上阵队伍
+  RANKING_EXTRA_INFO_TYPE_WORLDBOSS_TEAM = 3; // 世界Boss上阵队伍
+}
+
+// --------------聊天系统------------------------
+enum _ChatRoomType {
+  WORLD_ROOM = 1;  // 世界频道
+  UNION_ROOM = 2;  // 工会频道
+}
+
+enum _ChatEventType {
+	CHAT_EVENT_MIN = 0; // 事件最小
+  CHAT_EVENT_WORLD_BOOS_APPEAR = 1; // 世界boss出现
+  CHAT_EVENT_WORLD_BOOS_FLEE = 2; // 世界boss逃走
+  CHAT_EVENT_WORLD_BOOS_KILLED = 3; // 世界boss被击杀
+  CHAT_EVENT_BUY_TRANSFORMERS = 4; // 购买变形金刚
+  CHAT_EVENT_CARRIER_UP_MAX = 5; // 镖车（除驴车）升到高阶
+  CHAT_EVENT_EXPRESSMAN_UP_MAX = 6; // 镖师升到六星
+  CHAT_EVENT_EQUIMENT_UP_MAX = 7; // 镖师所有装备升到红+10
+  CHAT_EVENT_ARENA_UP_LEGEND = 8; // 竞技场进阶传奇
+  CHAT_EVENT_BUY_APPLE = 9; // 购买苹果马车
+  CHAT_EVENT_BUY_ALASD = 10; // 购买阿拉神灯
+  CHAT_EVENT_MAX = 11; // 事件最大
+}
+
+// --------------随机商店------------------------
+enum _RandomShopRefreshStatus {
+  RANDOM_SHOP_REFRESH_INIT = 1; // 初始化，未开启
+  RANDOM_SHOP_REFRESH_OVERDUE = 2; // 过期
+  RANDOM_SHOP_REFRESH_OPENING = 3; // 开启中
+  RANDOM_SHOP_REFRESH_CLOSED = 4; // 已关闭
+}
+
+// --------------徽章系统-------------------
+enum _BadgeAchievementType {
+  BADGE_ACHIEVEMENT_TYPE_VIP = 1;
+  BADGE_ACHIEVEMENT_TYPE_ARENA = 2;
+  BADGE_ACHIEVEMENT_TYPE_POWER = 3;
+}
+
+// --------------世界boss系统-------------------
+enum _WorldBossStatus {
+  WORLD_BOSS_IDLE = 1;
+  WORLD_BOSS_OPEN = 2;
+  WORLD_BOSS_CLOSED = 3;
+  WORLD_BOSS_KILLED = 4;
+}
+
+// --------------国战系统----------------------
+// 商会状态 (客户端显示)
+enum _CountryBattleCommerceStatus {
+  COUNTRY_BATTLE_COMMERCE_STATUS_IDLE = 1;  // 闲置状态
+  COUNTRY_BATTLE_COMMERCE_STATUS_COMBATING = 2; // 战斗中
+  COUNTRY_BATTLE_COMMERCE_STATUS_PROTECTED = 3; // 占领后保护期
+}
+
+// --------------材料回收系统----------------------
+enum _MaterialRecycleBoxChestType {
+  MATERIALS_RECYCLE_BOX_CHEST_LOW = 1; //初级
+  MATERIALS_RECYCLE_BOX_CHEST_MID = 2; //中级
+  MATERIALS_RECYCLE_BOX_CHEST_HIGH = 3; //高级
+}
+
+// 开战请求错误状态
+enum _CountryBattleStartError {
+  COUNTRY_BATTLE_START_ERROR_OWNING = 1; // 当前已拥有商会
+  COUNTRY_BATTLE_START_ERROR_LACK_ATTACK_COUNT = 2; // 缺少进攻次数
+  COUNTRY_BATTLE_START_ERROR_COMBATING = 3; // 商会处于战斗中
+  COUNTRY_BATTLE_START_ERROR_PROTECTED = 4; // 商会处于保护状态
+  COUNTRY_BATTLE_START_ERROR_INVALID_COMMERCE = 5; // 非法的商会
+}
+
+// 好友系统-搜索玩家
+enum _FriendSearchType {
+  FRIEND_SEARCH_PRECISE = 1; // 精确搜索
+  FRIEND_SEARCH_RECOMEND = 2; // 换一批
+}
+
+// 好友系统-关注玩家
+enum _FriendOptStatus {
+  FRIEND_OPT_SUCCESS = 1; // 操作成功
+  FRIEND_OPT_NOT_EXIST = 2; // 操作的玩家不存在
+  FRIEND_OPT_FAILED = 3; // 操作失败
+  FRIEND_OPT_FULL = 4; // 好友（黑名单）列表满了
+}
+
+// -------------错误系统------------------------
+enum _ErrorType {
+  LACK_COIN = 1;
+  LACK_GOLD = 2;
+  LACK_FLAG = 3;
+  LACK_TICKET = 4;
+  LACK_EXPRESSMAN_COIN = 5;  // 缺少镖师币
+  LACK_ARENA_COIN = 6;       // 缺少竞技场币
+  LACK_SKILL_BOOK = 7;       // 缺少技能书
+  LACK_PLUNDER_COIN = 8;       // 缺少黑市银票
+  LACK_TRADE_ROAD_COIN = 9;       // 缺少龙纹币
+  LACK_GOODS = 10; // 物品数量不够
+  OVERFLOW_GOODS = 11;  // 物品溢出
+  LACK_UNION_COIN = 12;       // 缺少公会币
+  LACK_MATERIAL_SOURCE = 13;   // 缺少材料本源
+}
+
+// --------------消息类型-------------------------
+enum MessageType {
+  // client <=> GameServer, Range [1, 1000)
+  // 登陆,创角 [1, 10)
+  LOGIN = 1;              // 登陆
+  CREATE_CHARACTER = 2;   // 创建角色
+  LOGIN_STATUS = 3; //
+  OFFICE_RENAME = 4;  // 更换镖局名字
+  OFFICE_LEVEL_REWARD = 5;   // 镖局升级通知
+  LOGOUT = 6;      // 账号登录时，该账号已登录的客户端会收到服务器踢出命令
+  GM_CHANGED_INFO = 7; // GM变动的物品，player_info信息
+
+  // 任务系统, 镖单录 [10, 30)
+  TASK_LIST  = 10;  // 普通任务列表
+  TASK_DENY  = 11;  // 拒绝普通任务请求
+  TASK_READ  = 12;  // 玩家查看了某个未读任务
+  TASK_ADD = 13;  // 加单
+  TASK_ASSIGN = 14; // 委托
+  TASK_ASSIGN_RECEIVE_REWARD = 15; // 领取委托奖励
+  CONSIGNER_LIST = 16;  // 委托人列表
+  CONSIGNER_RECEIVE_REWARD = 17;  // 获取委托人奖励
+
+  // 物品系统 [30, 50)
+  USE_GOODS = 30;  // C <=> S, 使用物品
+  SELL_GOODS = 31; // C <=> S, 售卖物品
+  COMPOSITE_GOODS = 32; // 合成物品
+  PURCHASE_GOODS = 33; // 购买物品
+  USE_BUNDLE_FLAG = 34; // 使用镖旗捆
+  USE_BOX = 35; //使用宝箱
+  USE_WAIST_TAG = 36;  //使用腰牌
+
+  // 招募系统 [50, 70)
+  RECRUIT = 50;  // 招募镖师
+  RAFFLE_INFO = 51;   // 镖师抽卡信息
+  RAFFLE = 52; // 抽卡
+  SOUL_RAFFLE = 53; // 魂匣抽卡
+
+  // 镖师系统 [70, 90)
+  LEVELUP_SKILL =  70;   // 技能升级
+  WORKING_EXPRESSMEN = 71;  // 上阵镖师ids
+  LEVELUP_EQUIPMENT = 72; //装备升级
+  QUALITYUP_EQUIPMENT = 73; // 装备升阶
+  BUY_EXPRESSMAN = 74;   // 购买镖师
+  UNLOCK_EQUIPMENT = 75;   // 解锁装备
+  RECRUIT_NEW_EXPRESSMAN = 76; //招募新镖师
+  MAJORGRADEUP_EXPRESSMAN = 77; //镖师升大阶
+  LEVELUP_MORAL = 78;  // 素质升级
+  QUALITYUP_MORAL = 79; // 素质升阶
+  MORAL_LEVEL_INFO = 80; // 镖师人品升级通知
+  QUERY_TEAM_INFO = 81;   // 查询队伍信息
+
+  // 押镖系统 [90, 110)
+  ESCORT_START = 90;
+  ESCORT_STAGE_START = 91;
+  ESCORT_COMBAT_START = 92;
+  ESCORT_COMBAT_END = 93;
+  ESCORT_STAGE_END = 94;
+  ESCORT_END = 95;
+  ESCORT_SYNC = 100;
+
+  // 每日任务 [110, 120)
+  DAILY_TASK_LIST = 110;  // 每日任务列表
+  // DAILY_TASK_REPLACE = 111;  // 刷新某个每日任务
+  DAILY_TASK_REWARD = 112;   // 领取某个每日任务的奖励
+
+  // 厨房系统 [120, 130)
+  KITCHEN_LIST = 120;  // 获取厨房信息
+  KITCHEN_COLLECT_ALL_FOOD = 121; // 收取所有食物
+
+  // 镖车系统 [130, 150)
+  DEPLOY_CARRIER = 130; // 出战镖车
+  BUY_CARRIER = 131; // 购买镖车
+  STRENGTHEN_CARRIER = 132; // 强化镖车
+  REPAIR_CARRIER = 133; // 修复镖车
+  CARRIER_EQUIP_PART = 134;  // 装备配件
+  CARRIER_UN_EQUIP_PART = 135;  // 卸装配件
+  CARRIER_UNLOCK_PART = 136;     // 解锁
+  CARRIER_LEVEL_UP_PART = 137;   // 升级
+  CARRIER_GRADE_UP_PART = 138; // 升阶
+
+  // 商店系统 [160, 170)
+  OUTLETS_LIST = 160;  // 折扣列表
+  OUTLETS_BUY = 161;   // 购买商品
+  OUTLETS_REFRESH = 162;   // 手动刷新折扣店
+
+  // 劫镖系统 [170, 210)
+  // client <=> game server
+  PLUNDER_INFO = 170;        // 押镖系统的最新状态
+  PLUNDER_SEARCH = 171;      // 正在押镖的任务
+  PLUNDER_START = 172;       // 开始劫镖
+  PLUNDER_RESULT = 173;      // 押镖结果
+  PLUNDER_RECEIVE_ASSIGN_REWARD = 174;  // 领取劫镖奖励
+  PLUNDER_RECORD_INFO = 175;  // 劫镖记录
+  PLUNDER_REVENGE = 176;      // 复仇
+  PLUNDER_REVENGE_RECEIVE_REWARD = 177; // 领取复仇奖励
+  PLUNDER_SHOP_INFO = 178;  // 劫镖商店
+  PLUNDER_SHOP_BUY = 179;      // 劫镖商店购买
+  PLUNDER_SHOP_REFRESH = 180; // 劫镖商店手动刷新
+
+  // 工坊系统 [210, 220)
+  WORKSHOP_LIST = 210;        // 获取工坊信息
+  WORKSHOP_COLLECT_ALL = 211; // 收取所有镖旗
+
+  // 活动系统 [220, 240)
+  ACTIVITY_LIST = 220;          // 获取活动系统信息
+  BUY_ACTIVITY_COUNT = 221;     // 购买活动次数
+  ACTIVITY_SYSTEM_SWEEP = 222;  // 活动扫荡
+
+  // 新手引导系统[240, 250)
+  SET_GUIDE_STEP = 240;
+  GUIDE_LIST = 241;
+
+  // 赞助商系统[250, 260)
+  SPONSOR_LIST = 250;  // 获取赞助商系统的信息
+  SPONSOR_SIGN = 251;  // 签约新的赞助商, 同时领取奖励
+
+  // 竞技场及系统 [260, 290)
+  ARENA_LIST = 260;    // 竞技场基本信息
+  // ARENA_TOP_PLAYERS = 261;  // 竞技场Top玩家
+  ARENA_FIND_OPPONENT = 262;  // 竞技场匹配对手
+  ARENA_ADVANCE = 263;        // 竞技场进阶了
+  ARENA_MATCH_RECORD = 264;   // 竞技场比赛记录
+  // ARENA_TOP_PLAYERS_TEAM_INFO = 265;  // 竞技场Top玩家的队伍信息
+  // 竞技场商店
+  ARENA_SHOP_INFO = 270;     // 竞技场商店
+  ARENA_SHOP_BUY = 271;      // 竞技场商店购买
+  ARENA_SHOP_REFRESH = 272;  // 竞技场商店刷新
+
+  // 邮件系统 [290, 300)
+  MAIL_LIST = 290;     // 所有邮件
+  MAIL_READ = 291;     // 读取邮件
+  MAIL_ATTACHMENT_RECEIVE = 292; // 收取该附件, 并删除该邮件
+  MAIL_PUSH = 293;   // 推送新的邮件
+
+  // 元宝交易系统 [300, 310)
+  GOLD_EXCHANGE_LIST = 300;   // 元宝交易系统信息
+  GOLD_EXCHANGE_BUY = 301;   // 使用元宝购买
+
+  // 充值系统 [310, 320)
+  RECHARGE_INFO = 310;   // 充值系统信息
+  VIP_LEVEL_REWARD = 311; // VIP升级奖励
+  RECHARGE_ORDER_ID = 312;  // 生成一笔订单请求
+  RECHARGE_SUCCESS = 313;   // 充值成功
+  VIP_REWARD_INFO = 314;    // VIP发放奖励信息
+  VIP_COLLECT_REWARD = 315;    // VIP领取奖励
+  COLLECT_FIRST_RECHARGE_REWARD = 316; // 首充奖励
+  DAILY_RECHARGE_REWARD_INFO = 317; //　每日充值奖励
+  COLLECT_DAILY_RECHARGE_REWARD = 318; //　领取每日充值奖励
+
+  // 主线剧情 [320, 330)
+  STORY_SYSTEM_INFO = 320; // 主线剧情系统信息
+  STORY_FINISH_REWARD = 321; // 主线完成后的奖励(解锁系统,送镖师等)
+  STORY_SEASON_REWARD = 322; // 主线赛季奖励（包含季度和年度奖励）
+  STORY_SYSTEM_SWEEP = 323; // 主线任务扫荡
+  STORY_SYSTEM_RESET_COUNT = 324; // 主线任务通关次数重置
+
+  // 镖师招募系统 [330, 340)
+  EXPRESSMEN_RECRUITMENT_INFO = 330;
+  BUY_RECRUIT_PERMIT = 331;
+  RECRUIT_EXPRESSMAN = 332;
+  TOUGHEN_EXPRESSMAN = 333;
+  TOUGHEN_EXPRESSMAN_INFO = 334;
+
+  // 通知系统 [340, 350)
+  NOTICE_INFO = 340;     // 跑马灯
+
+  // 每日登陆签到 [350, 360)
+  DAILY_SIGN_INFO = 350;
+  DAILY_SIGN = 351;
+  OPEN_EXPRESS_SIGN_INFO = 352;  // 开服签到信息
+  OPEN_EXPRESS_SIGN = 353;       // 开服签到
+
+  // 元宝商城 [360, 370)
+  GOLD_SHOP_INFO = 360;
+  GOLD_SHOP_BUY = 361;
+  GOLD_SHOP_REFRESH = 362;
+
+  // 兑换码 [370, 375)
+  USE_CDKEY = 370;
+
+  // 商路系统 [375, 390)
+  TRADE_ROAD_SWEEP = 375;           // 扫荡
+  TRADE_ROAD_OPEN_BOX = 376;        // 开启宝箱（高级开拓）
+  TRADE_ROAD_SHOP_INFO = 377;       // 西域商店
+  TRADE_ROAD_SHOP_BUY = 378;        // 西域商店购买
+  TRADE_ROAD_SHOP_REFRESH = 379;    // 西域商店刷新
+  TRADE_ROAD_LIST = 380;
+  TRADE_ROAD_UNLOCK_CITY = 381;        // 解锁城市
+  TRADE_ROAD_OPEN_BRANCH = 382;        // 解锁城市分支
+  TRADE_ROAD_FETCH_REWARD = 383;       // 领取奖励
+  TRADE_ROAD_REFRESH_PLAYERS = 384;    // 刷新辅助玩家
+  TRADE_ROAD_SELECT_PLAYER_EXPRESSMAN = 385;  // 选择辅助玩家镖师
+  TRADE_ROAD_SELECT_OPERATION_EXPRESSMAN = 386;  // 选择镖师运营
+  TRADE_ROAD_BRANCH_CHECK_OPERATED = 387;    // 查询运营是否完成
+  TRADE_ROAD_RESET = 388;				// 重置商路系统
+  TRADE_ROAD_FETCH_ALL_REWARD = 389;       // 一键领取奖励
+
+  // 镖局入侵 [390, 430)
+  OFFICE_INVADE_CRAP = 390; // 掷骰子
+  OFFICE_INVADE_GIFT = 391; // 领红包
+  OFFICE_INVADE_RAND_EVENT = 392; // 随机事件
+  OFFICE_INVADE_DICE = 393; // 送骰子
+  OFFICE_INVADE_COMBAT = 394; // 战斗
+  OFFICE_INVADE_CHOOSE_ROUTE = 395; // 选择某条路
+  OFFICE_INVADE_INFO = 396; // 选择某条路
+  OFFICE_INVADE_DEPLOY = 397; // 部署防守阵容
+  OFFICE_INVADE_MAIN_STORAGE = 398; // 设置主仓库
+  OFFICE_INVADE_END = 399;  // 进攻结束
+  OFFICE_INVADE_BEING_ATTACKED = 400;  // 当玩家被进攻时，却进行布防，升级等操作时，返回该消息
+  OFFICE_INVADE_PRODUCE = 401;  // 获取聚宝盆信息
+  OFFICE_INVADE_COLLECT = 402;  // 领取聚宝盆产出
+  OFFICE_INVADE_SEARCH = 403;  // 搜索可以进攻的队伍
+  OFFICE_INVADE_ATTACK = 404;  // 进攻搜索到的队伍
+  OFFICE_INVADE_CANCEL_ATTACK = 405;  // 取消本次进攻
+  OFFICE_INVADE_TRAP = 406;  // 陷阱的随机事件
+  OFFICE_INVADE_ATTACK_TIMEOUT = 407;  // 进攻是否超时
+  OFFICE_INVADE_PRODUCE_UPGRADE = 408;  // 升级聚宝盆
+  OFFICE_INVADE_DEFENSE_RECORD_INFO = 409;  // 防守记录
+  OFFICE_INVADE_REVENGE_TARGET_INFO = 410;  // 只是查看对方信息
+
+  // 运行活动系统 [430, 440)
+  OPERATING_ACTIVITY_INFO = 430;  // 运营活动系统
+  OPERATING_ACTIVITY_COLLECT = 431;  // 运营活动领取奖品
+
+  //公会系统 [440, 480)
+  UNION_LIST = 440; //公会系统信息
+  UNION_SEARCH = 441; //搜索公会
+  UNION_CREATE = 442; //创建公会
+  UNION_EXIT = 443; //退出帮会
+  UNION_CHANGE_ANNOUNCEMENT = 444; //更改公告
+  UNION_CHANGE_NAME = 445; //更改公会名字
+  UNION_DISSOLUTION = 446; //解散公会
+  UNION_ASSIGN = 447; //公会转让
+  UNION_KICK_OUT_MEMBER = 448; //请出帮会
+  UNION_APPLY_JOIN = 449; //申请入会
+  UNION_CANCEL_APPLY_JOIN = 450; // 取消申请入会
+  UNION_DONATE = 451; // 会员捐献
+  UNION_WORSHIP = 452; // 会员膜拜
+  UNION_COLLECT_WORSHIP_REWARD = 453; // 领取膜拜奖励
+  UNION_UNIONS = 454;  // 工会列表
+  UNION_REFRESH_MEMBERS = 455; // 刷新工会成员列表
+  UNION_DEAL_APPLY = 456; // 工会管理员处理申请
+  UNION_ERROR = 457;      // 工会操作出错
+  UNION_STATUS_DEALT = 458;  // 工会状态确认
+  UNION_REFRESH_ABSTRACT = 459; // 刷新工会概要信息
+  UNION_MEMBER_DETAIL = 460; // 公会成员详细信息
+  UNION_SET_MIN_LEVEL = 461; // 设置申请公会最低等级
+  UNION_SET_VERIFICATION = 462; // 设置公会入会验证开关
+  UNION_REFRESH_PENDING_MEMBERS = 463; // 刷新工会带审核成员列表
+  UNION_MANAGE_ELDERS = 464; // 管理长老（提升长老或者撤销长老）
+  UNION_SHOP_INFO = 465;  // 公会商店
+  UNION_SHOP_BUY = 466;      // 公会商店购买
+  UNION_SHOP_REFRESH = 467; // 公会商店手动刷新
+  UNION_COLLECT_ACTIVE_REWARD = 468; // 公会领取活跃值奖励
+
+  // 排行榜 [480, 490)
+  RANKING_LIST = 480;
+  RANKING_EXTRA_INFO = 481;
+
+  // 运营活动单个独做 [490, 510)
+  GROWTH_FUND_INFO = 490;
+  BUY_GROWTH_FUND = 491;
+  COLLECT_GROWTH_FUND = 492;
+
+  // 聊天系统 [510,520)
+  CHAT_ROOM_INFO = 510;
+  UNION_ROOM_CHANGE = 511;
+  CHAT_PLAYER_INFO = 512;
+
+  // 街市 [520,550)
+  STREET_ENTER = 520;
+  STREET_LEAVE = 521;
+  STREET_MOVE = 522;
+  STREET_ADD = 523;
+  STREET_REMOVE = 524;
+  STREET_SYNC = 525;
+
+  // 随机商店(街市里面的随机商店) [550,560)
+  RANDOM_SHOP_INFO = 550;
+  RANDOM_SHOP_OPEN = 551;
+  RANDOM_SHOP_CLOSE = 552;
+  RANDOM_SHOP_BUY = 553;
+
+  //镖局徽章[560,570)
+  BADGE_INFO = 560;
+  BADGE_USE = 561;
+
+   //好友邀请码[570, 590)
+  GET_ALL_INVITATION_INFO = 570;//拉取所有好友邀请的信息
+  OBTAIN_INVITING_REWARD = 571; //领取邀请奖励
+  OBTAIN_INVITED_REWARD = 572;  //领取被邀请奖励
+  SET_INVITE_KEY = 573;         //设置自己的邀请码
+
+  //世界boss[600,610)
+  GET_ALL_WORLD_BOSS_INFO = 600;	//拉取所有boss最新信息
+  GET_HARM_RANKING_TO_BOSS = 601;	//拉取当前boss战实时伤害输出排行
+  REFRESH_WORLD_BOSS_CD = 602;		//立即清除boss挑战cd时间
+  WORLD_BOSS_START_BATTLE = 603;	//开始世界boss战斗
+  WORLD_BOSS_END_BATTLE	= 604;		//结束世界boss战斗
+  GET_WORLD_BOSS_SCORE_RANKING = 605;	//拉取世界boss积分排行
+  WORLD_BOSS_START_BATTLE_PRE = 606;//查询开战前boss战斗数据
+  WORLD_BOSS_NOTIFY_BOSS_STAGE = 607; //同步当前活动阶段
+  WORLD_BOSS_NOTIFY_BATTLE_STATE = 608; //同步当前战斗阶段
+
+  //嘉年华活动[620, 630)
+  CARNIVAL_ACTIVITY_INFO = 620;     // 嘉年华活动信息
+  CARNIVAL_ACTIVITY_COLLECT = 621;  // 领取嘉年华任务奖励
+  CARNIVAL_ACTIVITY_PROGRESS_COLLECT = 622; // 领取嘉年华进度奖励
+
+  // 国战系统 [630, 660)
+  COUNTRY_BATTLE_INFO = 630;      // 玩家本身信息
+  COUNTRY_BATTLE_WORLD = 631;     // 世界基本信息
+  COUNTRY_BATTLE_PROVINCE = 632;  // 省的基本信息
+  COUNTRY_BATTLE_CITY = 633;      // 市的基本信息
+  COUNTRY_BATTLE_COMMERCE = 634;  // 商会基本信息
+  COUNTRY_BATTLE_REWARD_COLLECT = 635;  // 商会奖励领取
+  COUNTRY_BATTLE_GIVEUP_COMMERCE = 636; // 放弃商会
+  COUNTRY_BATTLE_START_ERROR = 637;     // 出战检查错误
+  COUNTRY_BATTLE_MY_COMMERCE = 638;     // 自身拥有的商会
+  
+  // 材料回收系统 [660, 670)
+  MATERIALS_RECYCLE_DECOMPOSE_MATERIALS = 660; // 装备材料分解
+  MATERIALS_RECYCLE_OPEN_BOX = 661; // 打开宝箱
+  MATERIALS_RECYCLE_BOX_INFO = 662; // 宝箱信息请求
+  
+  // 武魂回收系统 [670, 680)
+  SOULS_RECYCLE_INFO = 670;  // 武魂回收系统信息查询
+  SOULS_RECYCLE_OPEN_BOX = 671; // 打开宝箱  
+  SOUL_SHOP_BUY = 672; // // 武魂商店购买
+  SOUL_SHOP_REFRESH = 673;  // 武魂商店刷新
+
+  // 好友系统 [680, 720)
+  FRIEND_INFO_LIST = 680; // 获取好友信息
+  FRIEND_SEARCH = 681; // 搜索玩家
+  FRIEND_ADD_FOLLOW = 682; // 关注玩家
+  FRIEND_CANCLE_FOLLOW = 683; // 取消关注
+  FRIEND_ADD_BLACK = 684; // 拉入黑名单
+  FRIEND_CANCLE_BLACK = 685; // 移出黑名单
+  FRIEND_DETAIL_INFO = 686;   // 详细信息
+  
+  // 世界boss商店系统 [720, 730)
+  WORLD_BOSS_SHOP_INFO = 720;  //世界boss商店信息查询
+  WORLD_BOSS_SHOP_BUY = 721;  //世界boss商店购买
+
+  // => Gateway消息 Range [1100, 1200)
+  REGISTER_AS_CLIENT = 1100;  // 注册为客户端
+
+  // --------------------非常重要--------------------------------
+  // -------------以下类型为服务器之间通信的消息--------------------
+  REGISTER_AS_SERVER = 1101;  // 注册为服务器
+  GATEWAY_KEEPALIVE = 1102;  //  keepalive 消息
+
+  // game server <=> plunder server
+  PS_PLUNDER_SEARCH = 1120;     // 查询正在进行押镖的任务
+  PS_ESCORT_START = 1121;   // 开始押镖(劫镖玩家可以搜索到此押镖)
+  PS_ESCORT_END = 1122;     // 结束押镖(劫镖玩家不再可以搜索到此押镖)
+  PS_PLUNDER_START = 1123;      // 开始劫镖(其他玩家不再可以搜索，劫此镖)
+  PS_SEARCH_ASSIGNED_TEAM = 1124; // 搜索委托押镖
+
+  // game server => game server
+  GS_PLUNDER_START = 1130;      // 开始劫镖
+  GS_PLUNDER_RESULT = 1131;     // 押镖结束
+  GS_PLUNDER_ASSIGN_TASK = 1132; // 劫委托镖
+  GS_PLUNDER_REVENGE = 1133; // 埋伏
+
+  // => DBServer消息 Range [1200, 1300)
+  DB_PROTOBUF_REFLECTION = 1200;     // 以protobuf反射进行mysql操作
+  DB_LOGIN = 1201;             // 获取某个玩家信息
+  DB_CREATE_CHARACTER = 1202;  // 创建玩家角色
+  DB_PRELOAD = 1203;           // 预加载一定数量的活跃玩家
+  DB_PRELOAD_FINISHED = 1204;       // DBServer => gameserver (预加载数据发送完毕)
+  DB_GM_COMMAND = 1205;    // 执行gm command前，先需要从DBServer加载玩家数据
+  DB_DEL_ACCOUNT = 1206;   // 删除玩家账号
+  DB_RANKING = 1207;       // 排行榜信息
+  DB_LOAD_PLAYER = 1208;		// 加载玩家信息（区分DB_LOGIN）
+  DB_REFLECTION_ACK = 1209;     // 反射成功确认
+  DB_UNIONS = 1210;     // 公会信息加载
+
+  // => GMServer消息[1300, 1310)
+  GM_COMMAND =  1300;
+
+  // => PayServer消息 [1310, 1320)
+  PAY_GENERATE_RECHARGE_ORDER = 1310; // 产生充值订单 [gamserver <=> payserver]
+  PAY_COMPLETE_RECHARGE_ORDER = 1311; // 完成充值订单 [payserver <=> gameserver]
+
+  // => InvadeServer消息 [1320, 1330)
+  GS_IS_INVADE_INFO = 1320;    // 通知(每个服的状态)
+  // GameServerA => InvadeServer => GameServerB => GameServerA
+  GS_IS_INVADE_SEARCH = 1321;  // GameServer => InvadeServer
+  IS_GS_INVADE_SEARCH = 1322;  // InvadeServer => GameServer
+  GS_GS_INVADE_SEARCH = 1323;  // GameServer => GameServer
+  // GameServerA <=> GameServerB
+  GS_GS_INVADE_ATTACK_REQUEST = 1324;   // GameServer => GameServer
+  GS_GS_INVADE_ATTACK_RESPONSE = 1325;   // GameServer => GameServer
+  GS_GS_INVADE_ATTACK_CAPTURE = 1326;   // GameServer => GameServer
+  GS_GS_INVADE_ATTACK_END = 1327;   // GameServer => GameServer
+  GS_GS_REVENGE_SEARCH_REQ = 1328;  // 复仇的玩家信息查询
+  GS_GS_REVENGE_SEARCH_REP = 1329;  // 复仇的玩家信息结果
+
+  // => CDkeyServer消息 [1330, 1340)
+  GS_CS_USE_CDKEY = 1330; 		 // GameServer => CDKeyServer
+
+  // => BattlerServer消息 [1400, 1500)
+  BS_ESCORT_START = 1400;
+  BS_ESCORT_END = 1401;
+
+  // => ChatServer消息 [1500, 1600)
+  GC_CREAT_CHAT_ROOM = 1500;    // GameServer => ChatServer
+  GC_DESTORY_CHAT_ROOM = 1501;    // GameServer => ChatServer
+  GC_SEND_CHAT_ROOM_MESSAGE = 1502;    // GameServer => ChatServer
+
+  // <=> CountryServer [1600, 1700)
+  CS_COUNTRY_BATTLE_INFO = 1600;    //  包括占领城池信息
+  CS_COUNTRY_BATTLE_WORLD = 1601;   //  世界信息
+  CS_COUNTRY_BATTLE_PROVINCE = 1602; // 省的信息
+  CS_COUNTRY_BATTLE_CITY = 1603;     // 城市信息
+  CS_COUNTRY_BATTLE_COMMERCE = 1604; // 商会信息
+  CS_COUNTRY_BATTLE_REWARD_COLLECT = 1605;   // 领取奖励
+  CS_COUNTRY_BATTLE_GIVEUP_COMMERCE = 1606;  // 放弃占领的商会
+  // CS_COUNTRY_BATTLE_ESCORT_START = 1607;     // 开战开始
+  // CS_COUNTRY_BATTLE_ESCORT_END = 1608;       // 开战结束
+  CS_COUNTRY_BATTLE_PLAYER_INFO = 1609;      // 询问玩家信息
+  CS_COUNTRY_BATTLE_KICKOUT_INFO = 1610;     // 玩家被从商会踢出
+  CS_COUNTRY_BATTLE_MY_COMMERCE = 1611;      // 玩家占领的商会信息
+  CS_ESCORT_START = 1612;      // 玩家开始进攻
+  CS_ESCORT_END = 1613;        // 结束进攻
+  CS_COUNTRY_BATTLE_RECORD_INFO = 1614;  // 进攻记录
+  
+  // <=> FriendServer [1700, 1800)
+  FS_FRIEND_INFO_SYNC = 1700;    //  获取好友信息
+  FS_FRIEND_INFO_LIST = 1701;    //  获取好友信息
+  FS_FRIEND_SEARCH = 1702;   //  搜索玩家
+  FS_FRIEND_ADD_FOLLOW = 1703; //  关注玩家
+  FS_FRIEND_CANCLE_FOLLOW = 1704;     //  取消关注
+  FS_FRIEND_ADD_BLACK = 1705; // 拉入黑名单
+  FS_FRIEND_CANCLE_BLACK = 1706;   // 移出黑名单
+  FS_FRIEND_DETAIL_INFO = 1707;   // 详细信息
+  FS_FRIEND_PROBE = 1708;   // 探测玩家是否存在
+}

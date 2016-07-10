@@ -1,0 +1,29 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "operating_activity_base.proto";
+import "expressmen_base.proto";
+
+// OPERATING_ACTIVITY_INFO
+message OperatingActivityInfoRequest {
+  required int32 user_id = 1;
+}
+
+message OperatingActivityInfoResponse {
+  optional _OperatingActivityInfo operating_activity_info = 1;
+}
+
+// OPERATING_ACTIVITY_COLLECT 
+message OperatingActivityCollectRequest {
+  required int32 user_id = 1;
+  required int32 activity_id = 2;
+  required int32 achievement_id = 3;
+}
+
+message OperatingActivityCollectResponse {
+  optional _OperatingActivityInfo operating_activity_info = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo  goods_info = 3;
+  optional _RewardInfo reward_info = 4;
+  optional _ExpressmenInfo expressmen_info = 5;
+}

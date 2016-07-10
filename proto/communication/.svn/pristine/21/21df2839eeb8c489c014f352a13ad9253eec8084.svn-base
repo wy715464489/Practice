@@ -1,0 +1,12 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+message _MaterialBoxes {
+	optional int32 type = 1;
+	optional int32 open_times = 2;
+}
+
+message _MaterialRecycleBoxInfo {
+	repeated _MaterialBoxes material_boxes = 1;
+}

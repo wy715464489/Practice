@@ -1,0 +1,170 @@
+package lm;
+import "common_enum.proto";
+import "carrier_base.proto";
+
+// ------------------------ 全局基本类型 ---------------------------
+
+// ----------玩家基本信息-------------------
+message _PlayerExtraInfo {
+  optional int32 badge_id = 1;  // 徽章ID
+  optional string union_name = 2; // 所属公会的名字
+  optional int32 server_id = 3;  // 服务器id                                                  
+  optional int32 union_id = 4;   // 公会id   
+  optional int32 user_id = 5;    // 玩家用户id
+}
+message _PlayerInfo {
+  optional int32 gold = 1;  // 元宝
+  optional int32 coin = 2;  // 铜币
+  optional int32 reputation = 3;  // 声望
+  optional int32 ticket = 4;  // 票券 (变为物品)
+  optional int32 flag = 5;  // 镖旗
+  optional string player_id = 6; // 玩家ID
+  optional string player_name = 7; // 玩家名字
+  optional int32  character_id = 8; // 角色ID
+  optional int32 power = 9; //玩家战斗力
+  optional int32 level = 10; //镖局级别 
+  optional int32 building_level = 11;  // 建筑物等级
+  optional string office_name = 12;  // 镖局名字，初始设置为player_name
+  optional bool  free_rename = 13;  // 是否可以免费更名
+  optional int32 flag_refresh_time = 14;  // 下一个镖旗的刷新时间
+  optional int32 expressman_coin = 19; // 镖师币
+  optional int32 arena_coin = 20;      // 竞技场币 
+  optional int32 skill_book = 21;      // 技能书
+  optional int32 trade_road_coin = 22;  // 西域币
+  optional int32 plunder_coin = 23;  // 黑市币
+  optional int32 union_coin = 24;  // 工会币
+  optional int32 street_coin = 25;  // 街市币
+
+  optional _PlayerExtraInfo player_extra_info = 26;// 镖局徽章 等属性
+  optional int32 material_source = 27;  // 材料本源
+}
+
+// ------------ 物品 -----------------------
+message _Goods {
+  required int32 id = 1;  // 物品ID  
+  required int32 count = 2; // 物品数量
+}
+
+message _GoodsInfo {
+  repeated _Goods goods = 1;
+}
+
+
+// -------------错误------------------------
+message _ErrorInfo {
+  optional _ErrorType error = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _GoodsInfo  goods_info = 3;
+}
+
+// -------------镖师------------------------
+message _Equipment {
+  required int32 id = 1;
+  optional int32 quality = 2;  // 品质 1(铜), 2（银）, 3（金 ）
+  optional int32 level = 3;  // 级别 [0, 10]
+  optional bool unlocked = 4;  // 是否解锁
+}
+
+message _Skill {
+  required int32 id = 1;
+  optional int32 level = 2;
+  optional bool unlocked = 3;  // 是否解锁
+}
+
+message _Moral {
+  required int32 id = 1;
+  optional int32 quality = 2;  // 品质 [1, 7];
+  optional int32 level = 3;    // 小级别 [0, 5]
+}
+
+message _Expressman {
+  required int32 id = 1;
+  optional int32 level = 2;  // 等级
+  optional int32 exp = 4;   // 升下一级所积攒的经验值
+  optional int32 major_grade = 5;  // 0 - 5星
+  optional int32 minor_grade = 6;  // 0 - 5阶, 5 => 6即意味着升星
+  optional int32 debris = 7;  // 升下一小阶所积攒的碎片数
+  repeated _Equipment equipment = 9;  // 装备
+  repeated _Skill     skills = 10;  // 技能
+  optional int32 power = 11;  // 去除情义镖师加成的自身战斗力
+  optional int32 total_power = 12;  // 包括情义镖师加成的战斗力
+  repeated _Moral morals = 13;      // 素质
+  optional int32  moral_level = 14; // 人品级别 [初始为1]
+  optional int32  moral_value = 15; // 人品
+}
+
+// ----------玩家资源分类-------------------
+// 奖励信息(用于各个系统的统一结算展示)
+message _Reward {
+  required _AssetType type = 1;  // 类型
+  required int32  id   = 2;  // ID (请见Goods_txt)
+  required int32  count = 3; // 数量
+  optional _AssetSource source = 4; // 来源: 比如镖师化为碎片
+}
+
+message _RewardInfo {
+  repeated _Reward rewards = 1;  // 奖励的展示排序由客户端实现
+}
+
+message _OpenedSystemInfo {
+  optional bool plunder_system_opened = 1;     // 劫镖系统是否开放
+  optional bool daily_task_system_opened = 2;  // 每日任务是否已开放
+  optional bool kitchen_system_opened = 3;     // 厨房是否开放
+  optional bool workshop_system_opened = 4;    // 镖旗坊是否开放
+  optional bool task_system_opened = 5;    // 押镖是否开放  （默认开放）
+  optional bool shop_system_opened = 6;        // 商店是否开放
+  optional bool carrier_system_opened = 7;        // 镖车是否开放
+  optional bool sponsor_system_opened = 8;     // 赞助商是否开放 
+  optional bool arena_system_opened = 9;       // 竞技场是否开放
+  optional bool recruit_system_opened = 10;    // 招募镖师系统是否开放
+  optional bool gold_exchange_coin_system_opened = 11;    // 钱庄系统是否开放
+  optional bool gold_exchange_flag_system_opened = 12;    // 镖旗行系统是否开放
+  optional bool bag_system_opened = 13;    // 仓库系统是否开放
+  optional bool activity_racing_system_opened = 14;    // 活动争分夺秒是否开放
+  optional bool activity_mining_system_opened = 15;    // 活动挖掘矿洞是否开放
+  optional bool activity_hunting_system_opened = 16;    // 活动丛林狩猎是否开放 
+  optional bool activity_defense_system_opened = 17;    // 活动山贼入侵是否开放
+  optional bool expressman_system_opened = 18;    // 活动山贼入侵是否开放
+  optional bool order_list_system_opened = 19;    // 镖单录系统是否开放
+  optional bool trade_road_system_opened = 20;    //商路系统是否开放
+  optional bool office_invade_system_opened = 21;    // 镖局潜入系统是否开放
+  optional bool union_system_opened = 22;    // 公会系统是否开放
+  optional bool gold_shop_system_opened = 23; // 元宝商城是否开放
+  optional bool street_system_opened = 24; // 元宝商城是否开放
+  optional bool badge_system_opened = 25;  // 徽章系统是否开放
+  optional bool world_boss_system_opened = 26; // 世界Boss是否开放
+  optional bool country_system_opened = 27;    // 国战系统是否开放
+}
+
+// ----------服务器时间-------------------
+message _ServerTimeInfo {
+  required int32 server_time = 1;  // 服务器时间
+  required int32 server_timezone = 2; // 服务器时区
+  optional int32 server_open_time = 3;  // 服务器开服时间
+}
+
+// ----------通用上阵队伍信息----------------
+message _TeamInfo {
+  repeated _Expressman expressmen = 1;  // 上阵的镖师
+  optional _Carrier carrier = 2;        // 上阵的镖车
+  optional int32  power = 3;  // 上阵镖师及镖车的总战斗力
+  optional string player_name = 4;  // 主角名字
+  optional _PlayerExtraInfo player_extra_info = 5; // 镖局徽章 等属性
+  optional _CarriersInfo carriers_info = 6;  // 镖车科技值,配件等
+}
+
+// ----------战斗力信息----------------
+message _PowerInfo {
+  optional int32 carrier_total_power = 1;
+  optional int32 expressman_total_power = 2;
+}
+
+message _OtherPlayerInfo {
+  optional int32 character_id = 1;
+  optional string name = 2;
+  optional int32 level = 3;
+  optional string union_name = 4;
+  optional int32 goods_id = 5;
+  optional int32 vip = 6;
+  optional int32 total_power = 7;
+}

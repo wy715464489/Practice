@@ -1,0 +1,151 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "expressmen_base.proto";
+import "carrier_base.proto";
+
+// --------------------公会系统基本类型----------------------
+message _UnionTrapTask {
+  required int32 id = 1;
+  optional int32 level = 2;  // 从1开始,数字越大难度越高
+  optional int32 star = 3;   // 战斗胜利星数
+}
+
+message _UnionTrap {
+  optional int32 left_count = 1; // 公会陷阱战剩余次数(公会币在PlayerInfo中)
+  optional int32 task_id = 2; // task_id
+  repeated _UnionTrapTask tasks = 3; // 奇门遁甲活动
+}
+
+message _UnionActiveReward {
+  optional int32 achievement_id = 1;
+  optional int32 criteria = 2; // 达标标准
+  optional bool  reward_received = 3; // 奖励有没有被领过
+}
+
+message _UnionActiveRewardInfo {
+  repeated _UnionActiveReward union_active_achievement = 1;
+}
+
+message _UnionSelfInfo {
+  optional int32 worship_left_count = 1; // 剩余膜拜次数
+  optional int32 worship_total_count = 2; // 总共膜拜次数
+  repeated string worship_player_ids = 3; // 膜拜过哪些人
+  optional bool advance_worship_open = 4; // 高级膜拜是否开启
+  optional int32 donate_left_count = 5; // 剩余捐献次数
+  optional int32 worship_reward = 6; // 膜拜可领取的奖励(为0则表示没有可领取的奖励)
+  optional int32 refresh_time = 7; // 刷新时间
+	optional _UnionTrap union_trap = 8; // 公会陷阱战斗
+	optional int32 today_active_value = 9; // 今天贡献的活跃值
+  optional _UnionActiveRewardInfo union_active_reward_info = 10; // 工会活跃值奖励
+}
+
+message _JoinedUnion {
+  required int32 union_id = 1; // 工会id
+  optional int32 joined_time = 2; // 加入工会时间
+  optional _UnionJoinedStatus joined_status = 3; // 工会状态（正常，被踢出，工会已解散）
+}
+
+message _ApplyingUnion {
+  required int32 union_id = 1; // 工会id
+  optional int32 apply_time = 2; // 申请时间
+}
+
+message _PlayerUnionInfo {
+  optional _JoinedUnion joined_union = 1;  // 已加入的工会
+  repeated _ApplyingUnion applying_unions = 2;  // 已申请加入的工会
+  optional _UnionSelfInfo self_info = 3; // 个人在公会中的信息
+  optional int32 appliable_remain_time = 4; // 还有多长时间可申请入会
+}
+
+message _UnionDailyActiveValue {
+	optional int32 day = 1; // 每天5点的时间戳
+	optional int32 value = 2; // 活跃值
+	optional int32 day_date = 3; // 显示日期
+}
+
+// 公会活跃值
+message _UnionActiveValue {
+	optional int32 refresh_time = 1; // 刷新时间
+  optional int32 active_value_all = 2; // 总活跃值
+  optional int32 active_value_today = 3; // 当天的活跃值（今天的）
+  optional int32 active_value_3day = 4; // 3天活跃值（今天以前的三天累计，不计算当天）
+  optional int32 active_value_7day = 5; // 7天活跃值（今天以前的七天累计，不计算当天）
+
+  // 以下字段客户端不使用
+  repeated _UnionDailyActiveValue daily_active_value = 6; // 每日的活跃值
+}
+
+message _UnionMember {
+  optional string player_id = 1;    // 玩家ID
+  optional string player_name = 2;  // 玩家名
+  optional int32  player_level = 3;  // 玩家级别
+  optional int32 latest_login_time = 4;  // 最近登录时间
+  optional _UnionMemberType member_type = 5;  // 成员类型（会长，会员）
+  optional int32 player_expressman_id = 6;  // 玩家主角id
+  optional int32 total_power = 7;  // 包括情义镖师加成的战斗力
+  optional int32 join_time = 9;  // 加入时间
+  optional int32 user_id = 10;
+  optional _PlayerExtraInfo player_extra_info = 11;
+  optional _UnionActiveValue active_value = 12; // 公会活跃值
+}
+
+// 公会图标信息
+message _UnionLogoInfo {
+  optional int32 logo_icon_id = 1; // 帮会图标id
+  optional int32 logo_border_id = 2; // 帮会图标边框id
+}
+
+// 工会概要
+message _UnionAbstract {
+  required int32 id = 1; // 帮会ID
+  optional string union_name = 2;  // 帮会名称
+  optional int32 created_time = 3; // 帮会创建时间
+  optional string announcement = 4;  // 帮会公告
+  optional int32  owned_member_num = 5;  // 已有会员人数
+  optional string chairman_name = 6; // 会长名称
+  optional string chairman_player_id = 7; // 会长id(通过id判断是否自己为会长), 和unionMember里的member_type有点冗余
+  optional int32 experience = 8; // 帮会经验
+  optional int32 level = 9; // 级别
+  optional int32 union_coin = 10; // 联盟币
+  optional bool auto_join = 11; // 自动加入(入会验证开关)
+  optional string chat_room_id = 12; // 公会聊天室id
+  optional int32 send_timestamp = 13; // 发送创建room的time
+  optional _UnionLogoInfo logo_info = 14; // 图标信息
+  optional int32 apply_min_level = 15; // 申请加入最低等级
+	optional _UnionActiveValue active_value = 16; // 公会活跃值
+}
+
+// 一个工会的所有信息
+message _Union {
+	required int32 id = 1; // 帮会ID, 和_UnionAbstract中的id冗余
+  optional _UnionAbstract union_abstract = 2; // 帮会概要
+  repeated _UnionMember enrolled_members = 3;  // 帮会成员
+  repeated _UnionMember pending_members = 4; // 待审核会员
+  optional _UnionSelfInfo self_info = 5; // 在公会中的一些自身信息
+  // todo 副本信息
+  // todo 副本资源产出，待管理员分配
+  // todo 日志
+  // todo 街市
+}
+
+// 玩家的工会系统的信息
+message _UnionInfo {
+  optional _Union union = 1; // 已入帮会
+  optional int32 appliable_remain_time = 2; // 还有多长时间可申请入会
+  optional int32 appliable_chance_left_count = 3; // 还可投递入会申请的个数, 不一定需要这个限制
+  repeated int32 applying_union_ids = 4;  // 正在申请入会的工会ids
+}
+
+message _UnionShopGoods {
+  optional int32 goods_id = 1; // 物品ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _UnionShopInfo {
+  repeated int32 goods_ids = 1;  // 客户端可以售出的货物id
+  optional int32 refresh_time = 2;  // 下次刷新时间 (给客户端的为倒计时)
+  optional int32 refresh_absolute_time = 3; // 刷新绝对时间
+  optional int32 has_refresh_times = 4; //
+  repeated _UnionShopGoods goods = 5;  // 客户端可以售出的货物增加字段
+}

@@ -1,0 +1,24 @@
+package lm;
+import "lm_base.proto";
+import "workshop_base.proto";
+
+// --------------工坊系统交互消息--------------------------
+// message: WORKSHOP_LIST
+message WorkshopListRequest {
+  required int32 user_id = 1;
+}
+
+message WorkshopListResponse {
+  required _Workshop workshop = 1;
+}
+
+// message: WORKSHOP_COLLECT_ALL
+message WorkshopCollectAllRequest {
+  required int32 user_id = 1;
+}
+
+message WorkshopCollectAllResponse {
+  required _Workshop workshop = 1;
+  optional _PlayerInfo  player_info = 2;
+  optional int32 gain_count = 3;
+}

@@ -1,0 +1,101 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "task_base.proto";
+import "expressmen_base.proto";
+
+// ----------------------任务系统交互消息------------------
+// MessageType: TASK_LIST
+message TaskListRequest {
+  required int32 user_id = 1;
+}
+
+message TaskListResponse {
+  optional _TaskInfo task_info = 1;
+}
+
+// MessageType: TASK_READ
+message TaskReadRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+}
+
+// MessageType: TASK_DENY 
+message TaskDenyRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+}
+
+message TaskDenyResponse {
+  required int32 task_id = 1;
+  required _TaskDenyResult deny_result = 2;
+  optional _TaskInfo task_info = 3;
+  optional _PlayerInfo player_info = 4;
+}
+
+// MessageType: TASK_ADD
+message TaskAddRequest {
+  required int32 user_id = 1;
+}
+
+message TaskAddResponse {
+  optional _TaskInfo task_info = 1;
+  optional _PlayerInfo player_info = 2; // 扣除铜币
+  optional _ErrorInfo  error_info = 3;  // 铜币不足
+  optional bool no_more_task = 4; // 没有符合条件的任务(用户客户端提示)
+}
+
+// MessageType: TASK_ASSIGN
+message TaskAssignRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+}
+
+message TaskAssignResponse {
+  optional _Task task = 1;
+  optional _PlayerInfo player_info = 2;
+  optional _ErrorInfo error_info = 3;  // 镖旗不足
+}
+
+// MessageType: TASK_ASSIGN_RECEIVE_REWARD
+message TaskAssignReceiveRewardRequest {
+  required int32 user_id = 1;
+  required int32 task_id = 2;
+}
+
+message TaskAssignReceiveRewardResponse {
+  optional _PlayerInfo player_info = 1;
+  optional _GoodsInfo  goods_info = 2;
+  optional _ExpressmenInfo expressmen_info = 3;  // 镖局获得声望升级，从而导致上阵镖师数量变化
+  optional _TaskInfo task_info = 4;
+  optional int32  task_id = 5; // 领取奖励的委托任务ID
+  optional string plunder_player_name = 6;  // 劫镖者名字
+  optional int32 reward_times = 7; // 奖励倍数
+  optional _RewardInfo reward_info = 8; // 奖励信息
+}
+
+// MessageType:  CONSIGNER_LIST
+message ConsignerListRequest {
+  required int32 user_id = 1;
+}
+
+message ConsignerListResponse {
+  repeated _Consigner  consigners = 1;
+}
+
+// MessageType: CONSIGNER_RECEIVE_REWARD
+message ConsignerReceiveRewardRequest {
+  required int32 user_id = 1;
+  required int32 consigner_id = 2;
+  required int32 reward_id = 3;
+}
+
+message ConsignerReceiveRewardResponse {
+  required int32 consigner_id = 1;
+  required int32 reward_id = 2;
+  required _Consigner  consigner = 3;
+  optional _PlayerInfo player_info = 4;  // 铜币或者钱 
+  optional _GoodsInfo  goods_info = 5;   // 物品
+  optional _ExpressmenInfo  expressmen_info = 6;  // 镖师
+  optional _RewardInfo reward_info = 7; // 物品奖励
+}

@@ -1,0 +1,52 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// ------运营活动基本类型--------------
+message _CarnivalTaskAchievement {
+  required int32 achievement_id = 1;
+  optional int32 process = 2; // 进度
+  optional int32 criteria = 3; // 标准
+  optional bool  reward_received = 4; // 奖励有没有被领过
+}
+
+message _CarnivalTaskAchievementInfo {
+  repeated _CarnivalTaskAchievement carnival_task_achievement = 3;
+}
+
+message _CarnivalTask {
+  optional int32 task_id = 1; // 嘉年华任务id
+  optional _CarnivalTaskType task_type = 2; // 嘉年华任务类型
+  optional int32 day_index = 3; // 嘉年华活动所属哪一天
+  optional _CarnivalTaskAchievementInfo carnival_task_achievement_info = 4; // 
+}
+
+message _CarnivalTaskInfo {
+  repeated _CarnivalTask carnival_tasks = 1; // 嘉年华的任务
+}
+
+message _CarnivalActivityProgress {
+  optional int32 progress_id = 1; 
+  optional int32 progress = 2;
+  optional int32 criteria = 3; // 标准
+  optional bool  reward_received = 4; // 奖励有没有被领过
+}
+
+message _CarnivalActivityProgressInfo {
+  repeated _CarnivalActivityProgress activity_progress = 1; // 嘉年华进度
+}
+
+message _CarnivalActivity {
+  optional int32 activity_id = 1; // 
+  optional int32 total_day = 2; // 总共多少天
+  optional int32 activity_open_time = 3;   // 活动开始时间
+  optional int32 activity_end_time = 4;  //  活动结束时间
+  optional int32 achievement_end_time = 5;   // 领奖结束时间
+  optional _CarnivalTaskInfo carnival_task_info = 6; // 嘉年华任务
+  optional _CarnivalActivityProgressInfo activity_progress_info = 7; // 嘉年华任务进度
+}
+
+message _CarnivalActivityInfo {
+  repeated _CarnivalActivity carnival_activities = 1; // 嘉年华活动
+  optional int32 refresh_time = 2;  // 刷新倒计时
+}

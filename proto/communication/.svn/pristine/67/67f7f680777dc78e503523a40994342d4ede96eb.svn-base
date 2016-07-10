@@ -1,0 +1,12 @@
+package lm;
+
+// 兑换码
+message _CDkeyUsed {
+	required string cdkey = 1;  // 兑换码
+	optional int32 type = 2; // 兑换码的类型
+	optional int32 usedTime = 3; // 使用兑换码的时间
+}
+
+message _CDkeyUsedInfo {
+	repeated _CDkeyUsed cdKeyUsed = 1; // 使用的兑换码
+}

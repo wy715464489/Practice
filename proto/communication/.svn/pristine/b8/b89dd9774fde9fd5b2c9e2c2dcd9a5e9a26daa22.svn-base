@@ -1,0 +1,56 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+
+// --------------------商路系统基本类型----------------------
+
+message _TradeRoadAssistPlayerInfo {
+  optional string player_id = 1;
+  optional string name = 2;
+  optional int32 level = 3;
+  optional int32 selected_expressman_id = 4;
+  repeated _Expressman expressmen = 5;
+  optional _PlayerExtraInfo player_extra_info = 6;
+}
+
+message _TradeRoadBranch {
+  optional int32 id = 1;
+  optional _TradeRoadBranchStatus status = 2;
+  optional int32 expressman_id = 3;   // 运营镖师id
+  optional _TradeRoadBranchLevel level = 4; //商路分支级别，分为初级开拓和高级开拓 
+  optional int32 expressman_attr = 5; // 运营镖师的对应属性值
+  optional int32 operate_start_time = 6; // 运营开始时间
+  optional int32 fetch_reward_time = 7;  // 领取奖励的时间点
+  optional int32 expressman_grade = 8;   // 运营镖师星阶
+  optional int32 trade_coin_fetch_reward_time = 9;   // 西域币领取奖励的时间点
+  optional int32 star = 10;  // 几星完成
+  optional int32 open_box_times = 11; // 开启宝箱次数
+}
+
+message _TradeRoadCity {
+  optional int32 id = 1;
+  repeated _TradeRoadBranch trade_road_branches = 2;  
+  optional _TradeRoadCityStatus status = 3;
+}
+
+message _TradeRoadInfo {
+  repeated _TradeRoadCity trade_road_cities = 1;
+  repeated _TradeRoadAssistPlayerInfo trade_road_assist_player_infoes = 2;
+  optional int32 next_refresh_count = 3;
+  optional int32 remain_fresh_time = 4;
+  optional int32 remain_reset_count = 5;
+  optional int32 total_reset_count = 6;
+}
+
+message _TradeShopGoods {
+  optional int32 goods_id = 1; // 物品ID
+  optional bool has_sold = 2; // 是否已被卖出(未卖出是false，已买出是true)
+}
+
+message _TradeRoadShopInfo {
+  repeated int32 goods_ids = 1;  // 客户端可以售出的货物id
+  optional int32 refresh_time = 2;  // 下次刷新时间 (给客户端的为倒计时)
+  optional int32 refresh_absolute_time = 3; // 刷新绝对时间
+  optional int32 has_refresh_times = 4; // 
+  repeated _TradeShopGoods goods = 5;  // 客户端可以售出的货物增加字段
+}

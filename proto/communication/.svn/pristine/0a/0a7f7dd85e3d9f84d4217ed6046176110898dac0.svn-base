@@ -1,0 +1,61 @@
+package lm;
+import "lm_base.proto";
+
+// AOI算法， marker:标记者， watcher:观察者
+message StreetPlayerData {
+	required int32 user_id = 1;
+	optional _OtherPlayerInfo player_info = 2;
+	optional float pos_x = 3;
+	optional float pos_y = 4;
+}
+
+message StreetEnterRequest {
+	required int32 user_id = 1;
+	optional int32 street_id = 2;
+	optional float entry_pos_x = 3;
+	optional float entry_pos_y = 4;
+}
+
+// 玩家加入街市自己收到
+// 自己不包含在watchers列表， 自己的信息请从客户端自取，有吗？
+// message: STREET_ENTER
+message StreetEnterResponse {
+	optional int32 street_id = 1;
+	repeated StreetPlayerData watchers = 2;
+}
+
+message StreetLeaveRequest {
+	required int32 user_id = 1;
+}
+
+// message: STREET_LEAVE
+message StreetLeaveResponse {
+	optional int32 dummy_user_id = 1;
+}
+
+message StreetMoveRequest {
+	required int32 user_id = 1;
+	optional int32 move_to_x = 2;
+	optional int32 move_to_y = 3;	
+}
+// 自己不会收到，因为自己的行为客户端已有表现，并且这个同步是延迟的
+// message: STREET_MOVE
+
+
+// 玩家加入街市观察者收到
+// message: STREET_ADD
+message StreetAddResponse {
+	optional StreetPlayerData marker = 1;
+}
+
+// 玩家退出街市观察者收到
+// message: STREET_REMOVE
+message StreetRemoveResponse {
+	required int32 user_id = 1;
+}
+
+// 同步玩家信息，自己的信息更改不会自己收到
+// message: STREET_SYNC
+message StreetSyncResponse {
+	optional StreetPlayerData marker = 1;
+}

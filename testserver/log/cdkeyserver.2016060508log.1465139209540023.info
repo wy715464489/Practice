@@ -1,0 +1,97 @@
+20160605 08:06:49.540177 TcpClient: try to connect server 127.0.0.1:8888
+20160605 08:06:49.540276 TcpClient: connected server 127.0.0.1:8888
+20160605 08:06:49.540343 TcpConnection::send:directly_write process_time_in_us:13 try_count:1 send_lentgth:20 total_length:20
+20160605 08:07:19.684737 TcpConnection::send:directly_write process_time_in_us:40 try_count:1 send_lentgth:20 total_length:20
+20160605 08:07:19.684757 Send keep alive message to gateways
+20160605 08:07:49.832765 TcpConnection::send:directly_write process_time_in_us:41 try_count:1 send_lentgth:20 total_length:20
+20160605 08:07:49.832781 Send keep alive message to gateways
+20160605 08:08:19.961964 TcpConnection::send:directly_write process_time_in_us:56 try_count:1 send_lentgth:20 total_length:20
+20160605 08:08:19.961984 Send keep alive message to gateways
+20160605 08:08:50.098708 TcpConnection::send:directly_write process_time_in_us:101 try_count:1 send_lentgth:20 total_length:20
+20160605 08:08:50.098728 Send keep alive message to gateways
+20160605 08:09:20.230920 TcpConnection::send:directly_write process_time_in_us:94 try_count:1 send_lentgth:20 total_length:20
+20160605 08:09:20.230935 Send keep alive message to gateways
+20160605 08:09:50.370170 TcpConnection::send:directly_write process_time_in_us:36 try_count:1 send_lentgth:20 total_length:20
+20160605 08:09:50.370184 Send keep alive message to gateways
+20160605 08:10:20.516786 TcpConnection::send:directly_write process_time_in_us:148 try_count:1 send_lentgth:20 total_length:20
+20160605 08:10:20.516798 Send keep alive message to gateways
+20160605 08:10:50.631415 TcpConnection::send:directly_write process_time_in_us:41 try_count:1 send_lentgth:20 total_length:20
+20160605 08:10:50.631431 Send keep alive message to gateways
+20160605 08:11:20.785808 TcpConnection::send:directly_write process_time_in_us:33 try_count:1 send_lentgth:20 total_length:20
+20160605 08:11:20.785822 Send keep alive message to gateways
+20160605 08:11:50.904499 TcpConnection::send:directly_write process_time_in_us:35 try_count:1 send_lentgth:20 total_length:20
+20160605 08:11:50.904521 Send keep alive message to gateways
+20160605 08:12:21.030265 TcpConnection::send:directly_write process_time_in_us:41 try_count:1 send_lentgth:20 total_length:20
+20160605 08:12:21.030281 Send keep alive message to gateways
+20160605 08:12:51.172892 TcpConnection::send:directly_write process_time_in_us:40 try_count:1 send_lentgth:20 total_length:20
+20160605 08:12:51.172908 Send keep alive message to gateways
+20160605 08:13:21.330832 TcpConnection::send:directly_write process_time_in_us:102 try_count:1 send_lentgth:20 total_length:20
+20160605 08:13:21.330854 Send keep alive message to gateways
+20160605 08:13:51.453774 TcpConnection::send:directly_write process_time_in_us:166 try_count:1 send_lentgth:20 total_length:20
+20160605 08:13:51.453790 Send keep alive message to gateways
+20160605 08:14:21.596487 TcpConnection::send:directly_write process_time_in_us:37 try_count:1 send_lentgth:20 total_length:20
+20160605 08:14:21.596500 Send keep alive message to gateways
+20160605 08:14:51.729872 TcpConnection::send:directly_write process_time_in_us:26 try_count:1 send_lentgth:20 total_length:20
+20160605 08:14:51.729881 Send keep alive message to gateways
+20160605 08:15:21.889063 TcpConnection::send:directly_write process_time_in_us:42 try_count:1 send_lentgth:20 total_length:20
+20160605 08:15:21.889079 Send keep alive message to gateways
+20160605 08:15:52.008041 TcpConnection::send:directly_write process_time_in_us:125 try_count:1 send_lentgth:20 total_length:20
+20160605 08:15:52.008051 Send keep alive message to gateways
+20160605 08:16:22.128050 TcpConnection::send:directly_write process_time_in_us:51 try_count:1 send_lentgth:20 total_length:20
+20160605 08:16:22.128065 Send keep alive message to gateways
+20160605 08:16:52.268108 TcpConnection::send:directly_write process_time_in_us:44 try_count:1 send_lentgth:20 total_length:20
+20160605 08:16:52.268124 Send keep alive message to gateways
+20160605 08:17:22.388314 TcpConnection::send:directly_write process_time_in_us:33 try_count:1 send_lentgth:20 total_length:20
+20160605 08:17:22.388327 Send keep alive message to gateways
+20160605 08:17:52.517899 TcpConnection::send:directly_write process_time_in_us:114 try_count:1 send_lentgth:20 total_length:20
+20160605 08:17:52.517915 Send keep alive message to gateways
+20160605 08:18:22.646647 TcpConnection::send:directly_write process_time_in_us:35 try_count:1 send_lentgth:20 total_length:20
+20160605 08:18:22.646660 Send keep alive message to gateways
+20160605 08:18:52.794134 TcpConnection::send:directly_write process_time_in_us:89 try_count:1 send_lentgth:20 total_length:20
+20160605 08:18:52.794150 Send keep alive message to gateways
+20160605 08:19:22.900154 TcpConnection::send:directly_write process_time_in_us:255 try_count:1 send_lentgth:20 total_length:20
+20160605 08:19:22.900162 Send keep alive message to gateways
+20160605 08:19:53.042116 TcpConnection::send:directly_write process_time_in_us:55 try_count:1 send_lentgth:20 total_length:20
+20160605 08:19:53.042137 Send keep alive message to gateways
+20160605 08:20:23.186996 TcpConnection::send:directly_write process_time_in_us:34 try_count:1 send_lentgth:20 total_length:20
+20160605 08:20:23.187009 Send keep alive message to gateways
+20160605 08:20:53.334380 TcpConnection::send:directly_write process_time_in_us:32 try_count:1 send_lentgth:20 total_length:20
+20160605 08:20:53.334392 Send keep alive message to gateways
+20160605 08:21:23.457478 TcpConnection::send:directly_write process_time_in_us:64 try_count:1 send_lentgth:20 total_length:20
+20160605 08:21:23.457502 Send keep alive message to gateways
+20160605 08:21:53.557544 TcpConnection::send:directly_write process_time_in_us:48 try_count:1 send_lentgth:20 total_length:20
+20160605 08:21:53.557565 Send keep alive message to gateways
+20160605 08:22:23.664888 TcpConnection::send:directly_write process_time_in_us:59 try_count:1 send_lentgth:20 total_length:20
+20160605 08:22:23.664909 Send keep alive message to gateways
+20160605 08:22:53.798804 TcpConnection::send:directly_write process_time_in_us:100 try_count:1 send_lentgth:20 total_length:20
+20160605 08:22:53.798827 Send keep alive message to gateways
+20160605 08:23:23.938700 TcpConnection::send:directly_write process_time_in_us:89 try_count:1 send_lentgth:20 total_length:20
+20160605 08:23:23.938706 Send keep alive message to gateways
+20160605 08:23:54.064783 TcpConnection::send:directly_write process_time_in_us:116 try_count:1 send_lentgth:20 total_length:20
+20160605 08:23:54.064841 Send keep alive message to gateways
+20160605 08:24:24.186985 TcpConnection::send:directly_write process_time_in_us:145 try_count:1 send_lentgth:20 total_length:20
+20160605 08:24:24.187024 Send keep alive message to gateways
+20160605 08:24:54.329834 TcpConnection::send:directly_write process_time_in_us:44 try_count:1 send_lentgth:20 total_length:20
+20160605 08:24:54.329853 Send keep alive message to gateways
+20160605 08:25:24.477360 TcpConnection::send:directly_write process_time_in_us:41 try_count:1 send_lentgth:20 total_length:20
+20160605 08:25:24.477376 Send keep alive message to gateways
+20160605 08:25:54.599915 TcpConnection::send:directly_write process_time_in_us:47 try_count:1 send_lentgth:20 total_length:20
+20160605 08:25:54.599932 Send keep alive message to gateways
+20160605 08:26:24.711522 TcpConnection::send:directly_write process_time_in_us:40 try_count:1 send_lentgth:20 total_length:20
+20160605 08:26:24.711538 Send keep alive message to gateways
+20160605 08:26:54.840065 TcpConnection::send:directly_write process_time_in_us:42 try_count:1 send_lentgth:20 total_length:20
+20160605 08:26:54.840082 Send keep alive message to gateways
+20160605 08:27:24.994167 TcpConnection::send:directly_write process_time_in_us:48 try_count:1 send_lentgth:20 total_length:20
+20160605 08:27:24.994185 Send keep alive message to gateways
+20160605 08:27:55.139553 TcpConnection::send:directly_write process_time_in_us:42 try_count:1 send_lentgth:20 total_length:20
+20160605 08:27:55.139570 Send keep alive message to gateways
+20160605 08:28:25.264015 TcpConnection::send:directly_write process_time_in_us:56 try_count:1 send_lentgth:20 total_length:20
+20160605 08:28:25.264035 Send keep alive message to gateways
+20160605 08:28:55.403321 TcpConnection::send:directly_write process_time_in_us:42 try_count:1 send_lentgth:20 total_length:20
+20160605 08:28:55.403337 Send keep alive message to gateways
+20160605 08:29:25.531960 TcpConnection::send:directly_write process_time_in_us:86 try_count:1 send_lentgth:20 total_length:20
+20160605 08:29:25.531977 Send keep alive message to gateways
+20160605 08:29:55.673438 TcpConnection::send:directly_write process_time_in_us:193 try_count:1 send_lentgth:20 total_length:20
+20160605 08:29:55.673458 Send keep alive message to gateways
+20160605 08:30:25.796546 TcpConnection::send:directly_write process_time_in_us:29 try_count:1 send_lentgth:20 total_length:20
+20160605 08:30:25.796556 Send keep alive message to gateways

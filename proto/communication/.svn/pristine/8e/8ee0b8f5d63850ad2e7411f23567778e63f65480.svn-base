@@ -1,0 +1,26 @@
+package lm;
+import "common_enum.proto";
+import "lm_base.proto";
+import "badge_base.proto";
+
+// ------------徽章系统交互消息--------------
+// 徽章信息
+// MessageType: BADGE_INFO
+message BadgeInfoRequest {
+  required int32 user_id = 1;
+}
+
+message BadgeInfoResponse {
+  optional _PlayerInfo player_info = 1; 
+}
+
+// 使用徽章
+// MessageType: BADGE_USE
+message BadgeUseRequest {
+  required int32 user_id = 1;
+  required int32 badge_id = 2;
+}
+
+message BadgeUseResponse {
+  optional _PlayerInfo player_info = 1;  
+}
