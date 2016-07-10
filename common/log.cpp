@@ -10,7 +10,7 @@
 #include <signal.h>
 #include <string>
 
-namespace hrg { namespace common {
+ namespace common {
 
 bool SplitLogname(const std::string& logname,
                   RULE_LIST* rules,
@@ -343,4 +343,4 @@ void SigsegvHandler(int sig) {
 }
 
 }  // namespace common
-}  // namespace hrg
+

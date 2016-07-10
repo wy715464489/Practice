@@ -2,7 +2,7 @@
 #ifndef COMMON_NONCOPYABLE_H_
 #define COMMON_NONCOPYABLE_H_
 
-namespace hrg { namespace common {
+ namespace common {
 
 // A macro to disallow the copy constructor and operator= functions
 // This should be used in the private: declarations for a class
@@ -11,5 +11,5 @@ namespace hrg { namespace common {
     void operator=(const TypeName&)
 
 }  // namespace common
-}  // namespace hrg
+
 #endif  // COMMON_NONCOPYABLE_H_

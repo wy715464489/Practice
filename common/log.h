@@ -10,7 +10,7 @@
 #include <string>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace common {
+namespace common {
 
 typedef std::vector<std::string> RULE_LIST;
 
@@ -149,7 +149,7 @@ void SigsegvHandler(int sig);
                          protobuf_obj.ShortDebugString().c_str())
 
 }  // namespace common
-}  // namespace hrg
+
 
 
 #endif  // COMMON_LOG_H_
