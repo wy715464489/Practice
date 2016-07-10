@@ -12,10 +12,10 @@
 #include <string.h>
 #include <string>
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 void IgnorePipeSignal() {
   struct sigaction sa;
@@ -122,4 +122,4 @@ bool IsInternalIp(uint32_t ip) {
 }
 
 }  // namespace net
-}  // namespace hrg
+

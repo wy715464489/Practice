@@ -10,7 +10,7 @@
 #include <string>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 typedef uint16_t MESSAGE_HEADER_TYPE;
 typedef uint32_t MESSAGE_HEADER_ID;
@@ -124,7 +124,7 @@ typedef std::tr1::function<bool (const Message& input,
 
 
 }  // namespace net
-}  // namespace hrg
+
 
 
 #endif  // NET_MESSAGE_H_

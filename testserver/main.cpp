@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
   int lock_fd;
   CheckIfProgramAlreadyRun("/tmp/testserver.lock", &lock_fd);
 
-  if (true) {
+  if (false) {
     daemon(1, 0);
   }
 

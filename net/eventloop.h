@@ -10,7 +10,7 @@
 #include <queue>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class Channel;
 class Poller;
@@ -76,5 +76,5 @@ class EventLoop {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_EVENTLOOP_H_

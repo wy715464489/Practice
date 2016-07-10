@@ -8,7 +8,7 @@
 #include <map>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class Channel;
 class EventLoop;
@@ -47,5 +47,5 @@ class Poller {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_POLLER_H_

@@ -12,7 +12,7 @@
 #include "net/message.h"
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class Channel;
 class Poller;
@@ -94,6 +94,6 @@ void DefaultConnectionDataCallback(MessageHandler message_handler,
                                    Buffer* buffer);
 
 }  // namespace net
-}  // namespace hrg
+
 
 #endif  // NET_TCP_CONNECTION_H_

@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 // #include "common/Log.h"
+
 #include <string>
 
 // using common::SplitLogname;

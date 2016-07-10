@@ -10,10 +10,10 @@
 #include <unistd.h>
 #include "common/log.h"
 #include "net/eventloop.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 Acceptor::Acceptor(EventLoop* loop, const InetAddress& listen_addr)
   : loop_(loop),
@@ -73,4 +73,4 @@ void Acceptor::set_new_connection_callback(const NewConnectionCallback& cb) {
 }
 
 }  // namespace net
-}  // namespace hrg
+

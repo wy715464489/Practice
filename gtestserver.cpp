@@ -1,4 +1,4 @@
-// Copyright [2012-2014] <HRG>
+
 #include <tr1/functional>
 #include <unistd.h>
 #include <signal.h>
@@ -16,25 +16,25 @@
 #include "common/log.h"
 #include "gtest/gtest.h"
 
-using hrg::net::TcpConnection;
-using hrg::net::TcpConnectionPtr;
-using hrg::net::Poller;
-using hrg::net::Buffer;
-using hrg::net::IgnorePipeSignal;
-using hrg::net::TcpClient;
-using hrg::net::TcpServer;
-using hrg::net::Message;
-using hrg::net::MessageQueue;
-using hrg::net::MessageHeader;
-using hrg::net::MessageHandler;
-using hrg::common::LogSystem;
+using net::TcpConnection;
+using net::TcpConnectionPtr;
+using net::Poller;
+using net::Buffer;
+using net::IgnorePipeSignal;
+using net::TcpClient;
+using net::TcpServer;
+using net::Message;
+using net::MessageQueue;
+using net::MessageHeader;
+using net::MessageHandler;
+using common::LogSystem;
 
 int gFuncExecNum1 = 0;
 
 class TcpClientNormal: public TcpClient {
  public:
-  TcpClientNormal(hrg::net::EventLoop* loop,
-                  const hrg::net::InetAddress& server_addr,
+  TcpClientNormal(net::EventLoop* loop,
+                  const net::InetAddress& server_addr,
                   MessageHandler message_handler)
   : TcpClient(loop, server_addr, message_handler) {
   }
@@ -59,8 +59,8 @@ class TcpClientNormal: public TcpClient {
 
 class TcpClientNormalSend: public TcpClient {
  public:
-  TcpClientNormalSend(hrg::net::EventLoop* loop,
-                  const hrg::net::InetAddress& server_addr,
+  TcpClientNormalSend(net::EventLoop* loop,
+                  const net::InetAddress& server_addr,
                   MessageHandler message_handler)
   : TcpClient(loop, server_addr, message_handler) {
   }
@@ -88,7 +88,7 @@ bool ClientHandleNormal1(const Message& input, MessageQueue* outputs) {
   std::string body(input.body(), input.body_length());
   // printf("client received body:%s\n", body.c_str());
   EXPECT_EQ(std::string("hello world"), body);
-  hrg::net::EventLoop::instance().quit();
+  net::EventLoop::instance().quit();
   return true;
 }
 
@@ -113,15 +113,15 @@ bool ServerHandleNormal1(const Message& input, MessageQueue* outputs) {
 }
 
 TEST(TcpClientServerTest, NormalRecvAndSend) {
-  hrg::net::EventLoop& loop = hrg::net::EventLoop::instance();
-  hrg::net::InetAddress server_addr;
+  net::EventLoop& loop = net::EventLoop::instance();
+  net::InetAddress server_addr;
   server_addr.init("127.0.0.1", 9999);
 
   /*
   LogSystem::instance().init("./log/client_server_test.%y%m%d%hlog", 100);
-  LogSystem::instance().set_workable(hrg::common::kLogLevelDebug, true);
-  LogSystem::instance().set_workable(hrg::common::kLogLevelInfo, true);
-  LogSystem::instance().set_workable(hrg::common::kLogLevelError, true);
+  LogSystem::instance().set_workable(common::kLogLevelDebug, true);
+  LogSystem::instance().set_workable(common::kLogLevelInfo, true);
+  LogSystem::instance().set_workable(common::kLogLevelError, true);
   */
 
   // use conn->send
@@ -154,8 +154,8 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 }
 
 // TEST(TcpClientServerTest, ClientStartFirst) {
-//   hrg::net::EventLoop& loop = hrg::net::EventLoop::instance();
-//   hrg::net::InetAddress server_addr;
+//   net::EventLoop& loop = net::EventLoop::instance();
+//   net::InetAddress server_addr;
 //   server_addr.init("127.0.0.1", 9999);
 
 //   TcpClientNormal client(&loop, server_addr, ClientHandleNormal);
@@ -174,8 +174,8 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 
 // class TcpClientCloseServerBeforeSend: public TcpClient {
 //  public:
-//   TcpClientCloseServerBeforeSend(hrg::net::EventLoop* loop,
-//                   const hrg::net::InetAddress& server_addr,
+//   TcpClientCloseServerBeforeSend(net::EventLoop* loop,
+//                   const net::InetAddress& server_addr,
 //                   MessageHandler message_handler,
 //                   TcpServer* server)
 //   : TcpClient(loop, server_addr, message_handler),
@@ -201,7 +201,7 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 //                            sizeof(header)));
 //     EXPECT_FALSE(conn->send(s.c_str(), s.size()));
 
-//     hrg::net::EventLoop::instance().quit();
+//     net::EventLoop::instance().quit();
 //   }
 //   TcpServer* server_;
 // };
@@ -211,8 +211,8 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 //   // Pipe signal will be raised when try to write a closed socket
 //   IgnorePipeSignal();
 
-//   hrg::net::EventLoop& loop = hrg::net::EventLoop::instance();
-//   hrg::net::InetAddress server_addr;
+//   net::EventLoop& loop = net::EventLoop::instance();
+//   net::InetAddress server_addr;
 //   server_addr.init("127.0.0.1", 9999);
 
 //   TcpServer* server = new TcpServer(&loop, server_addr, ServerHandleNormal);
@@ -229,7 +229,7 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 // }
 
 // void ExitEventLoop() {
-//   hrg::net::EventLoop::instance().quit();
+//   net::EventLoop::instance().quit();
 // }
 
 // bool ServerHandleCloseClientBeforeSend(TcpClient* client,
@@ -254,7 +254,7 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 //   // send two messages
 //   outputs->push_back(out_message);
 //   outputs->push_back(out_message);
-//   hrg::net::EventLoop::instance().run_after(100, ExitEventLoop);
+//   net::EventLoop::instance().run_after(100, ExitEventLoop);
 //   return true;
 // }
 
@@ -264,8 +264,8 @@ TEST(TcpClientServerTest, NormalRecvAndSend) {
 //   // Pipe signal will be raised when try to write a closed socket
 //   IgnorePipeSignal();
 
-//   hrg::net::EventLoop& loop = hrg::net::EventLoop::instance();
-//   hrg::net::InetAddress server_addr;
+//   net::EventLoop& loop = net::EventLoop::instance();
+//   net::InetAddress server_addr;
 //   server_addr.init("127.0.0.1", 9999);
 
 //   TcpClientNormal* client =

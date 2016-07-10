@@ -10,7 +10,7 @@
 #include "net/tcp_connection.h"
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class EventLoop;
 class Connector: public std::tr1::enable_shared_from_this<Connector> {
@@ -35,5 +35,5 @@ class Connector: public std::tr1::enable_shared_from_this<Connector> {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_CONNECTOR_H_

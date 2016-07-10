@@ -7,7 +7,7 @@
 #include <errno.h>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class InetAddress;
 
@@ -42,6 +42,6 @@ class Socket {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 
 #endif  // NET_SOCKET_H_

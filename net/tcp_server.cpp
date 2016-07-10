@@ -10,10 +10,10 @@
 #include "net/acceptor.h"
 #include "common/log.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
-using hrg::common::LogSystem;
-using hrg::common::INFO_LOG;
+using common::LogSystem;
+using common::INFO_LOG;
 
 TcpServer::TcpServer(EventLoop* loop,
                      const InetAddress& listen_addr,
@@ -84,4 +84,4 @@ void TcpServer::new_connection(int fd, const InetAddress& inet_addr) {
 
 
 }  // namespace net
-}  // namespace hrg
+

@@ -7,6 +7,7 @@
 #include "net/message.h"
 #include "net/eventloop.h"
 #include "net/gateway_client.h"
+#include "common/FSM.h"
 
 namespace testserver {
 
@@ -59,6 +60,15 @@ class TestServer {
  private:
   TestServer();
   ~TestServer();
+
+  // FSM
+  void      onIdentityEnter();
+  void      onIdentityExit();
+  void      onIdentityTick(float fdt);
+  void      onNewsEnter();
+  void      onNewsExit();
+  void      onNewsTick(float fdt);
+  
   std::string subsystem_conf_;
   int       sample_message_;
   int       id_;
@@ -69,6 +79,8 @@ class TestServer {
   std::vector<GatewayClient*>        gateway_clients_;
   TestServerMessageHandlers          message_handlers_;
   net::EventLoop*               loop_;
+
+  FSM     mFSM; 
 };
 
 }

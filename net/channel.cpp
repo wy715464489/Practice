@@ -2,10 +2,10 @@
 #include "net/channel.h"
 #include "net/poller.h"
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 void DefaultEventCallback() {
   ERROR_LOG("Default event callback invoked, "
@@ -138,4 +138,4 @@ void Channel::disable_all() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

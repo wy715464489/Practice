@@ -7,7 +7,7 @@
 #include "net/inet_address.h"
 #include "net/tcp_connection.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class EventLoop;
 class Connector;
@@ -52,5 +52,5 @@ class TcpClient {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_TCP_CLIENT_H_

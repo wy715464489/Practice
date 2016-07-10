@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <string>
 
-namespace hrg { namespace net {
+ namespace net {
 
 class InetAddress {
  public:
@@ -37,5 +37,5 @@ class InetAddress {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_INET_ADDRESS_H_

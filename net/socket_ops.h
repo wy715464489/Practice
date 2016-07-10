@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <string>
 
-namespace hrg { namespace net {
+ namespace net {
 
 // Ignore Pipe signal when write to a closed/reset socket
 void IgnorePipeSignal();
@@ -48,5 +48,5 @@ const char* NetworkToAddress(uint32_t ip);
 bool IsInternalIp(uint32_t ip);
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_SOCKET_OPS_H_

@@ -8,10 +8,10 @@
 #include "net/socket_ops.h"
 #include "net/eventloop.h"
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 Connector::Connector(EventLoop* loop, const InetAddress& server_addr)
   : loop_(loop),
@@ -78,4 +78,4 @@ void Connector::handle_write() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

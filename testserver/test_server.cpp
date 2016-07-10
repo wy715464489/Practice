@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include "common/log.h"
+
 #include "proto/communication/common_enum.pb.h"
 
 namespace testserver {
@@ -59,6 +60,40 @@ void TestServer::init(net::EventLoop* loop) {
 
 	// connect gateway
 	connect_gateway();
+
+	FSM::State *pState = mFSM.addState("Identity");
+	pState->setEnterMethod(this, &TestServer::onIdentityEnter);
+	pState->setExitMethod(this, &TestServer::onIdentityExit);
+	pState->setTickMethod(this, &TestServer::onIdentityTick);
+
+	pState = mFSM.addState("News");
+	pState->setEnterMethod(this, &TestServer::onNewsEnter);
+	pState->setExitMethod(this, &TestServer::onNewsExit);
+	pState->setTickMethod(this, &TestServer::onNewsTick);
+	mFSM.addTransition("Identity", "News", "IdentityFinished");
+	mFSM.begin();
+}
+
+void TestServer::onIdentityEnter() {
+	DEBUG_LOG("onIdentityEnter");
+}
+
+void TestServer::onIdentityExit() {
+	DEBUG_LOG("onIdentityExit");
+}
+void TestServer::onIdentityTick(float fdt) {
+	DEBUG_LOG("onIdentityTick");
+}
+
+void TestServer::onNewsEnter() {
+	DEBUG_LOG("onNewsEnter");
+}
+void TestServer::onNewsExit() {
+	DEBUG_LOG("onNewsExit");
+}
+void TestServer::onNewsTick(float fdt)
+{
+	DEBUG_LOG("onNewsTick");
 }
 
 int TestServer::id() const {
@@ -142,9 +177,12 @@ void TestServer::send_message_through_gateway(int gateway_idx, const Message& me
 }
 
 void TestServer::update() {
-
+	DEBUG_LOG( "update\n" );
+	mFSM.evaluate();
+	mFSM.tick(1);
 	// 每10秒钟持久化到硬盘
-	if (keep_alive_ % 10 == 0) {
+	if (keep_alive_ % 5 == 0) {
+		mFSM.setCondition("IdentityFinished", true);
 		common::FlushLog();
     // 定期回收tcp连接的buffer
     for (size_t i = 0; i < gateway_clients_.size(); i++) {

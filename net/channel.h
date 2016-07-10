@@ -9,7 +9,7 @@
 #include <tr1/functional>
 #include "common/noncopyable.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
 class Poller;
 
@@ -70,5 +70,5 @@ class Channel: public std::tr1::enable_shared_from_this<Channel> {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 #endif  // NET_CHANNEL_H_

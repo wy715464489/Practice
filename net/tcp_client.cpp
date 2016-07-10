@@ -12,11 +12,11 @@
 #include "net/connector.h"
 #include "common/log.h"
 
-namespace hrg { namespace net {
+ namespace net {
 
-using hrg::common::LogSystem;
-using hrg::common::INFO_LOG;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::INFO_LOG;
+using common::ERROR_LOG;
 
 TcpClient::TcpClient(EventLoop* loop,
                     const InetAddress& server_addr,
@@ -105,4 +105,4 @@ void TcpClient::shrink_connection_buffer() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

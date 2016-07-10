@@ -3,7 +3,7 @@
 #include <string.h>
 #include <string>
 
-namespace hrg { namespace net {
+ namespace net {
 
 MessageHeader::MessageHeader()
   : length_(0),
@@ -63,4 +63,4 @@ Message::~Message() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

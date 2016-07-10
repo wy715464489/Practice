@@ -17,7 +17,7 @@
 //   |                   |                  |                  |
 //   0      <=     reader_index_  <=  writer_index_    <=    capacity
 
-namespace hrg { namespace net {
+ namespace net {
 
 class Buffer {
  public:
@@ -72,6 +72,6 @@ class Buffer {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 
 #endif  // NET_BUFFER_H_

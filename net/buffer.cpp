@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace hrg { namespace net {
+ namespace net {
 
 // 1KB
 const size_t Buffer::kInitialSize = 1024;
@@ -128,4 +128,4 @@ const std::vector<char>& Buffer::buffer() const {
 }
 
 }  // namespace net
-}  // namespace hrg
+

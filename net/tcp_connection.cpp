@@ -11,12 +11,12 @@
 #include "net/socket_ops.h"
 #include "common/log.h"
 
-using hrg::common::LogSystem;
-using hrg::common::DEBUG_LOG;
-using hrg::common::INFO_LOG;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::DEBUG_LOG;
+using common::INFO_LOG;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 // In case one connection sends too many messages one time
 // Which may cause other connections starve
@@ -302,4 +302,4 @@ void DefaultConnectionDataCallback(MessageHandler message_handler,
 }
 
 }  // namespace net
-}  // namespace hrg
+

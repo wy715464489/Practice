@@ -10,10 +10,10 @@
 #include "net/socket_ops.h"
 #include "net/inet_address.h"
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 Socket::Socket(int fd):fd_(fd) {
 }
@@ -87,4 +87,4 @@ void Socket::set_keepalive() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

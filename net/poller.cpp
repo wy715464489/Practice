@@ -9,10 +9,10 @@
 #include <string.h>
 #include "net/channel.h"
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 const int kInitEventListSize = 200;
 
@@ -101,4 +101,4 @@ void Poller::control(int operation, Channel* channel) {
 }
 
 }  // namespace net
-}  // namespace hrg
+

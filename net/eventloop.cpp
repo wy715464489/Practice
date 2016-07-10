@@ -4,9 +4,9 @@
 #include "net/poller.h"
 #include "net/socket_ops.h"
 #include "common/log.h"
-using hrg::common::INFO_LOG;
+using common::INFO_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 const int kDefaultPollTimeoutMs = 10;
 
@@ -90,4 +90,4 @@ std::tr1::shared_ptr<Poller> EventLoop::poller() {
 }
 
 }  // namespace net
-}  // namespace hrg
+

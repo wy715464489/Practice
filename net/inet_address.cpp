@@ -8,10 +8,10 @@
 #include <netinet/in.h>
 #include <string>
 #include "common/log.h"
-using hrg::common::LogSystem;
-using hrg::common::ERROR_LOG;
+using common::LogSystem;
+using common::ERROR_LOG;
 
-namespace hrg { namespace net {
+ namespace net {
 
 InetAddress::InetAddress() {
   bzero(&addr_, sizeof addr_);
@@ -38,4 +38,4 @@ uint16_t InetAddress::port() const {
 }
 
 }  // namespace net
-}  // namespace hrg
+

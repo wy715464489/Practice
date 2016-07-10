@@ -11,7 +11,7 @@
 class EventLoop;
 class InetAddress;
 
-namespace hrg { namespace net {
+ namespace net {
 
 class TcpServer {
  public:
@@ -47,6 +47,6 @@ class TcpServer {
 };
 
 }  // namespace net
-}  // namespace hrg
+
 
 #endif  // NET_TCP_SERVER_H_
